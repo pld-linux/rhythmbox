@@ -1,5 +1,3 @@
-#TODO:
-# - bconds for gstreamer or xine
 
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
@@ -12,9 +10,9 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.t
 # Source0-md5:	15e7d1c8a37a472068b55daf70e73b33
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
-#BuildRequires:	gstreamer-GConf-devel
-#BuildRequires:	gstreamer-devel >= 0.6.1
-#BuildRequires:	gstreamer-plugins-devel >= 0.6.1
+BuildRequires:	gstreamer-GConf-devel
+BuildRequires:	gstreamer-devel >= 0.6.1
+BuildRequires:	gstreamer-plugins-devel >= 0.6.1
 BuildRequires:	gtk+2-devel >= 2.2.1
 BuildRequires:	libbonobo-devel >= 2.3.6
 BuildRequires:	libglade2-devel
@@ -26,12 +24,13 @@ BuildRequires:	lirc-devel
 BuildRequires:	mad-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	pkgconfig
-BuildRequires:	xine-lib-devel
 BuildRequires:	xosd-devel
 BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
 Requires(post):	GConf2
 Requires:	gtk+2 >= 2.2.1
+Requires:	gstreamer-audio-effects
+Requires:	gstreamer-audio-formats
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -48,7 +47,6 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %build
 %configure \
-	--enable-xine \
 	--disable-schemas-install
 
 %{__make}
