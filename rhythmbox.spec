@@ -1,13 +1,13 @@
 
 %bcond_with xine		# build with xine-lib instead of gstreamer
 
-%define 	min_ver 0.7.6
+%define 	min_ver 0.8.0
 
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.7.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.7/%{name}-%{version}.tar.bz2
