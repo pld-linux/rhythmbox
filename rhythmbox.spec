@@ -16,8 +16,9 @@ BuildRequires:	gnome-vfs2-devel
 %if %{without xine}
 BuildRequires:	gstreamer-GConf-devel
 BuildRequires:	gstreamer-devel >= 0.6.3
-BuildRequires:	gstreamer-gnome-vfs >= 0.6.3
 BuildRequires:	gstreamer-plugins-devel >= 0.6.3
+%else
+BuildRequires:	xine-lib-devel
 %endif
 BuildRequires:	gtk+2-devel >= 2.2.1
 BuildRequires:	libbonobo-devel >= 2.3.6
@@ -30,13 +31,15 @@ BuildRequires:	lirc-devel
 BuildRequires:	mad-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	pkgconfig
-%{?_with_xine:BuildRequires:	xine-lib-devel}
 BuildRequires:	xosd-devel
 BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
 Requires(post):	GConf2
 Requires:	gtk+2 >= 2.2.1
+%if %{without xine}
 Requires:	gstreamer-audiosink
+Requires:	gstreamer-gnomevfs >= 0.6.3
+%endif
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -85,15 +88,15 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
-%{_sysconfdir}/gconf/schemas/*
-%{_datadir}/%{name}
-%{_desktopdir}/*
 %{_datadir}/application-registry/*
-%{_pixmapsdir}/*
 %{_datadir}/gnome-2.0/ui/*.xml
 %{_datadir}/idl/*
 %{_datadir}/mime-info/*.keys
-%{_libdir}/bonobo/*.so
+%{_datadir}/%{name}
+%{_desktopdir}/*
 %{_libdir}/bonobo/servers/*
-%{_pkgconfigdir}/*
+%{_libdir}/bonobo/*.so
 %{_omf_dest_dir}/%{name}
+%{_pixmapsdir}/*
+%{_pkgconfigdir}/*
+%{_sysconfdir}/gconf/schemas/*
