@@ -1,13 +1,14 @@
-
-%bcond_with xine		# build with xine-lib instead of gstreamer
-
+#
+# Conditional build:
+%bcond_with	xine	# build with xine-lib instead of gstreamer
+#
 %define 	min_ver 0.8.0
 
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.8.0
-Release:	2
+Release:	3
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.8/%{name}-%{version}.tar.bz2
@@ -15,6 +16,8 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.8/%{name}-%{version}.t
 Patch0:		%{name}-locale-names.patch
 Patch1:		%{name}-vorbis.patch
 Patch2:		%{name}-audio_mpeg.patch
+Patch3:		%{name}-dup.patch
+URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 %if %{without xine}
@@ -64,6 +67,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 mv po/{no,nb}.po
 
@@ -120,7 +124,7 @@ echo "- gstreamer-flac (for FLAC)"
 %{_datadir}/%{name}
 %{_desktopdir}/*
 %{_libdir}/bonobo/servers/*
-%{_libdir}/bonobo/*.so
+%attr(755,root,root) %{_libdir}/bonobo/*.so
 %{_omf_dest_dir}/%{name}
 %{_pixmapsdir}/*
 %{_pkgconfigdir}/*
