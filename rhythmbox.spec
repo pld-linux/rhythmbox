@@ -31,6 +31,7 @@ Requires(post):	GConf2
 Requires:	gtk+2 >= 2.2.1
 Requires:	gstreamer-audio-effects
 Requires:	gstreamer-audio-formats
+Requires:	gstreamer-gnomevfs
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
