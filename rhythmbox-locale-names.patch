@@ -1,11 +1,12 @@
---- rhythmbox-0.8.0/configure.ac.wiget	2004-04-16 18:23:06.000000000 +0200
-+++ rhythmbox-0.8.0/configure.ac	2004-04-16 20:41:40.440888039 +0200
-@@ -442,7 +442,7 @@
+diff -aurN rhythmbox-0.8.5.orig/configure.ac rhythmbox-0.8.5/configure.ac
+--- rhythmbox-0.8.5.orig/configure.ac	2004-06-24 03:43:33.000000000 +0200
++++ rhythmbox-0.8.5/configure.ac	2004-06-26 19:43:36.000000000 +0200
+@@ -437,7 +437,7 @@
  AC_SUBST(RHYTHMBOX_CFLAGS)
  AC_SUBST(RHYTHMBOX_LIBS)
  
--ALL_LINGUAS="am ar az be bg ca cs cy da de el en_CA en_GB es et fi fr ga hr hu id it ja ko lt lv mn ms nl no pa pl pt pt_BR ro ru sr sr@Latn sv tr uk vi zh_TW zh_CN"
-+ALL_LINGUAS="am ar az be bg ca cs cy da de el en_CA en_GB es et fi fr ga hr hu id it ja ko lt lv mn ms nb nl pa pl pt pt_BR ro ru sr sr@Latn sv tr uk vi zh_TW zh_CN"
+-ALL_LINGUAS="am ar az be bg ca cs cy da de el en_CA en_GB es et fi fr ga hr hu id is it ja ko lt lv mn ms nl no pa pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi zh_TW zh_CN"
++ALL_LINGUAS="am ar az be bg ca cs cy da de el en_CA en_GB es et fi fr ga hr hu id is it ja ko lt lv mn ms nb nl pa pl pt pt_BR ro ru sk sr sr@Latn sv tr uk vi zh_TW zh_CN"
  
  GETTEXT_PACKAGE=rhythmbox
  AC_SUBST(GETTEXT_PACKAGE)
