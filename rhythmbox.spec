@@ -5,12 +5,13 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.8.8
-Release:	3
+Version:	0.9.0
+Release:	0.20050325.1
 License:	GPL v2+
 Group:		Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	46cd84b3b67f85009aa48e0e301124fe
+#Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.bz2
+# Source0-md5:	7ec62bc4ceb53f7d993fdbe3e71b33e3
 Patch0:		%{name}-vorbis.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://www.rhythmbox.org/
@@ -63,14 +64,13 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+#%patch0 -p1
+#%patch1 -p1
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__automake}
+intltoolize --force
+glib-gettextize --force
+autoreconf -i
 %configure \
 	--disable-schemas-install \
 	--enable-ipod \
@@ -126,7 +126,6 @@ EOF
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
 %{_datadir}/application-registry/*
-%{_datadir}/gnome-2.0/ui/*.xml
 %{_datadir}/idl/*
 %{_datadir}/mime-info/*.keys
 %{_datadir}/%{name}
