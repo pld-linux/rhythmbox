@@ -1,12 +1,12 @@
-diff -urN aa/rhythmbox-0.7.0/configure.ac rhythmbox-0.7.0/configure.ac
---- aa/rhythmbox-0.7.0/configure.ac	2004-02-05 17:05:10.000000000 +0100
-+++ rhythmbox-0.7.0/configure.ac	2004-03-10 17:49:32.785491712 +0100
-@@ -429,7 +429,7 @@
+diff -urN rhythmbox-0.7.1.orig/configure.ac rhythmbox-0.7.1/configure.ac
+--- rhythmbox-0.7.1.orig/configure.ac	2004-03-17 07:33:42.169961136 +0100
++++ rhythmbox-0.7.1/configure.ac	2004-03-17 07:34:02.657846504 +0100
+@@ -454,7 +454,7 @@
  AC_SUBST(RHYTHMBOX_CFLAGS)
  AC_SUBST(RHYTHMBOX_LIBS)
  
--ALL_LINGUAS="am ar az be ca cs cy da de el es fi fr ga id it ja ko lt lv mn ms nl no pl pt pt_BR ro ru sr sr@Latn sv tr vi zh_TW"
-+ALL_LINGUAS="am ar az be ca cs cy da de el es fi fr ga id it ja ko lt lv mn ms nb nl pl pt pt_BR ro ru sr sr@Latn sv tr vi zh_TW"
+-ALL_LINGUAS="am ar az be bg ca cs cy da de el es et fi fr ga hr hu id it ja ko lt lv mn ms nl no pl pt pt_BR ro ru sr sr@Latn sv tr uk vi zh_TW"
++ALL_LINGUAS="am ar az be bg ca cs cy da de el es et fi fr ga hr hu id it ja ko lt lv mn ms nb nl pl pt pt_BR ro ru sr sr@Latn sv tr uk vi zh_TW"
  
  GETTEXT_PACKAGE=rhythmbox
  AC_SUBST(GETTEXT_PACKAGE)
