@@ -42,10 +42,7 @@ Requires:	gtk+2 >= 2.2.1
 Requires:	gstreamer-audio-effects >= %{min_ver}
 Requires:	gstreamer-audio-formats >= %{min_ver}
 Requires:	gstreamer-audiosink
-Requires:	gstreamer-flac >= %{min_ver}
 Requires:	gstreamer-gnomevfs >= %{min_ver}
-Requires:	gstreamer-mad >= %{min_ver}
-Requires:	gstreamer-vorbis >= %{min_ver}
 %endif
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
