@@ -2,17 +2,17 @@
 # Conditional build:
 %bcond_with	xine	# build with xine-lib instead of gstreamer
 #
-%define 	min_ver 0.8.0
+%define 	min_ver 0.8.1
 
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.8.1
+Version:	0.8.2
 Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	c42581010928a9c472562d1a08cad756
+# Source0-md5:	f203eeb83ae91bd809b15d51d76d89dc
 Patch0:		%{name}-locale-names.patch
 Patch1:		%{name}-vorbis.patch
 URL:		http://www.rhythmbox.org/
@@ -98,11 +98,20 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install
 /usr/bin/scrollkeeper-update
 %if %{without xine}
+echo
 echo "Remember to install appropriate gstreamer plugins for files"
 echo "you want to play:"
+echo "- gstreamer-flac (for FLAC)"
 echo "- gstreamer-mad (for mp3s)"
 echo "- gstreamer-vorbis (for Ogg Vorbis)"
-echo "- gstreamer-flac (for FLAC)"
+echo
+%else
+echo
+echo "Remember to install appropriate xine-decode plugins for files"
+echo "you want to play:"
+echo "- xine-decode-flac (for FLAC)"
+echo "- xine-decode-ogg (for Ogg Vorbis)"
+echo
 %endif
 
 %postun 
