@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.8.8
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
@@ -29,18 +29,19 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	xine-lib-devel >= 1.0.0
 %endif
 BuildRequires:	gnome-vfs2-devel >= 2.10.0-2
-BuildRequires:	gtk+2-devel >= 2:2.6.3
+BuildRequires:	gtk+2-devel >= 2:2.6.4
 BuildRequires:	libbonobo-devel >= 2.8.0
-BuildRequires:	libglade2-devel >= 1:2.5.0
+BuildRequires:	libglade2-devel >= 1:2.5.1
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.176
+BuildRequires:	rpmbuild(macros) >= 1.196
 BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
-Requires(post,postun):	/usr/bin/scrollkeeper-update
-Requires(post):	GConf2
+Requires(post,preun):	GConf2
+Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	scrollkeeper
 %if %{without xine}
 Requires:	gstreamer-audio-effects >= 0.8.8
 Requires:	gstreamer-audio-formats >= 0.8.8
@@ -49,7 +50,7 @@ Requires:	gstreamer-gnomevfs >= 0.8.8
 %else
 Requires:	xine-plugin-audio
 %endif
-Requires:	gtk+2 >= 2:2.6.3
+Requires:	gtk+2 >= 2:2.6.4
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -86,6 +87,7 @@ rm -rf $RPM_BUILD_ROOT
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
+rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
 
 %find_lang %{name} --with-gnome --all-name
 
@@ -95,10 +97,11 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
 rm -rf $RPM_BUILD_ROOT
 
 %post
+umask 022
 /sbin/ldconfig
-%gconf_schema_install
-/usr/bin/scrollkeeper-update
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+%gconf_schema_install /etc/gconf/schemas/rhythmbox.schemas
+/usr/bin/scrollkeeper-update -q
+/usr/bin/update-desktop-database
 %if %{without xine}
 %banner %{name} -e << EOF
 Remember to install appropriate GStreamer plugins for files
@@ -116,19 +119,25 @@ you want to play:
 EOF
 %endif
 
+%preun
+if [ $1 = 0 ]; then
+	%gconf_schema_uninstall /etc/gconf/schemas/rhythmbox.schemas
+fi
+
 %postun 
-/sbin/ldconfig
-/usr/bin/scrollkeeper-update
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+if [ $1 = 0 ]; then
+	umask 022
+	/sbin/ldconfig
+	/usr/bin/scrollkeeper-update -q
+	/usr/bin/update-desktop-database
+fi
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/application-registry/*
 %{_datadir}/gnome-2.0/ui/*.xml
 %{_datadir}/idl/*
-%{_datadir}/mime-info/*.keys
 %{_datadir}/%{name}
 %{_desktopdir}/*
 %{_libdir}/bonobo/servers/*
