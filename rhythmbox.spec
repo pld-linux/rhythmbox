@@ -7,12 +7,12 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.8.7
+Version:	0.8.8
 Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	2ea5f7cd44f79b64721ce60f1fc1c2b7
+# Source0-md5:	46cd84b3b67f85009aa48e0e301124fe
 Patch0:		%{name}-vorbis.patch
 Patch1:		%{name}-desktop.patch
 URL:		http://www.rhythmbox.org/
@@ -73,6 +73,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %configure \
 	--disable-schemas-install \
 	--enable-ipod \
+	--enable-nautilus-menu \
 	%{?_with_xine:--with-player=xine}
 	
 %{__make}
