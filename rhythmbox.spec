@@ -1,17 +1,22 @@
 
 %bcond_with xine		# build with xine-lib instead of gstreamer
 
-%define 	min_ver 0.7.4
+%define 	min_ver 0.7.6
 
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.7.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.7/%{name}-%{version}.tar.bz2
 # Source0-md5:	6d059735720ceeb8051abcca5cb58038
+Patch0:		%{name}-locale-names.patch
+Patch1:		%{name}-gstreamer08.patch
+Patch2:		%{name}-vorbis.patch
+BuildRequires:	autoconf
+BuildRequires:	automake
 %if %{without xine}
 BuildRequires:	gstreamer-GConf-devel >= %{min_ver}
 BuildRequires:	gstreamer-devel >= %{min_ver}
@@ -30,6 +35,7 @@ BuildRequires:	libbonobo-devel >= 2.4.0
 BuildRequires:	libglade2-devel >= 2.0.1
 BuildRequires:	libgnomeui-devel >= 2.4.0
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
+BuildRequires:	libtool
 BuildRequires:	pkgconfig
 BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
@@ -55,8 +61,17 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %prep
 %setup -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
+mv po/{no,nb}.po
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__automake}
 %configure \
 	--disable-schemas-install \
 	%{?_with_xine:--with-player=-xine}
