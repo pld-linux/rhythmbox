@@ -2,7 +2,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.5.0
-Release:	1
+Release:	1.1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.tar.bz2
@@ -11,9 +11,9 @@ Patch0:	rb-mmkeys3.diff
 # Source0-md5:	7a0f8a9bbf964b95778889e26aa011ae
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
-BuildRequires:	gstreamer-GConf-devel
-BuildRequires:	gstreamer-devel >= 0.6.1
-BuildRequires:	gstreamer-plugins-devel >= 0.6.1
+#BuildRequires:	gstreamer-GConf-devel
+#BuildRequires:	gstreamer-devel >= 0.6.1
+#BuildRequires:	gstreamer-plugins-devel >= 0.6.1
 BuildRequires:	gtk+2-devel >= 2.2.1
 BuildRequires:	libbonobo-devel >= 2.3.6
 BuildRequires:	libglade2-devel
@@ -25,6 +25,7 @@ BuildRequires:	lirc-devel
 BuildRequires:	mad-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	pkgconfig
+BuildRequires:	xine-lib-devel
 BuildRequires:	xosd-devel
 BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
@@ -46,6 +47,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %build
 %configure \
+	--enable-xine \
 	--disable-schemas-install
 
 %{__make}
