@@ -1,14 +1,15 @@
+#TODO:
+# - bconds for gstreamer or xine
+
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.5.0
-Release:	1.1
+Version:	0.5.1
+Release:	0.5
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.tar.bz2
-Patch0:	rb-mmkeys3.diff
-# from http://www.uni-bonn.de/~jpeterse/rb-mmkeys3.diff
-# Source0-md5:	7a0f8a9bbf964b95778889e26aa011ae
+# Source0-md5:	15e7d1c8a37a472068b55daf70e73b33
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
 #BuildRequires:	gstreamer-GConf-devel
@@ -31,6 +32,7 @@ BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
 Requires(post):	GConf2
 Requires:	gtk+2 >= 2.2.1
+Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -43,7 +45,6 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %prep
 %setup -q
-%patch0 -p0
 
 %build
 %configure \
