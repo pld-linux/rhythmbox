@@ -6,15 +6,14 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.7.0
-Release:	3
+Version:	0.7.1
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.7/%{name}-%{version}.tar.bz2
-# Source0-md5:	6d059735720ceeb8051abcca5cb58038
+# Source0-md5:	f75c38f2d5b738e027c000529dd79731
 Patch0:		%{name}-locale-names.patch
-Patch1:		%{name}-gstreamer08.patch
-Patch2:		%{name}-vorbis.patch
+Patch1:		%{name}-vorbis.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 %if %{without xine}
@@ -30,7 +29,7 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	xine-lib-devel >= 1.0.0
 %endif
 BuildRequires:	gnome-vfs2-devel >= 2.4.0
-BuildRequires:	gtk+2-devel >= 2.3.0
+BuildRequires:	gtk+2-devel >= 2.4.0
 BuildRequires:	libbonobo-devel >= 2.4.0
 BuildRequires:	libglade2-devel >= 2.0.1
 BuildRequires:	libgnomeui-devel >= 2.4.0
@@ -41,7 +40,7 @@ BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post):	GConf2
-Requires:	gtk+2 >= 2.3.0
+Requires:	gtk+2 >= 2.4.0
 %if %{without xine}
 Requires:	gstreamer-audio-effects >= %{min_ver}
 Requires:	gstreamer-audio-formats >= %{min_ver}
@@ -63,7 +62,6 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
 
 mv po/{no,nb}.po
 
