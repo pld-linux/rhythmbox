@@ -72,7 +72,7 @@ mv po/{no,nb}.po
 %{__automake}
 %configure \
 	--disable-schemas-install \
-	%{?_with_xine:--with-player=-xine}
+	%{?_with_xine:--with-player=xine}
 	
 %{__make}
 
