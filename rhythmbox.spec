@@ -72,6 +72,7 @@ mv po/{no,nb}.po
 %{__automake}
 %configure \
 	--disable-schemas-install \
+	--enable-ipod \
 	%{?_with_xine:--with-player=xine}
 	
 %{__make}
