@@ -6,6 +6,8 @@ Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.tar.bz2
+Patch0:	rb-mmkeys3.diff
+# from http://www.uni-bonn.de/~jpeterse/rb-mmkeys3.diff 
 # Source0-md5:	7a0f8a9bbf964b95778889e26aa011ae
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
@@ -40,6 +42,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure \
