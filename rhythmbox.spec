@@ -6,12 +6,12 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.5.4
+Version:	0.6.0
 Release:	1
 License:	GPL
 Group:		Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	e68e2690fd7ba08492c210689e6a0d1c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.6/%{name}-%{version}.tar.bz2
+# Source0-md5:	4b2f613f3a9f0e66facdc571867093c1
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
 %if %{without xine}
