@@ -1,20 +1,24 @@
-#TODO:
-# - bconds for gstreamer or xine
-
+#
+# Conditional build:
+%bcond_with xine		# build with xine-lib
+#
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.5.3
-Release:	1
+Release:	2
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.tar.bz2
 # Source0-md5:	a00a4dafbdbfe6ff3b686b3e82c9cdab
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
+%if %{without xine}
 BuildRequires:	gstreamer-GConf-devel
 BuildRequires:	gstreamer-devel >= 0.6.3
+BuildRequires:	gstreamer-gnome-vfs >= 0.6.3
 BuildRequires:	gstreamer-plugins-devel >= 0.6.3
+%endif
 BuildRequires:	gtk+2-devel >= 2.2.1
 BuildRequires:	libbonobo-devel >= 2.3.6
 BuildRequires:	libglade2-devel
@@ -26,7 +30,7 @@ BuildRequires:	lirc-devel
 BuildRequires:	mad-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	pkgconfig
-#BuildRequires:	xine-lib-devel
+%{?_with_xine:BuildRequires:	xine-lib-devel}
 BuildRequires:	xosd-devel
 BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
@@ -48,8 +52,9 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %build
 %configure \
-	--disable-schemas-install
-
+	--disable-schemas-install \
+	%{?_with_xine:--enable-xine}
+	
 %{__make}
 
 %install
@@ -60,6 +65,8 @@ rm -rf $RPM_BUILD_ROOT
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
 %find_lang %{name} --with-gnome --all-name
+
+rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
 
 %clean
 rm -rf $RPM_BUILD_ROOT
