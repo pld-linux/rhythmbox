@@ -7,15 +7,15 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.8.5
-Release:	2
+Version:	0.8.6
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	50d2ebb835f89e01c6fb0531d65c1341
-Patch0:		%{name}-locale-names.patch
-Patch1:		%{name}-vorbis.patch
-Patch2:		%{name}-desktop.patch
+# Source0-md5:	6f745e97a66c56623e1d782e9e4941fd
+Patch0:		%{name}-vorbis.patch
+Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-buildfix.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -67,8 +67,6 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %patch1 -p1
 %patch2 -p1
 
-mv po/{no,nb}.po
-
 %build
 %{__libtoolize}
 %{__aclocal}
@@ -88,6 +86,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
+rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
+
 %find_lang %{name} --with-gnome --all-name
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
@@ -99,6 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %gconf_schema_install
 /usr/bin/scrollkeeper-update
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
 %if %{without xine}
 echo
 echo "Remember to install appropriate gstreamer plugins for files"
@@ -119,6 +120,7 @@ echo
 %postun 
 /sbin/ldconfig
 /usr/bin/scrollkeeper-update
+[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
