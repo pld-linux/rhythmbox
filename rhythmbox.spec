@@ -83,6 +83,13 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %gconf_schema_install
 /usr/bin/scrollkeeper-update
+%if %{without xine}
+echo "Remember to install appropriate gstreamer plugins for files"
+echo "you want to play:
+echo "- gstreamer-mad (for mp3s)"
+echo "- gstreamer-vorbis (for Ogg Vorbis)
+echo "- gstreamer-flac (for FLAC)
+%endif
 
 %postun 
 /sbin/ldconfig
