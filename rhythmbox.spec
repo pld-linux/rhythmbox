@@ -32,7 +32,6 @@ BuildRequires:	libvorbis-devel
 BuildRequires:	mad-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	pkgconfig
-BuildRequires:	xosd-devel
 BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
 Requires(post):	GConf2
