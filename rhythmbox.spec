@@ -1,18 +1,17 @@
-#
-# Conditional build:
+
 %bcond_with xine		# build with xine-lib
-#
+
 %define 	min_ver 0.6.3
 
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.5.3
-Release:	3
+Version:	0.5.4
+Release:	1
 License:	GPL
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.5/%{name}-%{version}.tar.bz2
-# Source0-md5:	a00a4dafbdbfe6ff3b686b3e82c9cdab
+# Source0-md5:	e68e2690fd7ba08492c210689e6a0d1c
 BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
 %if %{without xine}
@@ -29,7 +28,6 @@ BuildRequires:	libgnomecanvas-devel >= 2.3.6
 BuildRequires:	libgnomeui-devel >= 2.3.6
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
-BuildRequires:	lirc-devel
 BuildRequires:	mad-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	pkgconfig
