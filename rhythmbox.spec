@@ -47,6 +47,8 @@ Requires:	gstreamer-audio-effects >= %{min_ver}
 Requires:	gstreamer-audio-formats >= %{min_ver}
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= %{min_ver}
+%else
+Requires:	xine-plugin-audio
 %endif
 Requires:	gtk+2 >= 2:2.4.0
 Obsoletes:	net-rhythmbox
