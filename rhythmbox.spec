@@ -2,6 +2,8 @@
 # Conditional build:
 %bcond_with xine		# build with xine-lib
 #
+%define 	min_ver 0.6.3
+
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
@@ -15,8 +17,8 @@ BuildRequires:	flac-devel
 BuildRequires:	gnome-vfs2-devel
 %if %{without xine}
 BuildRequires:	gstreamer-GConf-devel
-BuildRequires:	gstreamer-devel >= 0.6.3
-BuildRequires:	gstreamer-plugins-devel >= 0.6.3
+BuildRequires:	gstreamer-devel >= %{min_ver}
+BuildRequires:	gstreamer-plugins-devel >= %{min_ver}
 %else
 BuildRequires:	xine-lib-devel
 %endif
@@ -37,8 +39,13 @@ Requires(post):	/sbin/ldconfig
 Requires(post):	GConf2
 Requires:	gtk+2 >= 2.2.1
 %if %{without xine}
+Requires:	gstreamer-audio-effects >= %{min_ver}
+Requires:	gstreamer-audio-formats >= %{min_ver}
 Requires:	gstreamer-audiosink
-Requires:	gstreamer-gnomevfs >= 0.6.3
+Requires:	gstreamer-flac >= %{min_ver}
+Requires:	gstreamer-gnomevfs >= %{min_ver}
+Requires:	gstreamer-mad >= %{min_ver}
+Requires:	gstreamer-vorbis >= %{min_ver}
 %endif
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
