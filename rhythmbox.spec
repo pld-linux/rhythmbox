@@ -36,6 +36,7 @@ BuildRequires:	zlib-devel
 Requires(post):	/sbin/ldconfig
 Requires(post):	GConf2
 Requires:	gtk+2 >= 2.2.1
+Requires:	gstreamer-audiosink
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
