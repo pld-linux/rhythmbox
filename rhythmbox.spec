@@ -26,6 +26,7 @@ BuildRequires:	libbonobo-devel >= 2.3.6
 BuildRequires:	libglade2-devel
 BuildRequires:	libgnomecanvas-devel >= 2.3.6
 BuildRequires:	libgnomeui-devel >= 2.3.6
+BuildRequires:	libid3tag-devel
 BuildRequires:	libogg-devel
 BuildRequires:	libvorbis-devel
 BuildRequires:	mad-devel
