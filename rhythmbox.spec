@@ -36,7 +36,7 @@ BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libtool
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.196
+BuildRequires:	rpmbuild(macros) >= 1.197
 BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,preun):	GConf2
@@ -97,11 +97,10 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-umask 022
-/sbin/ldconfig
-%gconf_schema_install /etc/gconf/schemas/rhythmbox.schemas
-/usr/bin/scrollkeeper-update -q
-/usr/bin/update-desktop-database
+%gconf_schema_install rhythmbox.schemas
+%ldconfig_post
+%scrollkeeper_update_post
+%update_desktop_database_post
 %if %{without xine}
 %banner %{name} -e << EOF
 Remember to install appropriate GStreamer plugins for files
@@ -120,17 +119,12 @@ EOF
 %endif
 
 %preun
-if [ $1 = 0 ]; then
-	%gconf_schema_uninstall /etc/gconf/schemas/rhythmbox.schemas
-fi
+%gconf_schema_uninstall rhythmbox.schemas
 
 %postun 
-if [ $1 = 0 ]; then
-	umask 022
-	/sbin/ldconfig
-	/usr/bin/scrollkeeper-update -q
-	/usr/bin/update-desktop-database
-fi
+%ldconfig_postun
+%scrollkeeper_update_postun
+%update_desktop_database_postun
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
