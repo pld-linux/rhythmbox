@@ -97,8 +97,8 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 %gconf_schema_install rhythmbox.schemas
-%ldconfig_post
 %scrollkeeper_update_post
 %update_desktop_database_post
 %if %{without xine}
@@ -122,7 +122,7 @@ EOF
 %gconf_schema_uninstall rhythmbox.schemas
 
 %postun 
-%ldconfig_postun
+/sbin/ldconfig
 %scrollkeeper_update_postun
 %update_desktop_database_postun
 
