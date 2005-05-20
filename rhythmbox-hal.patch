@@ -1,0 +1,38 @@
+--- rhythmbox-0.9.0/sources/rb-ipod-source.c.orig	2005-05-20 20:01:51.000000000 +0100
++++ rhythmbox-0.9.0/sources/rb-ipod-source.c	2005-05-20 20:01:31.000000000 +0100
+@@ -568,19 +568,20 @@
+ 	LibHalContext *ctx;
+ 	char *parent_udi, *parent_name;
+ 	gboolean result;
++	DBusError error;
+ 
+ 	result = FALSE;
+-	ctx = hal_initialize (NULL, FALSE);
++	ctx = libhal_ctx_new ();
+ 	if (ctx == NULL) {
+ 		/* FIXME: should we return an error somehow so that we can 
+ 		 * fall back to a check for iTunesDB presence instead ?
+ 		 */
+ 		return FALSE;
+ 	}
+-	parent_udi = hal_device_get_property_string (ctx, udi,
+-			"info.parent");
+-	parent_name = hal_device_get_property_string (ctx, parent_udi,
+-			"storage.model");
++	parent_udi = libhal_device_get_property_string (ctx, udi,
++			"info.parent", &error);
++	parent_name = libhal_device_get_property_string (ctx, parent_udi,
++			"storage.model", &error);
+ 	g_free (parent_udi);
+ 
+ 	if (parent_name != NULL && strcmp (parent_name, "iPod") == 0) {
+@@ -588,7 +589,8 @@
+ 	}
+ 
+ 	g_free (parent_name);
+-	hal_shutdown (ctx);
++	libhal_ctx_shutdown (ctx, &error);
++	libhal_ctx_free(ctx);
+ 
+ 	return result;
+ }
