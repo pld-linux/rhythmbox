@@ -1,0 +1,15 @@
+--- rhythmbox-0.9.0/remote/dbus/Makefile.am.orig	2005-05-17 20:06:29.000000000 +0100
++++ rhythmbox-0.9.0/remote/dbus/Makefile.am	2005-05-17 20:53:32.000000000 +0100
+@@ -13,10 +13,10 @@
+ rb_dbus_intf = org_gnome_Rhythmbox.xml
+ 
+ $(rb_dbus_glue_h): $(rb_dbus_intf)
+-	$(DBUS_GLIB_BIN)/bin/dbus-binding-tool --mode=glib-server --output=$@ $^
++	dbus-binding-tool --mode=glib-server --output=$@ $^
+ 
+ $(rb_dbus_binding_h): $(rb_dbus_intf)
+-	$(DBUS_GLIB_BIN)/bin/dbus-binding-tool --mode=glib-client --output=$@ $^
++	dbus-binding-tool --mode=glib-client --output=$@ $^
+ 
+ CLEANFILES = $(rb_dbus_glue_h) $(rb_dbus_binding_h)
+ BUILT_SOURCES = $(rb_dbus_glue_h) $(rb_dbus_binding_h)
