@@ -6,14 +6,15 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.0
-Release:	0.20050325.1
+Release:	0.20050920.1
 License:	GPL v2+
 Group:		Applications
 #Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
 Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	7ec62bc4ceb53f7d993fdbe3e71b33e3
+# Source0-md5:	77a8d715272c4cdfc22558a118990ab4
 Patch0:		%{name}-vorbis.patch
 Patch1:		%{name}-desktop.patch
+Patch2:		%{name}-dbus.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -36,8 +37,10 @@ BuildRequires:	libglade2-devel >= 1:2.5.0
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libtool
+BuildRequires:	nautilus-cd-burner-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.176
+BuildRequires:	totem-devel
 BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
@@ -66,6 +69,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %setup -q
 #%patch0 -p1
 #%patch1 -p1
+%patch2 -p1
 
 %build
 intltoolize --force
@@ -73,8 +77,9 @@ glib-gettextize --force
 autoreconf -i
 %configure \
 	--disable-schemas-install \
-	--enable-ipod \
+	--disable-ipod \
 	--enable-nautilus-menu \
+	--disable-more-warnings \
 	%{?_with_xine:--with-player=xine}
 %{__make}
 
@@ -95,10 +100,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
-%gconf_schema_install
-/usr/bin/scrollkeeper-update
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1 ||:
+%gconf_schema_install rhythmbox.schemas
+%scrollkeeper_update_post
+%update_desktop_database_post
 %if %{without xine}
 %banner %{name} -e << EOF
 Remember to install appropriate GStreamer plugins for files
@@ -116,10 +120,12 @@ you want to play:
 EOF
 %endif
 
-%postun 
-/sbin/ldconfig
-/usr/bin/scrollkeeper-update
-[ ! -x /usr/bin/update-desktop-database ] || /usr/bin/update-desktop-database >/dev/null 2>&1
+%preun
+%gconf_schema_uninstall rhythmbox.schemas
+
+%postun
+%scrollkeeper_update_postun
+%update_desktop_database_postun
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
