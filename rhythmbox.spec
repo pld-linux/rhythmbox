@@ -19,6 +19,7 @@ BuildRequires:	gstreamer-devel >= 0.8.9
 BuildRequires:	gstreamer-plugins-devel >= 0.8.8
 BuildRequires:	gnome-vfs2-devel >= 2.10.0-2
 BuildRequires:	gtk+2-devel >= 2:2.6.3
+BuildRequires:	intltool
 BuildRequires:	libbonobo-devel >= 2.8.0
 BuildRequires:	libglade2-devel >= 1:2.5.0
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
@@ -27,6 +28,7 @@ BuildRequires:	libtool
 BuildRequires:	nautilus-cd-burner-devel >= 2.9.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.176
+BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
@@ -64,10 +66,9 @@ rm po/{ar,mn}.po
 %{__autoheader}
 %{__automake}
 %{__autoconf}
+# NOTE: ipod needs dbus < 0.30, not ported yet
 %configure \
 	--disable-schemas-install \
-	--enable-ipod \
-	--enable-nautilus-menu \
 	--with-bonobo \
 	--with-cd-burner
 %{__make}
@@ -83,7 +84,9 @@ rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 %find_lang %{name} --with-gnome --all-name
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
+rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
+rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -111,13 +114,11 @@ EOF
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/application-registry/*
+%attr(755,root,root) %{_libdir}/bonobo/*.so
 %{_datadir}/idl/*
-%{_datadir}/mime-info/*.keys
 %{_datadir}/%{name}
 %{_desktopdir}/*
 %{_libdir}/bonobo/servers/*
-%attr(755,root,root) %{_libdir}/bonobo/*.so
 %{_omf_dest_dir}/%{name}
 %{_pixmapsdir}/*
 %{_pkgconfigdir}/*
