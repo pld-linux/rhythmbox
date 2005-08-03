@@ -1,34 +1,22 @@
-#
-# Conditional build:
-%bcond_with	xine	# build with xine-lib instead of gstreamer
-#
+%define		snap	20050803
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.0
-Release:	0.20050523.1
+Release:	0.%{snap}.1
 License:	GPL v2+
 Group:		Applications
 #Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
-Source0:	%{name}-%{version}.tar.bz2
-# Source0-md5:	902b216dc778c201e84361ab1cde3309
-Patch0:		%{name}-vorbis.patch
-Patch1:		%{name}-desktop.patch
+Source0:	%{name}-%{version}-%{snap}.tar.bz2
+# Source0-md5:	9602f717711b1fdb5dd210edb9b4e8d1
+Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-broken_locale.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-%if %{without xine}
 BuildRequires:	gstreamer-GConf-devel >= 0.8.8
 BuildRequires:	gstreamer-devel >= 0.8.9
 BuildRequires:	gstreamer-plugins-devel >= 0.8.8
-%else
-BuildRequires:	flac-devel
-BuildRequires:	libid3tag-devel >= 0.15.0b
-BuildRequires:	libmad-devel
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	xine-lib-devel >= 1.0.0
-%endif
 BuildRequires:	gnome-vfs2-devel >= 2.10.0-2
 BuildRequires:	gtk+2-devel >= 2:2.6.3
 BuildRequires:	libbonobo-devel >= 2.8.0
@@ -36,22 +24,18 @@ BuildRequires:	libglade2-devel >= 1:2.5.0
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libtool
-BuildRequires:	nautilus-cd-burner-devel
+BuildRequires:	nautilus-cd-burner-devel >= 2.9.0
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.176
-BuildRequires:	totem-devel
+BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
-Requires(post):	GConf2
-%if %{without xine}
+Requires(post,preun):	GConf2
 Requires:	gstreamer-audio-effects >= 0.8.8
 Requires:	gstreamer-audio-formats >= 0.8.8
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.8.8
-%else
-Requires:	xine-plugin-audio
-%endif
 Requires:	gtk+2 >= 2:2.6.3
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -66,19 +50,26 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
+%patch0 -p1
+%patch1 -p1
+
+# broken
+rm po/{ar,mn}.po
 
 %build
-intltoolize --force
-glib-gettextize --force
-autoreconf -i
+%{__intltoolize}
+%{__glib_gettextize}
+%{__libtoolize}
+%{__aclocal}
+%{__autoheader}
+%{__automake}
+%{__autoconf}
 %configure \
 	--disable-schemas-install \
 	--enable-ipod \
 	--enable-nautilus-menu \
-	--disable-more-warnings \
-	%{?_with_xine:--with-player=xine}
+	--with-bonobo \
+	--with-cd-burner
 %{__make}
 
 %install
@@ -101,7 +92,6 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install rhythmbox.schemas
 %scrollkeeper_update_post
 %update_desktop_database_post
-%if %{without xine}
 %banner %{name} -e << EOF
 Remember to install appropriate GStreamer plugins for files
 you want to play:
@@ -109,14 +99,6 @@ you want to play:
 - gstreamer-mad (for MP3s)
 - gstreamer-vorbis (for Ogg Vorbis)
 EOF
-%else
-%banner %{name} -e << EOF
-Remember to install appropriate xine-decode plugins for files
-you want to play:
-- xine-decode-flac (for FLAC)
-- xine-decode-ogg (for Ogg Vorbis)
-EOF
-%endif
 
 %preun
 %gconf_schema_uninstall rhythmbox.schemas
