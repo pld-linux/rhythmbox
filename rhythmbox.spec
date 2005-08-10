@@ -1,14 +1,12 @@
-%define		snap	20050803
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.0
-Release:	0.%{snap}.1
+Release:	1
 License:	GPL v2+
 Group:		Applications
-#Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
-Source0:	%{name}-%{version}-%{snap}.tar.bz2
-# Source0-md5:	9602f717711b1fdb5dd210edb9b4e8d1
+Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
+# Source0-md5:	3e01834c5085af7fc11d0b98b76b9354
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
 URL:		http://www.rhythmbox.org/
@@ -122,4 +120,4 @@ EOF
 %{_omf_dest_dir}/%{name}
 %{_pixmapsdir}/*
 %{_pkgconfigdir}/*
-%{_sysconfdir}/gconf/schemas/*
+%{_sysconfdir}/gconf/schemas/rhythmbox.schemas
