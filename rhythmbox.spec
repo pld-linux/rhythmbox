@@ -9,6 +9,7 @@ Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}
 # Source0-md5:	3e01834c5085af7fc11d0b98b76b9354
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
+Patch2:	%{name}-gtk2.8-crash.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -52,6 +53,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 # broken
 rm po/{ar,mn}.po
