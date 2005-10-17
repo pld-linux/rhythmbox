@@ -33,12 +33,9 @@ BuildRequires:	rpmbuild(macros) >= 1.176
 BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
-Requires(post,postun):	/sbin/ldconfig
 Requires(post,preun):	GConf2
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
-Requires(post,postun):	/usr/bin/scrollkeeper-update
-Requires(post,preun):	GConf2
 Requires:	dbus >= 0.35
 Requires:	gstreamer-audio-effects >= 0.8.8
 Requires:	gstreamer-audio-formats >= 0.8.8
@@ -81,7 +78,6 @@ rm po/{ar,mn}.po
 	--with-dbus \
 	--with-ipod \
 	--with-mds=howl
-	
 %{__make}
 
 %install
@@ -116,7 +112,6 @@ you want to play:
 EOF
 
 %postun 
-/sbin/ldconfig
 %scrollkeeper_update_postun
 %update_desktop_database_postun
 
