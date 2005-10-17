@@ -1,23 +1,26 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.9.0
-Release:	2
+Version:	0.9.1
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	3e01834c5085af7fc11d0b98b76b9354
+# Source0-md5:	942b204d1227f4d66e26a289ca762df2
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
-Patch2:	%{name}-gtk2.8-crash.patch
+Patch2:		%{name}-gtk2.8-crash.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
+BuildRequires:	dbus-glib-devel >= 0.35
 BuildRequires:	gstreamer-GConf-devel >= 0.8.8
 BuildRequires:	gstreamer-devel >= 0.8.9
 BuildRequires:	gstreamer-plugins-devel >= 0.8.8
 BuildRequires:	gnome-vfs2-devel >= 2.10.0-2
 BuildRequires:	gtk+2-devel >= 2:2.8.0
+BuildRequires:	hal-devel >= 0.5.4
+BuildRequires:	howl-devel
 BuildRequires:	intltool
 BuildRequires:	libbonobo-devel >= 2.8.0
 BuildRequires:	libglade2-devel >= 1:2.5.0
@@ -33,17 +36,20 @@ BuildRequires:	zlib-devel
 Requires(post,postun):	/sbin/ldconfig
 Requires(post,postun):	/usr/bin/scrollkeeper-update
 Requires(post,preun):	GConf2
+Requires:	dbus >= 0.35
 Requires:	gstreamer-audio-effects >= 0.8.8
 Requires:	gstreamer-audio-formats >= 0.8.8
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.8.8
 Requires:	gtk+2 >= 2:2.6.3
+Requires:	hal >= 0.5.4
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Rhythmbox is your one-stop multimedia application, supporting a music
 library, multiple "music groups", internet radio, and more.
+
 
 %description -l pl
 Rhythmbox to kompletna aplikacja multimedialna, obs³uguj±ca bibliotekê
@@ -62,15 +68,18 @@ rm po/{ar,mn}.po
 %{__intltoolize}
 %{__glib_gettextize}
 %{__libtoolize}
-%{__aclocal}
+%{__aclocal} -I macros
 %{__autoheader}
 %{__automake}
 %{__autoconf}
-# NOTE: ipod needs dbus < 0.30, not ported yet
 %configure \
 	--disable-schemas-install \
 	--with-bonobo \
-	--with-cd-burner
+	--with-cd-burner \
+	--with-dbus \
+	--with-ipod \
+	--with-mds=howl
+	
 %{__make}
 
 %install
@@ -117,6 +126,7 @@ EOF
 %attr(755,root,root) %{_libdir}/bonobo/*.so
 %{_datadir}/idl/*
 %{_datadir}/%{name}
+%{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*
 %{_libdir}/bonobo/servers/*
 %{_omf_dest_dir}/%{name}
