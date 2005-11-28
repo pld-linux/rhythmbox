@@ -1,12 +1,12 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.9.1
+Version:	0.9.2
 Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	942b204d1227f4d66e26a289ca762df2
+# Source0-md5:	533223578c9c37bd72634755b33beab7
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
 Patch2:		%{name}-gtk2.8-crash.patch
@@ -25,6 +25,7 @@ BuildRequires:	intltool
 BuildRequires:	libbonobo-devel >= 2.8.0
 BuildRequires:	libglade2-devel >= 1:2.5.1
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
+BuildRequires:	libgpod-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libtool
 BuildRequires:	nautilus-cd-burner-devel >= 2.9.0
@@ -42,7 +43,6 @@ Requires:	gstreamer-audio-formats >= 0.8.8
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.8.8
 Requires:	gtk+2 >= 2:2.6.3
-Requires:	hal >= 0.5.4
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -88,7 +88,9 @@ rm -rf $RPM_BUILD_ROOT
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
-rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
+
+# there is no -devel subpackage, so we don't need APIdocs
+rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 
 %find_lang %{name} --with-gnome --all-name
 
