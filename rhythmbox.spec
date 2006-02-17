@@ -45,6 +45,7 @@ Requires:	gstreamer-audio-formats >= 0.10
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.10
 Requires:	gtk+2 >= 2:2.6.3
+Requires:	nautilus-cd-burner
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
