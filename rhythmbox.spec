@@ -2,7 +2,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.3.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -30,7 +30,7 @@ BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libnotify-devel >= 0.2.2
 BuildRequires:	libsoup-devel
 BuildRequires:	libtool
-BuildRequires:	nautilus-cd-burner-devel >= 2.9.0
+BuildRequires:	nautilus-cd-burner-devel >= 2.14.0.1-2
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.176
 BuildRequires:	scrollkeeper
