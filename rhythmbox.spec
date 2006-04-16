@@ -1,15 +1,16 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.9.3.1
-Release:	2
+Version:	0.9.4
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	0b63402c35c10de5581d79f5157a0739
+# Source0-md5:	0d335864738d6de0d0e6acc2964f8bc4
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
 Patch2:		%{name}-gtk2.8-crash.patch
+Patch3:		%{name}-pyc.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -28,14 +29,17 @@ BuildRequires:	libgnomeui-devel >= 2.10.0-2
 BuildRequires:	libgpod-devel
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libnotify-devel >= 0.2.2
+BuildRequires:	libsexy-devel >= 0.1.5
 BuildRequires:	libsoup-devel
 BuildRequires:	libtool
 BuildRequires:	nautilus-cd-burner-devel >= 2.14.0.1-2
 BuildRequires:	pkgconfig
+BuildRequires:	python-pygtk-devel >= 2.6.0
 BuildRequires:	rpmbuild(macros) >= 1.176
 BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
+%pyrequires_eq	python-modules
 Requires(post,preun):	GConf2
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
@@ -61,6 +65,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 # broken
 rm po/{ar,mn}.po
@@ -75,11 +80,13 @@ rm po/{ar,mn}.po
 %{__autoconf}
 %configure \
 	--disable-schemas-install \
+	--disable-scrollkeeper \
 	--with-bonobo \
 	--with-cd-burner \
 	--with-dbus \
 	--with-ipod \
-	--with-mds=avahi
+	--with-mds=avahi \
+	--with-internal-libsexy=no
 %{__make}
 
 %install
@@ -97,6 +104,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 %find_lang %{name} --with-gnome --all-name
 
 rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
+rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*.{a,la,py}
 rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
 rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
 
@@ -127,6 +135,14 @@ EOF
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/bonobo/*.so
+%attr(755,root,root) %{_libdir}/rhythmbox-metadata
+
+%dir %{_libdir}/rhythmbox
+%dir %{_libdir}/rhythmbox/plugins
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/*.so
+%{_libdir}/rhythmbox/plugins/*-plugin
+%{_libdir}/rhythmbox/plugins/*.py[co]
+
 %{_datadir}/idl/*
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
