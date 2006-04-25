@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_without	ipod	# build without iPod support
+#
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
@@ -26,7 +30,7 @@ BuildRequires:	intltool
 BuildRequires:	libbonobo-devel >= 2.8.0
 BuildRequires:	libglade2-devel >= 1:2.5.1
 BuildRequires:	libgnomeui-devel >= 2.10.0-2
-BuildRequires:	libgpod-devel
+%{?with_ipod:BuildRequires:	libgpod-devel}
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libnotify-devel >= 0.2.2
 BuildRequires:	libsexy-devel >= 0.1.5
@@ -84,7 +88,7 @@ rm po/{ar,mn}.po
 	--with-bonobo \
 	--with-cd-burner \
 	--with-dbus \
-	--with-ipod \
+	%{!?with_ipod:--without-ipod} \
 	--with-mds=avahi \
 	--with-internal-libsexy=no
 %{__make}
