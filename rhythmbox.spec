@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.4.1
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -30,7 +30,7 @@ BuildRequires:	intltool
 BuildRequires:	libbonobo-devel >= 2.8.0
 BuildRequires:	libglade2-devel >= 1:2.5.1
 BuildRequires:	libgnomeui-devel >= 2.14.0
-%{?with_ipod:BuildRequires:	libgpod-devel}
+%{?with_ipod:BuildRequires:	libgpod-devel >= 0.3.0}
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
 BuildRequires:	libnotify-devel >= 0.2.2
 BuildRequires:	libsexy-devel >= 0.1.5
