@@ -1,56 +1,58 @@
 #
 # Conditional build:
-%bcond_with	xine	# build with xine-lib instead of gstreamer
+%bcond_without	ipod	# build without iPod support
 #
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.8.8
-Release:	4
+Version:	0.9.4.1
+Release:	2
 License:	GPL v2+
 Group:		Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.8/%{name}-%{version}.tar.bz2
-# Source0-md5:	46cd84b3b67f85009aa48e0e301124fe
-Patch0:		%{name}-vorbis.patch
-Patch1:		%{name}-desktop.patch
+Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
+# Source0-md5:	d725eb7134d1997efe28285715ebc05e
+Patch0:		%{name}-desktop.patch
+Patch1:		%{name}-broken_locale.patch
+Patch2:		%{name}-gtk2.8-crash.patch
+Patch3:		%{name}-pyc.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-%if %{without xine}
-BuildRequires:	gstreamer-GConf-devel >= 0.8.8
-BuildRequires:	gstreamer-devel >= 0.8.9
-BuildRequires:	gstreamer-plugins-devel >= 0.8.8
-%else
-BuildRequires:	flac-devel
-BuildRequires:	libid3tag-devel >= 0.15.0b
-BuildRequires:	libmad-devel
-BuildRequires:	libogg-devel
-BuildRequires:	libvorbis-devel
-BuildRequires:	xine-lib-devel >= 1.0.0
-%endif
-BuildRequires:	gnome-vfs2-devel >= 2.10.0-2
-BuildRequires:	gtk+2-devel >= 2:2.6.4
+BuildRequires:	avahi-glib-devel
+BuildRequires:	dbus-glib-devel >= 0.35
+BuildRequires:	gnome-vfs2-devel >= 2.14.0
+BuildRequires:	gstreamer-devel >= 0.10.2
+BuildRequires:	gstreamer-GConf >= 0.10
+BuildRequires:	gstreamer-plugins-base-devel >= 0.10
+BuildRequires:	gtk+2-devel >= 2:2.8.0
+BuildRequires:	hal-devel >= 0.5.4
+BuildRequires:	intltool
 BuildRequires:	libbonobo-devel >= 2.8.0
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.10.0-2
+BuildRequires:	libgnomeui-devel >= 2.14.0
+%{?with_ipod:BuildRequires:	libgpod-devel >= 0.3.0}
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
+BuildRequires:	libnotify-devel >= 0.2.2
+BuildRequires:	libsexy-devel >= 0.1.5
+BuildRequires:	libsoup-devel
 BuildRequires:	libtool
+BuildRequires:	nautilus-cd-burner-devel >= 2.14.0.1-2
 BuildRequires:	pkgconfig
-BuildRequires:	rpmbuild(macros) >= 1.197
+BuildRequires:	python-pygtk-devel >= 2.6.0
+BuildRequires:	rpmbuild(macros) >= 1.176
+BuildRequires:	scrollkeeper
+BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
-Requires(post,postun):	/sbin/ldconfig
+%pyrequires_eq	python-modules
 Requires(post,preun):	GConf2
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
-%if %{without xine}
-Requires:	gstreamer-audio-effects >= 0.8.8
-Requires:	gstreamer-audio-formats >= 0.8.8
+Requires:	dbus >= 0.35
+Requires:	gstreamer-audio-effects-base >= 0.10
+Requires:	gstreamer-audio-formats >= 0.10
 Requires:	gstreamer-audiosink
-Requires:	gstreamer-gnomevfs >= 0.8.8
-%else
-Requires:	xine-plugin-audio
-%endif
-Requires:	gtk+2 >= 2:2.6.4
+Requires:	gstreamer-gnomevfs >= 0.10
+Requires:	gtk+2 >= 2:2.6.3
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -66,17 +68,29 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
+# broken
+rm po/{ar,mn}.po
 
 %build
+%{__intltoolize}
+%{__glib_gettextize}
 %{__libtoolize}
-%{__aclocal}
-%{__autoconf}
+%{__aclocal} -I macros
+%{__autoheader}
 %{__automake}
+%{__autoconf}
 %configure \
 	--disable-schemas-install \
-	--enable-ipod \
-	--enable-nautilus-menu \
-	%{?_with_xine:--with-player=xine}
+	--disable-scrollkeeper \
+	--with-bonobo \
+	--with-cd-burner \
+	--with-dbus \
+	%{!?with_ipod:--without-ipod} \
+	--with-mds=avahi \
+	--with-internal-libsexy=no
 %{__make}
 
 %install
@@ -87,21 +101,24 @@ rm -rf $RPM_BUILD_ROOT
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
 rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
-rm -r $RPM_BUILD_ROOT%{_datadir}/{application-registry,mime-info}
+
+# there is no -devel subpackage, so we don't need APIdocs
+rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 
 %find_lang %{name} --with-gnome --all-name
 
-rm -f $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
+rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
+rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*.{a,la,py}
+rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
+rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post
-/sbin/ldconfig
 %gconf_schema_install rhythmbox.schemas
 %scrollkeeper_update_post
 %update_desktop_database_post
-%if %{without xine}
 %banner %{name} -e << EOF
 Remember to install appropriate GStreamer plugins for files
 you want to play:
@@ -109,34 +126,33 @@ you want to play:
 - gstreamer-mad (for MP3s)
 - gstreamer-vorbis (for Ogg Vorbis)
 EOF
-%else
-%banner %{name} -e << EOF
-Remember to install appropriate xine-decode plugins for files
-you want to play:
-- xine-decode-flac (for FLAC)
-- xine-decode-ogg (for Ogg Vorbis)
-EOF
-%endif
+
+%postun 
+%scrollkeeper_update_postun
+%update_desktop_database_postun
 
 %preun
 %gconf_schema_uninstall rhythmbox.schemas
-
-%postun 
-/sbin/ldconfig
-%scrollkeeper_update_postun
-%update_desktop_database_postun
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
-%{_datadir}/gnome-2.0/ui/*.xml
+%attr(755,root,root) %{_libdir}/bonobo/*.so
+%attr(755,root,root) %{_libdir}/rhythmbox-metadata
+
+%dir %{_libdir}/rhythmbox
+%dir %{_libdir}/rhythmbox/plugins
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/*.so
+%{_libdir}/rhythmbox/plugins/*-plugin
+%{_libdir}/rhythmbox/plugins/*.py[co]
+
 %{_datadir}/idl/*
 %{_datadir}/%{name}
+%{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*
 %{_libdir}/bonobo/servers/*
-%attr(755,root,root) %{_libdir}/bonobo/*.so
 %{_omf_dest_dir}/%{name}
 %{_pixmapsdir}/*
 %{_pkgconfigdir}/*
-%{_sysconfdir}/gconf/schemas/*
+%{_sysconfdir}/gconf/schemas/rhythmbox.schemas
