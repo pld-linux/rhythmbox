@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.4.1
-Release:	1
+Release:	6
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -15,24 +15,25 @@ Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
+Patch4:		%{name}-use-icon-name.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel
-BuildRequires:	dbus-glib-devel >= 0.35
-BuildRequires:	gnome-vfs2-devel >= 2.10.0-2
+BuildRequires:	dbus-glib-devel >= 0.60
+BuildRequires:	gnome-vfs2-devel >= 2.14.0
 BuildRequires:	gstreamer-devel >= 0.10.2
 BuildRequires:	gstreamer-GConf >= 0.10
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10
 BuildRequires:	gtk+2-devel >= 2:2.8.0
 BuildRequires:	hal-devel >= 0.5.4
 BuildRequires:	intltool
-BuildRequires:	libbonobo-devel >= 2.8.0
+BuildRequires:	libbonobo-devel >= 2.14.0
 BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.10.0-2
-%{?with_ipod:BuildRequires:	libgpod-devel}
+BuildRequires:	libgnomeui-devel >= 2.14.0
+%{?with_ipod:BuildRequires:	libgpod-devel >= 0.3.0}
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
-BuildRequires:	libnotify-devel >= 0.2.2
+BuildRequires:	libnotify-devel >= 0.4.0
 BuildRequires:	libsexy-devel >= 0.1.5
 BuildRequires:	libsoup-devel
 BuildRequires:	libtool
@@ -47,12 +48,13 @@ BuildRequires:	zlib-devel
 Requires(post,preun):	GConf2
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
-Requires:	dbus >= 0.35
+Requires:	dbus >= 0.60
 Requires:	gstreamer-audio-effects-base >= 0.10
 Requires:	gstreamer-audio-formats >= 0.10
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.10
 Requires:	gtk+2 >= 2:2.6.3
+Requires:	libgnomeui >= 2.14.0
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -70,6 +72,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 # broken
 rm po/{ar,mn}.po
