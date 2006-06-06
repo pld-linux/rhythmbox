@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.4.1
-Release:	6
+Release:	7
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -50,11 +50,12 @@ Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
 Requires:	dbus >= 0.60
 Requires:	gstreamer-audio-effects-base >= 0.10
-Requires:	gstreamer-audio-formats >= 0.10
+Requires:	gstreamer-audio-formats >= 0.10.3
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.10
+Requires:	gstreamer-plugins-good >= 0.10.3
 Requires:	gtk+2 >= 2:2.6.3
-Requires:	libgnomeui >= 2.14.0
+Requires:	libgnomeui >= 2.14.1
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -128,6 +129,7 @@ you want to play:
 - gstreamer-flac (for FLAC)
 - gstreamer-mad (for MP3s)
 - gstreamer-vorbis (for Ogg Vorbis)
+- gstreamer-neon (for HTTP streams)
 EOF
 
 %postun 
