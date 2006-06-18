@@ -1,10 +1,10 @@
-diff -aurN rhythmbox-0.9.4.orig/po/LINGUAS rhythmbox-0.9.4/po/LINGUAS
---- rhythmbox-0.9.4.orig/po/LINGUAS	2006-04-16 00:34:49.000000000 +0200
-+++ rhythmbox-0.9.4/po/LINGUAS	2006-04-16 12:37:36.549110688 +0200
+diff -aurN rhythmbox-0.9.4.90.orig/po/LINGUAS rhythmbox-0.9.4.90/po/LINGUAS
+--- rhythmbox-0.9.4.90.orig/po/LINGUAS	2006-04-18 10:04:43.000000000 +0200
++++ rhythmbox-0.9.4.90/po/LINGUAS	2006-06-15 12:39:40.332856912 +0200
 @@ -2,5 +2,5 @@
  #
  # please keep this list sorted alphabetically
  #
--am ar az be bg ca cs cy da de el en_CA en_GB es et eu fi fr ga gl he hr hu id is it ja ko lt lv mk ml mn ms nb ne nl no pa pl pt pt_BR ro ru rw sk sr sr@Latn sv th tr uk vi zh_CN zh_HK zh_TW
-+am az be bg ca cs cy da de el en_CA en_GB es et eu fi fr ga gl he hr hu id is it ja ko lt lv mk ml ms nb ne nl no pa pl pt pt_BR ro ru rw sk sr sr@Latn sv th tr uk vi zh_CN zh_HK zh_TW
+-am ar az be bg ca cs cy da de el en_CA en_GB es et eu fi fr ga gl he hr hu id is it ja ko lt lv mk ml mn ms nb ne nl pa pl pt pt_BR ro ru rw sk sr sr@Latn sv th tr uk vi zh_CN zh_HK zh_TW
++am az be bg ca cs cy da de el en_CA en_GB es et eu fi fr ga gl he hr hu id is it ja ko lt lv mk ml ms nb ne nl pa pl pt pt_BR ro ru rw sk sr sr@Latn sv th tr uk vi zh_CN zh_HK zh_TW
  
