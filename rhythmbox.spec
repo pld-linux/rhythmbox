@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.5
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -20,6 +20,7 @@ URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.11
+BuildRequires:	check >= 0.9.3
 BuildRequires:	dbus-glib-devel >= 0.62
 BuildRequires:	gnome-vfs2-devel >= 2.15.3
 BuildRequires:	gstreamer-devel >= 0.10.8
