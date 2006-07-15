@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.5
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -19,29 +19,29 @@ Patch4:		%{name}-use-icon-name.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	avahi-glib-devel >= 0.6.10
+BuildRequires:	avahi-glib-devel >= 0.6.11
 BuildRequires:	dbus-glib-devel >= 0.62
-BuildRequires:	gnome-vfs2-devel >= 2.15.2
+BuildRequires:	gnome-vfs2-devel >= 2.15.3
 BuildRequires:	gstreamer-devel >= 0.10.8
 BuildRequires:	gstreamer-GConf >= 0.10
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.7
-BuildRequires:	gtk+2-devel >= 2:2.9.3
+BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
-BuildRequires:	libglade2-devel >= 1:2.5.1
-BuildRequires:	libgnomeui-devel >= 2.15.1
+BuildRequires:	libglade2-devel >= 1:2.6.0
+BuildRequires:	libgnomeui-devel >= 2.15.2
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.3.3}
 BuildRequires:	libmusicbrainz-devel >= 2.0.1
-BuildRequires:	libnotify-devel >= 0.4.0
+BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.8
-BuildRequires:	libsoup-devel >= 2.2.94
+BuildRequires:	libsoup-devel >= 2.2.95.1
 BuildRequires:	libtool
-BuildRequires:	nautilus-cd-burner-devel >= 2.15.3
+BuildRequires:	nautilus-cd-burner-devel >= 2.15.4
 BuildRequires:	pkgconfig
-BuildRequires:	python-pygtk-devel >= 2.9.0
+BuildRequires:	python-pygtk-devel >= 2.9.3
 BuildRequires:	rpmbuild(macros) >= 1.176
 BuildRequires:	scrollkeeper
-BuildRequires:	totem-devel >= 1.5.2
+BuildRequires:	totem-devel >= 1.5.4
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
 Requires(post,preun):	GConf2 >= 2.14.0
@@ -53,8 +53,8 @@ Requires:	gstreamer-audio-formats >= 0.10.3
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.10.7
 Requires:	gstreamer-plugins-good >= 0.10.3
-Requires:	gtk+2 >= 2:2.9.3
-Requires:	libgnomeui >= 2.15.1
+Requires:	gtk+2 >= 2:2.10.0
+Requires:	libgnomeui >= 2.15.2
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -89,6 +89,7 @@ gnome-doc-prepare --copy
 %{__autoheader}
 %{__automake}
 %{__autoconf}
+LDFLAGS="%{rpmldflags} -Wl,--as-needed"
 %configure \
 	--disable-schemas-install \
 	--disable-scrollkeeper \
