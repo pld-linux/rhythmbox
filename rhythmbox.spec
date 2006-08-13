@@ -16,12 +16,13 @@ Patch1:		%{name}-broken_locale.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
 Patch4:		%{name}-use-icon-name.patch
+Patch5:		%{name}-dbus.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.11
 BuildRequires:	check >= 0.9.3
-BuildRequires:	dbus-glib-devel >= 0.62
+BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	gnome-vfs2-devel >= 2.15.3
 BuildRequires:	gstreamer-devel >= 0.10.8
 BuildRequires:	gstreamer-GConf >= 0.10
@@ -48,7 +49,7 @@ BuildRequires:	zlib-devel
 Requires(post,preun):	GConf2 >= 2.14.0
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	scrollkeeper
-Requires:	dbus >= 0.62
+Requires:	dbus >= 0.91
 Requires:	gstreamer-audio-effects-base >= 0.10.7
 Requires:	gstreamer-audio-formats >= 0.10.3
 Requires:	gstreamer-audiosink
@@ -74,6 +75,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 # broken
 rm po/{ar,mn}.po
