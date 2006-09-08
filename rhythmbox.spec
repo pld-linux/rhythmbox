@@ -28,6 +28,7 @@ BuildRequires:	gnome-vfs2-devel >= 2.15.3
 BuildRequires:	gstreamer-devel >= 0.10.8
 BuildRequires:	gstreamer-GConf >= 0.10
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.7
+BuildRequires:	gtk-doc
 BuildRequires:	gtk+2-devel >= 2:2.10.0
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
