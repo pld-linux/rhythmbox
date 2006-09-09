@@ -23,6 +23,7 @@ BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.11
 BuildRequires:	check >= 0.9.3
 BuildRequires:	dbus-glib-devel >= 0.71
+BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gnome-vfs2-devel >= 2.15.3
 BuildRequires:	gstreamer-devel >= 0.10.8
