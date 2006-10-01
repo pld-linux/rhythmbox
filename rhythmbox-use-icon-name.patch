@@ -20,7 +20,7 @@ diff -aurN rhythmbox-0.9.4.90.orig/widgets/eggtrayicon.c rhythmbox-0.9.4.90/widg
 -
 -  notify_notification_set_timeout (icon->notify->handle, timeout);
  
-   if (msgicon) 
+   if (msgicon)
      {
 +      icon->notify->handle = notify_notification_new (esc_primary,
 +                                                      esc_secondary,

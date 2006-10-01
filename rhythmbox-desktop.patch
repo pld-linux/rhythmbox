@@ -1,6 +1,6 @@
-diff -aurN rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in rhythmbox-0.9.3/data/rhythmbox.desktop.in
---- rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in	2006-01-24 07:51:58.000000000 +0100
-+++ rhythmbox-0.9.3/data/rhythmbox.desktop.in	2006-02-02 14:29:52.744276000 +0100
+diff -aurN rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in.in rhythmbox-0.9.3/data/rhythmbox.desktop.in.in
+--- rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in.in	2006-01-24 07:51:58.000000000 +0100
++++ rhythmbox-0.9.3/data/rhythmbox.desktop.in.in	2006-02-02 14:29:52.744276000 +0100
 @@ -8,7 +8,7 @@
  Type=Application
  Icon=rhythmbox.png
