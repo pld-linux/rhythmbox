@@ -5,12 +5,12 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.9.4.1
-Release:	7
+Version:	0.9.6
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	d725eb7134d1997efe28285715ebc05e
+# Source0-md5:	805459eafd670b18c663ba478ad2ebd4
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-broken_locale.patch
 Patch2:		%{name}-gtk2.8-crash.patch
@@ -104,17 +104,21 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
+#rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
 
 # there is no -devel subpackage, so we don't need APIdocs
 rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 
-%find_lang %{name} --with-gnome --all-name
+%find_lang %{name} --with-gnome
 
 rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
-rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*.{a,la,py}
+rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*.{a,la}
 rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
 rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
+
+find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.py" -exec rm -f {} \;
+find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.a" -exec rm -f {} \;
+find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.la" -exec rm -f {} \;
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -144,21 +148,42 @@ EOF
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/bonobo/*.so
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
+%dir %{_libdir}/rhythmbox/plugins/artdisplay
+%dir %{_libdir}/rhythmbox/plugins/audioscrobbler
+%dir %{_libdir}/rhythmbox/plugins/cd-recorder
+%dir %{_libdir}/rhythmbox/plugins/generic-player
+%dir %{_libdir}/rhythmbox/plugins/ipod
+%dir %{_libdir}/rhythmbox/plugins/lirc
+%dir %{_libdir}/rhythmbox/plugins/lyrics
+%dir %{_libdir}/rhythmbox/plugins/python-console
+%dir %{_libdir}/rhythmbox/plugins/rb
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/generic-player/*.so
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/lirc/*.so
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/*.so
 %{_libdir}/rhythmbox/plugins/*-plugin
-%{_libdir}/rhythmbox/plugins/*.py[co]
+%{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
+%{_libdir}/rhythmbox/plugins/artdisplay/*-plugin
+%{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
+%{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
+%{_libdir}/rhythmbox/plugins/generic-player/*-plugin
+%{_libdir}/rhythmbox/plugins/ipod/*-plugin
+%{_libdir}/rhythmbox/plugins/lirc/*-plugin
+%{_libdir}/rhythmbox/plugins/lyrics/*-plugin
+%{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
+%{_libdir}/rhythmbox/plugins/python-console/*-plugin
+%{_libdir}/rhythmbox/plugins/python-console/*.py[co]
+%{_libdir}/rhythmbox/plugins/rb/*.py[co]
 
-%{_datadir}/idl/*
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*
-%{_libdir}/bonobo/servers/*
+%{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_omf_dest_dir}/%{name}
-%{_pixmapsdir}/*
-%{_pkgconfigdir}/*
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
