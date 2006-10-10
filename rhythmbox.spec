@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.6
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -44,13 +44,14 @@ BuildRequires:	libtool
 BuildRequires:	nautilus-cd-burner-devel >= 2.16.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2.10.1
-BuildRequires:	rpmbuild(macros) >= 1.176
+BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 2.16.1
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
 Requires(post,preun):	GConf2 >= 2.14.0
 Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
 Requires:	dbus >= 0.93
 Requires:	gstreamer-audio-effects-base >= 0.10.10
@@ -135,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %gconf_schema_install rhythmbox.schemas
 %scrollkeeper_update_post
 %update_desktop_database_post
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+%update_icon_cache hicolor
 %banner %{name} -e << EOF
 Remember to install appropriate GStreamer plugins for files
 you want to play:
@@ -151,7 +152,7 @@ EOF
 %postun 
 %scrollkeeper_update_postun
 %update_desktop_database_postun
-gtk-update-icon-cache -qf %{_datadir}/icons/hicolor
+%update_icon_cache hicolor
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
