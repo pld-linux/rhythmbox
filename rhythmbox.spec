@@ -41,6 +41,7 @@ BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
 BuildRequires:	libsoup-devel >= 2.2.96
 BuildRequires:	libtool
+BuildRequires:	lirc-devel
 BuildRequires:	nautilus-cd-burner-devel >= 2.16.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2.10.1
@@ -98,12 +99,13 @@ gnome-doc-prepare --copy
 %configure \
 	--disable-schemas-install \
 	--disable-scrollkeeper \
-	--with-bonobo \
-	--with-cd-burner \
-	--with-dbus \
+	--enable-lirc \
+	--with-cd-burning \
+	--with-gnome-keyring \
 	%{!?with_ipod:--without-ipod} \
 	--with-mds=avahi \
-	--with-internal-libsexy=no
+	--with-internal-libsexy=no \
+	--with-x
 %{__make}
 
 %install
@@ -166,7 +168,7 @@ EOF
 %dir %{_libdir}/rhythmbox/plugins/audioscrobbler
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %dir %{_libdir}/rhythmbox/plugins/generic-player
-%dir %{_libdir}/rhythmbox/plugins/ipod
+%{?with_ipod:%dir %{_libdir}/rhythmbox/plugins/ipod}
 %dir %{_libdir}/rhythmbox/plugins/lirc
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %dir %{_libdir}/rhythmbox/plugins/python-console
@@ -175,7 +177,7 @@ EOF
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/generic-player/*.so
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so
+%{?with_ipod:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so}
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/lirc/*.so
 %{_libdir}/rhythmbox/plugins/*-plugin
 %{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
@@ -183,7 +185,7 @@ EOF
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
 %{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
 %{_libdir}/rhythmbox/plugins/generic-player/*-plugin
-%{_libdir}/rhythmbox/plugins/ipod/*-plugin
+%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*-plugin}
 %{_libdir}/rhythmbox/plugins/lirc/*-plugin
 %{_libdir}/rhythmbox/plugins/lyrics/*-plugin
 %{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
