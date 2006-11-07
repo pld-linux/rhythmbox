@@ -195,7 +195,7 @@ EOF
 
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
-%{_desktopdir}/*
+%{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_omf_dest_dir}/%{name}
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
