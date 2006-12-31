@@ -44,6 +44,7 @@ BuildRequires:	lirc-devel
 BuildRequires:	nautilus-cd-burner-devel >= 2.16.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2.10.1
+BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 2.16.1
