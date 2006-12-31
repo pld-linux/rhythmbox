@@ -1,0 +1,13 @@
+diff -urN rhythmbox-0.9.7/plugins/daap/Makefile.am rhythmbox-0.9.7.new/plugins/daap/Makefile.am
+--- rhythmbox-0.9.7/plugins/daap/Makefile.am	2006-11-17 09:02:42.000000000 +0100
++++ rhythmbox-0.9.7.new/plugins/daap/Makefile.am	2006-12-27 12:48:00.000000000 +0100
+@@ -13,7 +13,8 @@
+ libdaap_la_LIBADD = 					\
+ 	$(top_builddir)/daapsharing/libdaapsharing.la	\
+ 	$(SOUP_LIBS)					\
+-	$(MDNS_LIBS)
++	$(MDNS_LIBS)					\
++	$(GSTREAMER_0_10_LIBS)
+ 
+ INCLUDES = 						\
+         -DGNOMELOCALEDIR=\""$(datadir)/locale"\"        \
