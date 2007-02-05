@@ -18,36 +18,36 @@ Patch4:		%{name}-link.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	avahi-glib-devel >= 0.6.14
+BuildRequires:	avahi-glib-devel
 BuildRequires:	check >= 0.9.3
-BuildRequires:	dbus-glib-devel >= 0.71
+BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gnome-keyring-devel >= 0.6.0
-BuildRequires:	gnome-vfs2-devel >= 2.16.0
+BuildRequires:	gnome-keyring-devel
+BuildRequires:	gnome-vfs2-devel >= 2.14.0
 BuildRequires:	gstreamer-devel >= 0.10.10
-BuildRequires:	gstreamer-GConf >= 0.10.4
-BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
+BuildRequires:	gstreamer-GConf >= 0.10
+BuildRequires:	gstreamer-plugins-base-devel >= 0.10
 BuildRequires:	gtk-doc
-BuildRequires:	gtk+2-devel >= 2:2.10.4
+BuildRequires:	gtk+2-devel >= 2:2.8.0
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.16.0
+BuildRequires:	libgnomeui-devel >= 2.14.0
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.4.0}
 BuildRequires:	libmusicbrainz-devel >= 2.1.4
-BuildRequires:	libnotify-devel >= 0.4.2
-BuildRequires:	libsexy-devel >= 0.1.10
-BuildRequires:	libsoup-devel >= 2.2.96
+BuildRequires:	libnotify-devel >= 0.4.0
+BuildRequires:	libsexy-devel >= 0.1.5
+BuildRequires:	libsoup-devel
 BuildRequires:	libtool
 BuildRequires:	lirc-devel
-BuildRequires:	nautilus-cd-burner-devel >= 2.16.0
+BuildRequires:	nautilus-cd-burner-devel >= 2.14.0.1-2
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2.10.1
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-BuildRequires:	totem-devel >= 2.16.1
+BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
 Requires(post,preun):	GConf2 >= 2.14.0
@@ -102,7 +102,7 @@ gnome-doc-prepare --copy
 	--with-mds=avahi \
 	--with-internal-libsexy=no \
 	--with-x
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
