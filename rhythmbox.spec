@@ -3,7 +3,7 @@
 %bcond_without	ipod	# build without iPod support
 #
 Summary:	Music Management Application
-Summary(pl):	Aplikacja do zarz±dzania muzyk±
+Summary(pl.UTF-8):   Aplikacja do zarzÄ…dzania muzykÄ…
 Name:		rhythmbox
 Version:	0.9.7
 Release:	2
@@ -69,9 +69,9 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Rhythmbox is your one-stop multimedia application, supporting a music
 library, multiple "music groups", internet radio, and more.
 
-%description -l pl
-Rhythmbox to kompletna aplikacja multimedialna, obs³uguj±ca bibliotekê
-muzyczn±, wiele "grup muzyki", radio internetowe itp.
+%description -l pl.UTF-8
+Rhythmbox to kompletna aplikacja multimedialna, obsÅ‚ugujÄ…ca bibliotekÄ™
+muzycznÄ…, wiele "grup muzyki", radio internetowe itp.
 
 %prep
 %setup -q
