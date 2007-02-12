@@ -3,7 +3,7 @@
 %bcond_without	ipod	# build without iPod support
 #
 Summary:	Music Management Application
-Summary(pl.UTF-8):   Aplikacja do zarządzania muzyką
+Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.9.7
 Release:	2
