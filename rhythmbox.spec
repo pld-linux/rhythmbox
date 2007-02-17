@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.9.7
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -102,7 +102,7 @@ gnome-doc-prepare --copy
 	--with-mds=avahi \
 	--with-internal-libsexy=no \
 	--with-x
-%{__make}
+%{__make} -j1
 
 %install
 rm -rf $RPM_BUILD_ROOT
