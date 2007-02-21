@@ -82,7 +82,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 
 %build
 # for snapshots
-gnome-doc-prepare --copy
+gnome-doc-prepare --copy --force
 %{__gtkdocize}
 %{__gnome_doc_common}
 %{__glib_gettextize}
