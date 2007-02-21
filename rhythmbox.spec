@@ -5,12 +5,12 @@
 Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
-Version:	0.9.7
-Release:	2
+Version:	0.9.8
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	3ca989c655c5931ce056af7ff311885b
+# Source0-md5:	648400feb794538207b4fe95f0917d1f
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
@@ -54,14 +54,14 @@ Requires(post,preun):	GConf2 >= 2.14.0
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
-Requires:	dbus >= 0.93
+Requires:	dbus >= 0.60
 Requires:	gstreamer-audio-effects-base >= 0.10.10
 Requires:	gstreamer-audio-formats >= 0.10.4
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.10.10
 Requires:	gstreamer-plugins-good >= 0.10.4
-Requires:	gtk+2 >= 2:2.10.4
-Requires:	libgnomeui >= 2.16.0
+Requires:	gtk+2 >= 2:2.8.0
+Requires:	libgnomeui >= 2.14.0
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
