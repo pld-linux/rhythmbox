@@ -111,8 +111,6 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-#rm -r $RPM_BUILD_ROOT%{_datadir}/locale/no
-
 # there is no -devel subpackage, so we don't need APIdocs
 rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 
@@ -131,6 +129,7 @@ find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.la" -exec rm -f {} \;
 rm -rf $RPM_BUILD_ROOT
 
 %post
+/sbin/ldconfig
 %gconf_schema_install rhythmbox.schemas
 %scrollkeeper_update_post
 %update_desktop_database_post
@@ -147,7 +146,8 @@ EOF
 %preun
 %gconf_schema_uninstall rhythmbox.schemas
 
-%postun 
+%postun
+/sbin/ldconfig
 %scrollkeeper_update_postun
 %update_desktop_database_postun
 %update_icon_cache hicolor
@@ -157,11 +157,13 @@ EOF
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
+%attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
 
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
 %dir %{_libdir}/rhythmbox/plugins/artdisplay
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
+%{_libdir}/rhythmbox/plugins/artdisplay/rhythmbox-missing-artwork.svg
 %{_libdir}/rhythmbox/plugins/artdisplay/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/audiocd
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audiocd/*.so
@@ -171,9 +173,11 @@ EOF
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.xml
+%{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-prefs.glade
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
 %{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
+%{_libdir}/rhythmbox/plugins/cd-recorder/recorder.glade
 %dir %{_libdir}/rhythmbox/plugins/daap
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
 %{_libdir}/rhythmbox/plugins/daap/*-plugin
@@ -182,13 +186,22 @@ EOF
 %dir %{_libdir}/rhythmbox/plugins/generic-player
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/generic-player/*.so
 %{_libdir}/rhythmbox/plugins/generic-player/*-plugin
+%{_libdir}/rhythmbox/plugins/generic-player/generic-player-ui.xml
 %{?with_ipod:%dir %{_libdir}/rhythmbox/plugins/ipod}
 %{?with_ipod:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so}
 %{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*-plugin}
+%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/ipod-ui.xml}
 %dir %{_libdir}/rhythmbox/plugins/iradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/iradio/*.so
 %{_libdir}/rhythmbox/plugins/iradio/*-plugin
 %{_libdir}/rhythmbox/plugins/iradio/*.xml
+%{_libdir}/rhythmbox/plugins/iradio/iradio-initial.pls
+%{_libdir}/rhythmbox/plugins/iradio/station-properties.glade
+%dir %{_libdir}/rhythmbox/plugins/jamendo
+%{_libdir}/rhythmbox/plugins/jamendo/*.py[co]
+%{_libdir}/rhythmbox/plugins/jamendo/*.glade
+%{_libdir}/rhythmbox/plugins/jamendo/jamendo.rb-plugin
+%{_libdir}/rhythmbox/plugins/jamendo/*.png
 %dir %{_libdir}/rhythmbox/plugins/lirc
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/lirc/*.so
 %{_libdir}/rhythmbox/plugins/lirc/*-plugin
@@ -200,6 +213,9 @@ EOF
 %{_libdir}/rhythmbox/plugins/magnatune/*-plugin
 %{_libdir}/rhythmbox/plugins/magnatune/*.glade
 %{_libdir}/rhythmbox/plugins/magnatune/*.png
+%dir %{_libdir}/rhythmbox/plugins/mmkeys
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mmkeys/libmmkeys.so
+%{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.rb-plugin
 %dir %{_libdir}/rhythmbox/plugins/power-manager
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/power-manager/*.so
 %{_libdir}/rhythmbox/plugins/power-manager/*-plugin
@@ -208,6 +224,11 @@ EOF
 %{_libdir}/rhythmbox/plugins/python-console/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/rb
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/rb/*.py[co]
+%dir %{_libdir}/rhythmbox/plugins/visualizer
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
+%{_libdir}/rhythmbox/plugins/visualizer/visualizer-controls.glade
+%{_libdir}/rhythmbox/plugins/visualizer/visualizer-ui.xml
+%{_libdir}/rhythmbox/plugins/visualizer/visualizer.rb-plugin
 
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
