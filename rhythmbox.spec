@@ -5,18 +5,17 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.9.8
-Release:	3
+Version:	0.10.0
+Release:	1
 License:	GPL v2+
 Group:		Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
-# Source0-md5:	648400feb794538207b4fe95f0917d1f
+Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.10/%{name}-%{version}.tar.bz2
+# Source0-md5:	0cbd4339aebc2be4ffc29aa70809f589
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
 Patch4:		%{name}-link.patch
-Patch5:		%{name}-jamendo.patch
-Patch6:		%{name}-configure.patch
+Patch5:		%{name}-configure.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -25,34 +24,34 @@ BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gnome-keyring-devel >= 0.6.0
-BuildRequires:	gnome-vfs2-devel >= 2.16.0
+BuildRequires:	gnome-keyring-devel >= 0.8
+BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gstreamer-devel >= 0.10.10
 BuildRequires:	gstreamer-GConf >= 0.10.4
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk-doc
-BuildRequires:	gtk+2-devel >= 2:2.10.4
+BuildRequires:	gtk+2-devel >= 2:2.10.10
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.16.0
+BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.4.0}
 BuildRequires:	libmusicbrainz-devel >= 2.1.4
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
-BuildRequires:	libsoup-devel >= 2.2.96
+BuildRequires:	libsoup-devel >= 2.2.100
 BuildRequires:	libtool
 BuildRequires:	lirc-devel
-BuildRequires:	nautilus-cd-burner-devel >= 2.16.0
+BuildRequires:	nautilus-cd-burner-devel >= 2.18.0
 BuildRequires:	pkgconfig
-BuildRequires:	python-pygtk-devel >= 2.10.1
+BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
-BuildRequires:	totem-devel >= 2.16.1
+BuildRequires:	totem-devel >= 2.18.0
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
-Requires(post,preun):	GConf2 >= 2.14.0
+Requires(post,preun):	GConf2
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
@@ -62,8 +61,8 @@ Requires:	gstreamer-audio-formats >= 0.10.4
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-gnomevfs >= 0.10.10
 Requires:	gstreamer-plugins-good >= 0.10.4
-Requires:	gtk+2 >= 2:2.10.4
-Requires:	libgnomeui >= 2.16.0
+Requires:	gtk+2 >= 2:2.10.10
+Requires:	libgnomeui >= 2.18.1
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -82,7 +81,6 @@ muzyczną, wiele "grup muzyki", radio internetowe itp.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p1
 
 %build
 # for snapshots
@@ -120,6 +118,7 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 
 %find_lang %{name} --with-gnome
 
+rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.{la,a}
 rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
 rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.{a,la}
 rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
@@ -177,6 +176,7 @@ EOF
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.xml
+%{_libdir}/rhythmbox/plugins/audioscrobbler/as-icon.svg
 %{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-prefs.glade
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
@@ -230,6 +230,7 @@ EOF
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/rb/*.py[co]
 %dir %{_libdir}/rhythmbox/plugins/visualizer
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
+%{_libdir}/rhythmbox/plugins/visualizer/rb-visualizer-glue.h
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-controls.glade
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-ui.xml
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer.rb-plugin
