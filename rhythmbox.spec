@@ -5,12 +5,12 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.10.1
+Version:	0.11.0
 Release:	1
 License:	GPL v2+
 Group:		Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.10/%{name}-%{version}.tar.bz2
-# Source0-md5:	6ab510d54654d2973f91b5d0de54f854
+Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
+# Source0-md5:	ceb353ecafe59aced1400c962d81a22a
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
@@ -26,11 +26,11 @@ BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gnome-keyring-devel >= 0.8
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
-BuildRequires:	gstreamer-devel >= 0.10.10
 BuildRequires:	gstreamer-GConf >= 0.10.4
+BuildRequires:	gstreamer-devel >= 0.10.10
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
-BuildRequires:	gtk-doc
 BuildRequires:	gtk+2-devel >= 2:2.10.10
+BuildRequires:	gtk-doc
 BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
@@ -51,10 +51,10 @@ BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 2.18.0
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
-Requires(post,preun):	GConf2
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
+Requires(post,preun):	GConf2
 Requires:	dbus >= 0.93
 Requires:	gstreamer-audio-effects-base >= 0.10.10
 Requires:	gstreamer-audio-formats >= 0.10.4
@@ -169,6 +169,7 @@ EOF
 %{_libdir}/rhythmbox/plugins/artdisplay/rhythmbox-missing-artwork.svg
 %{_libdir}/rhythmbox/plugins/artdisplay/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/audiocd
+%{_libdir}/rhythmbox/plugins/audiocd/*.xml
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audiocd/*.so
 %{_libdir}/rhythmbox/plugins/audiocd/*-plugin
 %{_libdir}/rhythmbox/plugins/audiocd/*.glade
