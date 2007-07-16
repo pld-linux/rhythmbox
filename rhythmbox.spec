@@ -5,12 +5,12 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.11.0
-Release:	2
+Version:	0.11.1
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	ceb353ecafe59aced1400c962d81a22a
+# Source0-md5:	f2dcaca1b4896f1a455c94fe3bafa1bc
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
@@ -177,7 +177,7 @@ EOF
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.xml
-%{_libdir}/rhythmbox/plugins/audioscrobbler/as-icon.svg
+%{_libdir}/rhythmbox/plugins/audioscrobbler/as-icon.png
 %{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-prefs.glade
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
@@ -213,6 +213,7 @@ EOF
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
 %{_libdir}/rhythmbox/plugins/lyrics/*-plugin
+%{_libdir}/rhythmbox/plugins/lyrics/lyrics-prefs.glade
 %dir %{_libdir}/rhythmbox/plugins/magnatune
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/magnatune/*.py[co]
 %{_libdir}/rhythmbox/plugins/magnatune/*-plugin
@@ -240,5 +241,6 @@ EOF
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
+%{_iconsdir}/hicolor/*/*/rhythmbox.svg
 %{_omf_dest_dir}/%{name}
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
