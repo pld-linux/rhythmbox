@@ -5,12 +5,12 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.11.1
+Version:	0.11.2
 Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	f2dcaca1b4896f1a455c94fe3bafa1bc
+# Source0-md5:	125440f92e5c64b530894c5f3ca9038b
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
@@ -63,6 +63,11 @@ Requires:	gstreamer-gnomevfs >= 0.10.10
 Requires:	gstreamer-plugins-good >= 0.10.4
 Requires:	gtk+2 >= 2:2.10.10
 Requires:	libgnomeui >= 2.18.1
+Suggests:	gstreamer-flac
+Suggests:	gstreamer-mad
+Suggests:	gstreamer-vorbis
+Suggests:	gstreamer-neon
+Suggests:	python-Louie
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -137,14 +142,6 @@ rm -rf $RPM_BUILD_ROOT
 %scrollkeeper_update_post
 %update_desktop_database_post
 %update_icon_cache hicolor
-%banner %{name} -e << EOF
-Remember to install appropriate GStreamer plugins for files
-you want to play:
-- gstreamer-flac (for FLAC)
-- gstreamer-mad (for MP3s)
-- gstreamer-vorbis (for Ogg Vorbis)
-- gstreamer-neon (for HTTP streams)
-EOF
 
 %preun
 %gconf_schema_uninstall rhythmbox.schemas
@@ -230,13 +227,15 @@ EOF
 %{_libdir}/rhythmbox/plugins/python-console/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/rb
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/rb/*.py[co]
+%dir %{_libdir}/rhythmbox/plugins/upnp_coherence
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/upnp_coherence/*.py[co]
+%{_libdir}/rhythmbox/plugins/upnp_coherence/coherence.rb-plugin
 %dir %{_libdir}/rhythmbox/plugins/visualizer
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
 %{_libdir}/rhythmbox/plugins/visualizer/rb-visualizer-glue.h
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-controls.glade
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-ui.xml
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer.rb-plugin
-
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
