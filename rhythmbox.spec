@@ -63,6 +63,7 @@ Requires:	gstreamer-gnomevfs >= 0.10.10
 Requires:	gstreamer-plugins-good >= 0.10.4
 Requires:	gtk+2 >= 2:2.10.10
 Requires:	libgnomeui >= 2.18.1
+Suggests:	gnome-vfs2
 Suggests:	gstreamer-flac
 Suggests:	gstreamer-mad
 Suggests:	gstreamer-vorbis
