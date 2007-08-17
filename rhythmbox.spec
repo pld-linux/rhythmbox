@@ -68,7 +68,8 @@ Suggests:	gstreamer-flac
 Suggests:	gstreamer-mad
 Suggests:	gstreamer-vorbis
 Suggests:	gstreamer-neon
-Suggests:	pythong-gnome-vfs
+Suggests:	python-gnome
+Suggests:	python-gnome-vfs
 Suggests:	python-Louie
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
