@@ -35,7 +35,7 @@ BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
-%{?with_ipod:BuildRequires:	libgpod-devel >= 0.4.0}
+%{?with_ipod:BuildRequires:	libgpod-devel >= 0.5.2}
 BuildRequires:	libmusicbrainz-devel >= 2.1.4
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
