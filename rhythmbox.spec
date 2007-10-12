@@ -1,6 +1,7 @@
 #
 # Conditional build:
 %bcond_without	ipod	# build without iPod support
+%bcond_without	mtp	# build without MTP support
 #
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
