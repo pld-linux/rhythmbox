@@ -36,6 +36,7 @@ BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.5.2}
+%{?with_mtp:BuildRequires:	libmtp-devel}
 BuildRequires:	libmusicbrainz-devel >= 2.1.4
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
@@ -222,6 +223,10 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/mmkeys/libmmkeys.so
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.rb-plugin
+%{?with_mtp:%dir %{_libdir}/rhythmbox/plugins/mtpdevice}
+%{?with_mtp:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mtpdevice/libmtpdevice.so}
+%{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/mtpdevice.rb-plugin}
+%{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/mtp-ui.xml}
 %dir %{_libdir}/rhythmbox/plugins/power-manager
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/power-manager/*.so
 %{_libdir}/rhythmbox/plugins/power-manager/*-plugin
