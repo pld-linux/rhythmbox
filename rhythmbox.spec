@@ -17,6 +17,7 @@ Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
 Patch4:		%{name}-link.patch
 Patch5:		%{name}-configure.patch
+Patch6:		%{name}-453156.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -91,6 +92,7 @@ muzyczną, wiele "grup muzyki", radio internetowe itp.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 # for snapshots
