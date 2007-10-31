@@ -2,6 +2,7 @@
 # Conditional build:
 %bcond_without	ipod	# build without iPod support
 %bcond_without	mtp	# build without MTP support
+%bcond_without	track_transfer	# build without track transfer support
 #
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
@@ -27,6 +28,7 @@ BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gnome-keyring-devel >= 0.8
+%{?with_track_transfer:BuildRequires:	gnome-media-devel}
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gstreamer-GConf >= 0.10.4
 BuildRequires:	gstreamer-devel >= 0.10.10
@@ -115,8 +117,9 @@ gnome-doc-prepare --copy --force
 	%{!?with_ipod:--without-ipod} \
 	--with-mds=avahi \
 	--with-internal-libsexy=no \
+	%{?with_track_transfer:--enable-track-transfer} \
 	--with-x
-%{__make} -j1
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
