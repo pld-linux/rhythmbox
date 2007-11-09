@@ -49,6 +49,8 @@ BuildRequires:	lirc-devel
 BuildRequires:	nautilus-cd-burner-devel >= 2.18.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
+# support for --with-omf in find_lang.sh
+BuildRequires:	rpm-build >= 4.4.9-10
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
@@ -129,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 # there is no -devel subpackage, so we don't need APIdocs
 rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 
-%find_lang %{name} --with-gnome
+%find_lang %{name} --with-gnome --with-omf
 
 rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.{la,a}
 rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
@@ -257,5 +259,4 @@ rm -rf $RPM_BUILD_ROOT
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_iconsdir}/hicolor/*/*/rhythmbox.svg
-%{_omf_dest_dir}/%{name}
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
