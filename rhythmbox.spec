@@ -193,6 +193,10 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/rhythmbox/plugins/daap/*-plugin
 %{_libdir}/rhythmbox/plugins/daap/*.glade
 %{_libdir}/rhythmbox/plugins/daap/*.xml
+%dir %{_libdir}/rhythmbox/plugins/fmradio
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/fmradio/*.so
+%{_libdir}/rhythmbox/plugins/fmradio/*-plugin
+%{_libdir}/rhythmbox/plugins/fmradio/*.xml
 %dir %{_libdir}/rhythmbox/plugins/generic-player
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/generic-player/*.so
 %{_libdir}/rhythmbox/plugins/generic-player/*-plugin
