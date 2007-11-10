@@ -78,6 +78,8 @@ Suggests:	python-gnome
 Suggests:	python-gnome-vfs
 Suggests:	python-Louie
 Obsoletes:	net-rhythmbox
+# sr@Latn vs. sr@latin
+Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -95,6 +97,9 @@ muzyczną, wiele "grup muzyki", radio internetowe itp.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+
+sed -i -e s#sr\@Latn#sr\@latin# po/LINGUAS
+mv po/sr\@{Latn,latin}.po
 
 %build
 # for snapshots
