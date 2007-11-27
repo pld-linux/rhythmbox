@@ -49,11 +49,11 @@ BuildRequires:	lirc-devel
 BuildRequires:	nautilus-cd-burner-devel >= 2.18.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
-# support for --with-omf in find_lang.sh
-BuildRequires:	rpm-build >= 4.4.9-10
 BuildRequires:	rpm-pythonprov
+BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
+BuildRequires:	sed >= 4.0
 BuildRequires:	totem-devel >= 2.18.0
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
@@ -98,7 +98,7 @@ muzyczną, wiele "grup muzyki", radio internetowe itp.
 %patch4 -p1
 %patch5 -p1
 
-sed -i -e s#sr\@Latn#sr\@latin# po/LINGUAS
+sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
 mv po/sr\@{Latn,latin}.po
 
 %build
