@@ -8,16 +8,17 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.11.3
-Release:	2
+Release:	3
 License:	GPL v2+
-Group:		Applications
-Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
+Group:		X11/Applications
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
 # Source0-md5:	c03e82b9086ef2bc0cd8db0eb9615eff
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
 Patch4:		%{name}-link.patch
 Patch5:		%{name}-configure.patch
+Patch6:		%{name}-bug499208.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -72,11 +73,11 @@ Requires:	libgnomeui >= 2.18.1
 Suggests:	gnome-vfs2
 Suggests:	gstreamer-flac
 Suggests:	gstreamer-mad
-Suggests:	gstreamer-vorbis
 Suggests:	gstreamer-neon
+Suggests:	gstreamer-vorbis
+Suggests:	python-Louie
 Suggests:	python-gnome
 Suggests:	python-gnome-vfs
-Suggests:	python-Louie
 Obsoletes:	net-rhythmbox
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -97,6 +98,7 @@ muzyczną, wiele "grup muzyki", radio internetowe itp.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
 mv po/sr\@{Latn,latin}.po
