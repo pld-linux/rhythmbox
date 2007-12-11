@@ -78,6 +78,7 @@ Suggests:	gstreamer-vorbis
 Suggests:	python-Louie
 Suggests:	python-gnome
 Suggests:	python-gnome-vfs
+Suggests:	python-gstreamer
 Obsoletes:	net-rhythmbox
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
