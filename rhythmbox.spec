@@ -8,7 +8,7 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.11.3
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
@@ -76,6 +76,7 @@ Suggests:	gstreamer-mad
 Suggests:	gstreamer-neon
 Suggests:	gstreamer-vorbis
 Suggests:	python-Louie
+Suggests:	python-coherence
 Suggests:	python-gnome
 Suggests:	python-gnome-vfs
 Suggests:	python-gstreamer
