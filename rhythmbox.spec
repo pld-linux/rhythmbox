@@ -7,18 +7,20 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.11.3
-Release:	5
+Version:	0.11.4
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	c03e82b9086ef2bc0cd8db0eb9615eff
+# Source0-md5:	240f5c9c7986d9feb9d4dfe4f795f1b9
 Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
 Patch4:		%{name}-link.patch
 Patch5:		%{name}-configure.patch
 Patch6:		%{name}-bug499208.patch
+Patch7:		%{name}-soup24.patch
+Patch8:		%{name}-as-needed.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -55,7 +57,8 @@ BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
-BuildRequires:	totem-devel >= 2.18.0
+BuildRequires:	totem-pl-parser-devel >= 2.18.0
+BuildRequires:	xulrunner-devel
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
 Requires(post,postun):	desktop-file-utils
@@ -93,6 +96,20 @@ library, multiple "music groups", internet radio, and more.
 Rhythmbox to kompletna aplikacja multimedialna, obsługująca bibliotekę
 muzyczną, wiele "grup muzyki", radio internetowe itp.
 
+%package -n browser-plugin-%{name}
+Summary:	Rhythmbox's browser plugin
+Summary(pl.UTF-8):	Wtyczka Rhythmboksa do przeglądarek WWW
+Group:		X11/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	browser-plugins >= 2.0
+Requires:	browser-plugins(%{_target_base_arch})
+
+%description -n browser-plugin-%{name}
+Rhythmbox's plugin for browsers.
+
+%description -n browser-plugin-%{name} -l pl.UTF-8
+Wtyczka Rhythmboksa do przeglądarek WWW.
+
 %prep
 %setup -q
 %patch0 -p1
@@ -101,6 +118,8 @@ muzyczną, wiele "grup muzyki", radio internetowe itp.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
 mv po/sr\@{Latn,latin}.po
@@ -133,9 +152,13 @@ gnome-doc-prepare --copy --force
 %install
 rm -rf $RPM_BUILD_ROOT
 
+install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
+
+mv $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/* $RPM_BUILD_ROOT%{_browserpluginsdir}
 
 # there is no -devel subpackage, so we don't need APIdocs
 rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
@@ -170,6 +193,14 @@ rm -rf $RPM_BUILD_ROOT
 %scrollkeeper_update_postun
 %update_desktop_database_postun
 %update_icon_cache hicolor
+
+%post -n browser-plugin-%{name}
+%update_browser_plugins
+
+%postun -n browser-plugin-%{name}
+if [ "$1" = 0 ]; then
+	%update_browser_plugins
+fi
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
@@ -269,3 +300,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_iconsdir}/hicolor/*/*/rhythmbox.svg
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
+
+%files -n browser-plugin-%{name}
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_browserpluginsdir}/*.so
