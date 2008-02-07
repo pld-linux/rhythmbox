@@ -1,0 +1,13 @@
+diff --git a/lib/Makefile.am b/lib/Makefile.am
+index 21fc6d8..6cd69c2 100644
+--- a/lib/Makefile.am
++++ b/lib/Makefile.am
+@@ -51,6 +51,8 @@ INCLUDES =						\
+ 	$(SOUP_CFLAGS)					\
+ 	$(RHYTHMBOX_CFLAGS)
+ 
++librb_la_LIBADD = $(SOUP_LIBS)
++
+ BUILT_SOURCES=
+ 
+ CLEAN_FILES = $(BUILT_SOURCES)
