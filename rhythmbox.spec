@@ -122,8 +122,8 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch7 -p1
 %patch8 -p1
 
-sed -i -e 's#sr\@Latn#sr\@latin#' po/LINGUAS
-mv po/sr\@{Latn,latin}.po
+%{__sed} -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
+mv po/sr@{Latn,latin}.po
 
 %build
 # for snapshots
