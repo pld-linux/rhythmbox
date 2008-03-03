@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.8
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -46,7 +46,7 @@ BuildRequires:	nautilus-cd-burner-devel >= 2.14.0.1-2
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2.10.1
 BuildRequires:	rpm-pythonprov
-BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	rpmbuild(macros) >= 1.437
 BuildRequires:	scrollkeeper
 BuildRequires:	totem-devel >= 1.1.3
 BuildRequires:	zlib-devel
@@ -136,7 +136,7 @@ rm -rf $RPM_BUILD_ROOT
 %scrollkeeper_update_post
 %update_desktop_database_post
 %update_icon_cache hicolor
-%banner %{name} -e << EOF
+%banner %{name} -e <<'EOF'
 Remember to install appropriate GStreamer plugins for files
 you want to play:
 - gstreamer-flac (for FLAC)
