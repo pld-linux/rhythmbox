@@ -6,7 +6,7 @@ Summary:	Music Management Application
 Summary(pl):	Aplikacja do zarz±dzania muzyk±
 Name:		rhythmbox
 Version:	0.9.8
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Applications
 Source0:	http://ftp.gnome.org/pub/gnome/sources/rhythmbox/0.9/%{name}-%{version}.tar.bz2
@@ -15,11 +15,12 @@ Patch0:		%{name}-desktop.patch
 Patch2:		%{name}-gtk2.8-crash.patch
 Patch3:		%{name}-pyc.patch
 Patch4:		%{name}-link.patch
+Patch5:		%{name}-configure.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel
-BuildRequires:	check >= 0.9.3
+BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.60
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
@@ -79,6 +80,7 @@ muzyczn±, wiele "grup muzyki", radio internetowe itp.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 # for snapshots
