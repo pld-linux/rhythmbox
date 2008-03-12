@@ -8,7 +8,7 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.11.4
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
@@ -58,7 +58,7 @@ BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
-BuildRequires:	totem-pl-parser-devel >= 2.18.0
+BuildRequires:	totem-pl-parser-devel >= 2.22.0
 BuildRequires:	xulrunner-devel
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
