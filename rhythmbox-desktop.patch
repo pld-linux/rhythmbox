@@ -7,6 +7,6 @@ diff -aurN rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in.in rhythmbox-0.9.3/dat
  X-GNOME-DocPath=rhythmbox/rhythmbox.xml
 -Categories=GNOME;GTK;AudioVideo;
 +Categories=GTK;GNOME;AudioVideo;Audio;Player;
- MimeType=application/x-ogg;application/ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;application/x-flac;
+ MimeType=application/x-ogg;application/ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;application/x-flac;x-content/audio-cdda;x-content/audio-player;
  StartupNotify=true
  X-GNOME-Bugzilla-Bugzilla=GNOME
