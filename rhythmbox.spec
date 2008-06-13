@@ -8,16 +8,17 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.11.5
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
 # Source0-md5:	967440dd984ec724e7e7992d5bd57bbd
 Patch0:		%{name}-desktop.patch
-Patch2:		%{name}-gtk2.8-crash.patch
-Patch3:		%{name}-pyc.patch
-Patch4:		%{name}-link.patch
-Patch6:		%{name}-bug499208.patch
+Patch1:		%{name}-gtk2.8-crash.patch
+Patch2:		%{name}-pyc.patch
+Patch3:		%{name}-link.patch
+Patch4:		%{name}-bug499208.patch
+Patch5:		%{name}-lt.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -49,7 +50,7 @@ BuildRequires:	lirc-devel
 BuildRequires:	nautilus-cd-burner-devel >= 2.18.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
-BuildRequires:	python-gstreamer >= 0.10.0
+BuildRequires:	python-gstreamer-devel >= 0.10.1
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
@@ -111,10 +112,11 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch6 -p1
+%patch5 -p1
 
 %{__sed} -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
 mv po/sr@{Latn,latin}.po
@@ -206,7 +208,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.0
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
 %dir %{_libdir}/rhythmbox/plugins/artdisplay
