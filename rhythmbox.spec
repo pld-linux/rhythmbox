@@ -8,7 +8,7 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.11.5
-Release:	6
+Release:	7
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
@@ -19,6 +19,7 @@ Patch2:		%{name}-pyc.patch
 Patch3:		%{name}-link.patch
 Patch4:		%{name}-bug499208.patch
 Patch5:		%{name}-lt.patch
+Patch6:		%{name}-libmtp.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -40,7 +41,7 @@ BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.5.2}
-%{?with_mtp:BuildRequires:	libmtp-devel}
+%{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
 BuildRequires:	libmusicbrainz-devel >= 2.1.4
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
@@ -117,6 +118,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p0
 
 %{__sed} -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
 mv po/sr@{Latn,latin}.po
