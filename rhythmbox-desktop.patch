@@ -1,12 +1,11 @@
-diff -aurN rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in.in rhythmbox-0.9.3/data/rhythmbox.desktop.in.in
---- rhythmbox-0.9.3.orig/data/rhythmbox.desktop.in.in	2006-01-24 07:51:58.000000000 +0100
-+++ rhythmbox-0.9.3/data/rhythmbox.desktop.in.in	2006-02-02 14:29:52.744276000 +0100
-@@ -8,7 +8,7 @@
+--- rhythmbox-0.11.6/data/rhythmbox.desktop.in.in.wiget	2008-07-02 10:51:58.000000000 +0200
++++ rhythmbox-0.11.6/data/rhythmbox.desktop.in.in	2008-08-30 13:30:55.000000000 +0200
+@@ -7,7 +7,7 @@ Terminal=false
  Type=Application
  Icon=rhythmbox
  X-GNOME-DocPath=rhythmbox/rhythmbox.xml
 -Categories=GNOME;GTK;AudioVideo;
-+Categories=GTK;GNOME;AudioVideo;Audio;Player;
- MimeType=application/x-ogg;application/ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;application/x-flac;x-content/audio-cdda;x-content/audio-player;
++Categories=GNOME;GTK;AudioVideo;Audio;Player
+ MimeType=application/x-ogg;application/ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;audio/x-flac;x-content/audio-cdda;x-content/audio-player;
  StartupNotify=true
  X-GNOME-Bugzilla-Bugzilla=GNOME
