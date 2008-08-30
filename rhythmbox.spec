@@ -7,12 +7,12 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.11.5
-Release:	7
+Version:	0.11.6
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	967440dd984ec724e7e7992d5bd57bbd
+# Source0-md5:	b827e047d13954ba956c3c4ea940935e
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
@@ -296,6 +296,9 @@ fi
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-controls.glade
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-ui.xml
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/dontreallyclose
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.py[co]
+%{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.rb-plugin
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
