@@ -5,7 +5,7 @@
  Icon=rhythmbox
  X-GNOME-DocPath=rhythmbox/rhythmbox.xml
 -Categories=GNOME;GTK;AudioVideo;
-+Categories=GNOME;GTK;AudioVideo;Audio;Player
++Categories=GNOME;GTK;AudioVideo;Audio;Player;
  MimeType=application/x-ogg;application/ogg;audio/x-scpls;audio/x-mp3;audio/x-mpeg;audio/mpeg;audio/x-mpegurl;audio/x-flac;x-content/audio-cdda;x-content/audio-player;
  StartupNotify=true
  X-GNOME-Bugzilla-Bugzilla=GNOME
