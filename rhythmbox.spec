@@ -8,7 +8,7 @@ Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.12.0
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
@@ -23,6 +23,7 @@ URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.14
+BuildRequires:	brasero-devel >= 2.26.0
 BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	gnome-common
@@ -47,7 +48,6 @@ BuildRequires:	libsexy-devel >= 0.1.10
 BuildRequires:	libsoup-devel >= 2.2.100
 BuildRequires:	libtool
 BuildRequires:	lirc-devel
-BuildRequires:	nautilus-cd-burner-devel >= 2.18.0
 BuildRequires:	pkgconfig
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	python-gstreamer-devel >= 0.10.1
@@ -227,7 +227,6 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
 %{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
-%{_libdir}/rhythmbox/plugins/cd-recorder/recorder.glade
 %dir %{_libdir}/rhythmbox/plugins/daap
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
 %{_libdir}/rhythmbox/plugins/daap/*-plugin
