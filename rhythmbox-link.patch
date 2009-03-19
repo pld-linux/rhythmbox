@@ -18,7 +18,7 @@ diff -urN rhythmbox-0.9.8/plugins/daap/Makefile.am rhythmbox-0.9.8.new/plugins/d
 @@ -42,7 +42,8 @@
  libdaap_la_LDFLAGS = $(PLUGIN_LIBTOOL_FLAGS)
  libdaap_la_LIBADD = 					\
- 	$(SOUP_LIBS)					\
+ 	$(DBUS_LIBS)					\
 -	$(MDNS_LIBS)
 +	$(MDNS_LIBS)					\
 +	$(GSTREAMER_0_10_LIBS)

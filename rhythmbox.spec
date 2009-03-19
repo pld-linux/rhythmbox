@@ -7,19 +7,18 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.11.6
-Release:	5
+Version:	0.12.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.11/%{name}-%{version}.tar.bz2
-# Source0-md5:	b827e047d13954ba956c3c4ea940935e
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
+# Source0-md5:	ae6bc15786cc7659b41c313e45adf44a
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
 Patch3:		%{name}-link.patch
 Patch4:		%{name}-bug499208.patch
 Patch5:		%{name}-lt.patch
-Patch6:		%{name}-libmtp.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -118,10 +117,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%patch6 -p0
 
-%{__sed} -i -e 's#sr@Latn#sr@latin#' po/LINGUAS
-mv po/sr@{Latn,latin}.po
 # Pashto not yet supported by (our?) libc
 %{__sed} -i -e 's#ps##' po/LINGUAS
 rm -rf po/ps
@@ -249,6 +245,7 @@ fi
 %{?with_ipod:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so}
 %{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*-plugin}
 %{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/ipod-ui.xml}
+%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*.glade}
 %dir %{_libdir}/rhythmbox/plugins/iradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/iradio/*.so
 %{_libdir}/rhythmbox/plugins/iradio/*-plugin
@@ -260,9 +257,6 @@ fi
 %{_libdir}/rhythmbox/plugins/jamendo/*.glade
 %{_libdir}/rhythmbox/plugins/jamendo/jamendo.rb-plugin
 %{_libdir}/rhythmbox/plugins/jamendo/*.png
-%dir %{_libdir}/rhythmbox/plugins/lirc
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/lirc/*.so
-%{_libdir}/rhythmbox/plugins/lirc/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
 %{_libdir}/rhythmbox/plugins/lyrics/*-plugin
@@ -287,6 +281,10 @@ fi
 %{_libdir}/rhythmbox/plugins/python-console/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/rb
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/rb/*.py[co]
+%dir %{_libdir}/rhythmbox/plugins/rblirc
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/rblirc/*.so
+%{_libdir}/rhythmbox/plugins/rblirc/*-plugin
+%{_libdir}/rhythmbox/plugins/rblirc/rhythmbox_lirc_default
 %dir %{_libdir}/rhythmbox/plugins/upnp_coherence
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/upnp_coherence/*.py[co]
 %{_libdir}/rhythmbox/plugins/upnp_coherence/coherence.rb-plugin
