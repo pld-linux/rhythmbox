@@ -7,18 +7,18 @@
 Summary:	Music Management Application
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.12.0
-Release:	2
+Version:	0.12.3
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	ae6bc15786cc7659b41c313e45adf44a
+# Source0-md5:	4a28e79184f1a9737ac2e719a1478105
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
 Patch3:		%{name}-link.patch
-Patch4:		%{name}-bug499208.patch
-Patch5:		%{name}-lt.patch
+#Patch4:		%{name}-bug499208.patch
+#Patch5:		%{name}-lt.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -42,7 +42,7 @@ BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.5.2}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
-BuildRequires:	libmusicbrainz-devel >= 2.1.4
+BuildRequires:	libmusicbrainz3-devel
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
 BuildRequires:	libsoup-devel >= 2.2.100
@@ -115,8 +115,8 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
+#%patch4 -p1
+#%patch5 -p1
 
 # Pashto not yet supported by (our?) libc
 %{__sed} -i -e 's#ps##' po/LINGUAS
@@ -217,20 +217,20 @@ fi
 %{_libdir}/rhythmbox/plugins/audiocd/*.xml
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audiocd/*.so
 %{_libdir}/rhythmbox/plugins/audiocd/*-plugin
-%{_libdir}/rhythmbox/plugins/audiocd/*.glade
+%{_libdir}/rhythmbox/plugins/audiocd/*.ui
 %dir %{_libdir}/rhythmbox/plugins/audioscrobbler
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.xml
 %{_libdir}/rhythmbox/plugins/audioscrobbler/as-icon.png
-%{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-prefs.glade
+%{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-prefs.ui
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
 %{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/daap
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
 %{_libdir}/rhythmbox/plugins/daap/*-plugin
-%{_libdir}/rhythmbox/plugins/daap/*.glade
+%{_libdir}/rhythmbox/plugins/daap/*.ui
 %{_libdir}/rhythmbox/plugins/daap/*.xml
 %dir %{_libdir}/rhythmbox/plugins/fmradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/fmradio/*.so
@@ -244,26 +244,26 @@ fi
 %{?with_ipod:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so}
 %{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*-plugin}
 %{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/ipod-ui.xml}
-%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*.glade}
+%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*.ui}
 %dir %{_libdir}/rhythmbox/plugins/iradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/iradio/*.so
 %{_libdir}/rhythmbox/plugins/iradio/*-plugin
 %{_libdir}/rhythmbox/plugins/iradio/*.xml
 %{_libdir}/rhythmbox/plugins/iradio/iradio-initial.pls
-%{_libdir}/rhythmbox/plugins/iradio/station-properties.glade
+%{_libdir}/rhythmbox/plugins/iradio/station-properties.ui
 %dir %{_libdir}/rhythmbox/plugins/jamendo
 %{_libdir}/rhythmbox/plugins/jamendo/*.py[co]
-%{_libdir}/rhythmbox/plugins/jamendo/*.glade
+%{_libdir}/rhythmbox/plugins/jamendo/*.ui
 %{_libdir}/rhythmbox/plugins/jamendo/jamendo.rb-plugin
 %{_libdir}/rhythmbox/plugins/jamendo/*.png
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
 %{_libdir}/rhythmbox/plugins/lyrics/*-plugin
-%{_libdir}/rhythmbox/plugins/lyrics/lyrics-prefs.glade
+%{_libdir}/rhythmbox/plugins/lyrics/lyrics-prefs.ui
 %dir %{_libdir}/rhythmbox/plugins/magnatune
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/magnatune/*.py[co]
 %{_libdir}/rhythmbox/plugins/magnatune/*-plugin
-%{_libdir}/rhythmbox/plugins/magnatune/*.glade
+%{_libdir}/rhythmbox/plugins/magnatune/*.ui
 %{_libdir}/rhythmbox/plugins/magnatune/*.png
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/mmkeys/libmmkeys.so
@@ -290,18 +290,28 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/visualizer
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
 %{_libdir}/rhythmbox/plugins/visualizer/rb-visualizer-glue.h
-%{_libdir}/rhythmbox/plugins/visualizer/visualizer-controls.glade
+%{_libdir}/rhythmbox/plugins/visualizer/visualizer-controls.ui
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer-ui.xml
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer.rb-plugin
-%dir %{_libdir}/rhythmbox/plugins/dontreallyclose
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.py[co]
-%{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.rb-plugin
+#%dir %{_libdir}/rhythmbox/plugins/dontreallyclose
+#%attr(755,root,root) %{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.py[co]
+#%{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/im-status
+/usr/lib/rhythmbox/plugins/im-status/*.py[co]
+/usr/lib/rhythmbox/plugins/im-status/*.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/status-icon
+/usr/lib/rhythmbox/plugins/status-icon/libstatus-icon.so
+/usr/lib/rhythmbox/plugins/status-icon/*.ui
+/usr/lib/rhythmbox/plugins/status-icon/*.xml
+/usr/lib/rhythmbox/plugins/status-icon/*.rb-plugin
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_iconsdir}/hicolor/*/*/rhythmbox.svg
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
+
+
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
