@@ -5,18 +5,19 @@
 %bcond_without	track_transfer	# build without track transfer support
 #
 Summary:	Music Management Application
+Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.12.3
+Version:	0.12.5
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	4a28e79184f1a9737ac2e719a1478105
+# Source0-md5:	d70b26fc8a861bf1921e5709f9350893
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
-Patch3:		%{name}-link.patch
+#Patch3:		%{name}-link.patch
 #Patch4:		%{name}-bug499208.patch
 #Patch5:		%{name}-lt.patch
 URL:		http://www.rhythmbox.org/
@@ -46,11 +47,12 @@ BuildRequires:	libmusicbrainz3-devel
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
 BuildRequires:	libsoup-devel >= 2.2.100
+BuildRequires:	libsoup-gnome-devel
 BuildRequires:	libtool
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	python-gstreamer-devel >= 0.10.1
+BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
@@ -91,12 +93,18 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Rhythmbox is your one-stop multimedia application, supporting a music
 library, multiple "music groups", internet radio, and more.
 
+%description -l hu.UTF-8
+Rhythmbox egy multimédia alkalmazás, amley támogatja a
+zenekönyvtárakat, több "zenecsoportokat", internetes rádiót, és még
+sok mindent.
+
 %description -l pl.UTF-8
 Rhythmbox to kompletna aplikacja multimedialna, obsługująca bibliotekę
 muzyczną, wiele "grup muzyki", radio internetowe itp.
 
 %package -n browser-plugin-%{name}
 Summary:	Rhythmbox's browser plugin
+Summary(hu.UTF-8):	Rhythmbox böngésző plugin
 Summary(pl.UTF-8):	Wtyczka Rhythmboksa do przeglądarek WWW
 Group:		X11/Libraries
 Requires:	%{name} = %{version}-%{release}
@@ -106,6 +114,9 @@ Requires:	browser-plugins(%{_target_base_arch})
 %description -n browser-plugin-%{name}
 Rhythmbox's plugin for browsers.
 
+%description -n browser-plugin-%{name} -l hu.UTF-8
+Rhythmbox böngésző plugin.
+
 %description -n browser-plugin-%{name} -l pl.UTF-8
 Wtyczka Rhythmboksa do przeglądarek WWW.
 
@@ -114,7 +125,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+# %patch3 -p1
 #%patch4 -p1
 #%patch5 -p1
 
