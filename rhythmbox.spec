@@ -53,6 +53,7 @@ BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-gstreamer-devel >= 0.10.1
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
+BuildRequires:	python-pygobject-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
