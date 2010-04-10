@@ -2,24 +2,20 @@
 # Conditional build:
 %bcond_without	ipod	# build without iPod support
 %bcond_without	mtp	# build without MTP support
-%bcond_without	track_transfer	# build without track transfer support
 #
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.12.5
-Release:	1
+Version:	0.12.8
+Release:	0.1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	d70b26fc8a861bf1921e5709f9350893
+# Source0-md5:	3e24108119264a0cbd8b4ccbd7732173
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
-#Patch3:		%{name}-link.patch
-#Patch4:		%{name}-bug499208.patch
-#Patch5:		%{name}-lt.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -30,14 +26,12 @@ BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gnome-keyring-devel >= 0.8
-%{?with_track_transfer:BuildRequires:	gnome-media-devel}
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gstreamer-GConf >= 0.10.4
 BuildRequires:	gstreamer-devel >= 0.10.10
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.10.10
 BuildRequires:	gtk-doc
-BuildRequires:	hal-devel >= 0.5.7
 BuildRequires:	intltool
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
@@ -52,14 +46,15 @@ BuildRequires:	libtool
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-gstreamer-devel >= 0.10.1
-BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	python-pygobject-devel
+BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
 BuildRequires:	totem-pl-parser-devel >= 2.22.0
+BuildRequires:	udev-glib-devel >= 0.5.7
 BuildRequires:	xulrunner-devel
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
@@ -149,14 +144,22 @@ gnome-doc-prepare --copy --force
 %configure \
 	--disable-schemas-install \
 	--disable-scrollkeeper \
+	--disable-silent-rules \
+	--enable-browser-plugin \
+	--enable-gtk-doc \
 	--enable-lirc \
-	--with-cd-burning \
-	--with-gnome-keyring \
+	--enable-python \
+	--enable-vala \
 	%{!?with_ipod:--without-ipod} \
-	--with-mds=avahi \
-	--with-internal-libsexy=no \
-	%{?with_track_transfer:--enable-track-transfer} \
-	--with-x
+	--with-gnome-keyring \
+	--with-gnome-keyring \
+	--with-gudev \
+	--with-libbrasero-media \
+	--with-mdns=avahi \
+	--with-mtp \
+	--with-x \
+	--without-hal \
+	--without-libnautilus-burn
 %{__make}
 
 %install
@@ -224,6 +227,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/artdisplay
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
 %{_libdir}/rhythmbox/plugins/artdisplay/rhythmbox-missing-artwork.svg
+%{_libdir}/rhythmbox/plugins/artdisplay/*.png
 %{_libdir}/rhythmbox/plugins/artdisplay/*-plugin
 %dir %{_libdir}/rhythmbox/plugins/audiocd
 %{_libdir}/rhythmbox/plugins/audiocd/*.xml
@@ -251,6 +255,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/generic-player
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/generic-player/*.so
 %{_libdir}/rhythmbox/plugins/generic-player/*-plugin
+%{_libdir}/rhythmbox/plugins/generic-player/*.ui
 %{_libdir}/rhythmbox/plugins/generic-player/generic-player-ui.xml
 %{?with_ipod:%dir %{_libdir}/rhythmbox/plugins/ipod}
 %{?with_ipod:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so}
@@ -283,6 +288,7 @@ fi
 %{?with_mtp:%dir %{_libdir}/rhythmbox/plugins/mtpdevice}
 %{?with_mtp:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mtpdevice/libmtpdevice.so}
 %{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/mtpdevice.rb-plugin}
+%{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/*.ui}
 %{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/mtp-ui.xml}
 %dir %{_libdir}/rhythmbox/plugins/power-manager
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/power-manager/*.so
@@ -309,19 +315,40 @@ fi
 #%attr(755,root,root) %{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.py[co]
 #%{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.rb-plugin
 %dir %{_libdir}/rhythmbox/plugins/im-status
-/usr/lib/rhythmbox/plugins/im-status/*.py[co]
-/usr/lib/rhythmbox/plugins/im-status/*.rb-plugin
+%{_libdir}/rhythmbox/plugins/im-status/*.py[co]
+%{_libdir}/rhythmbox/plugins/im-status/*.rb-plugin
 %dir %{_libdir}/rhythmbox/plugins/status-icon
-/usr/lib/rhythmbox/plugins/status-icon/libstatus-icon.so
-/usr/lib/rhythmbox/plugins/status-icon/*.ui
-/usr/lib/rhythmbox/plugins/status-icon/*.xml
-/usr/lib/rhythmbox/plugins/status-icon/*.rb-plugin
+%{_libdir}/rhythmbox/plugins/status-icon/libstatus-icon.so
+%{_libdir}/rhythmbox/plugins/status-icon/*.ui
+%{_libdir}/rhythmbox/plugins/status-icon/*.xml
+%{_libdir}/rhythmbox/plugins/status-icon/*.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/sendto
+%{_libdir}/rhythmbox/plugins/sendto/*.py[co]
+%{_libdir}/rhythmbox/plugins/sendto/*.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/replaygain
+%{_libdir}/rhythmbox/plugins/replaygain/*.py[co]
+%{_libdir}/rhythmbox/plugins/replaygain/*.ui
+%{_libdir}/rhythmbox/plugins/replaygain/*.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/context
+%{_libdir}/rhythmbox/plugins/context/*.py[co]
+%{_libdir}/rhythmbox/plugins/context/*.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/context/img
+%{_libdir}/rhythmbox/plugins/context/img/*.png
+%{_libdir}/rhythmbox/plugins/context/img/*.gif
+%dir %{_libdir}/rhythmbox/plugins/context/tmpl
+%{_libdir}/rhythmbox/plugins/context/tmpl/*.html
+%{_libdir}/rhythmbox/plugins/context/tmpl/*.css
+%dir %{_libdir}/rhythmbox/plugins/sample-vala
+%{_libdir}/rhythmbox/plugins/sample-vala/*.so
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_iconsdir}/hicolor/*/*/rhythmbox.svg
+%{_iconsdir}/hicolor/*/*/music-library.png
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
+%{_mandir}/man1/rhythmbox.1*
+%{_mandir}/man1/rhythmbox-client.1*
 
 
 
