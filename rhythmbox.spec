@@ -55,6 +55,7 @@ BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
 BuildRequires:	totem-pl-parser-devel >= 2.22.0
 BuildRequires:	udev-glib-devel >= 0.5.7
+BuildRequires:	vala
 BuildRequires:	xulrunner-devel
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
