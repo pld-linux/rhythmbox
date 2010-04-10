@@ -152,7 +152,6 @@ gnome-doc-prepare --copy --force
 	--enable-vala \
 	%{!?with_ipod:--without-ipod} \
 	--with-gnome-keyring \
-	--with-gnome-keyring \
 	--with-gudev \
 	--with-libbrasero-media \
 	--with-mdns=avahi \
