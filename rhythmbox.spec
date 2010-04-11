@@ -23,9 +23,11 @@ BuildRequires:	avahi-glib-devel >= 0.6.14
 BuildRequires:	brasero-devel >= 2.26.0
 BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.71
+BuildRequires: gettext-devel
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gnome-keyring-devel >= 0.8
+BuildRequires: gnome-media-devel
 BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gstreamer-GConf >= 0.10.4
 BuildRequires:	gstreamer-devel >= 0.10.10
