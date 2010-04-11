@@ -8,7 +8,7 @@ Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.12.8
-Release:	0.1
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
@@ -39,6 +39,7 @@ BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.5.2}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
+BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libmusicbrainz3-devel
 BuildRequires:	libnotify-devel >= 0.4.2
 BuildRequires:	libsexy-devel >= 0.1.10
