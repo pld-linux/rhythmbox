@@ -1,17 +1,16 @@
-diff -aurN rhythmbox-0.9.4.orig/configure.ac rhythmbox-0.9.4/configure.ac
---- rhythmbox-0.9.4.orig/configure.ac	2006-04-16 05:50:50.000000000 +0200
-+++ rhythmbox-0.9.4/configure.ac	2006-04-16 12:38:58.016725728 +0200
-@@ -842,11 +842,11 @@
- 	AC_MSG_RESULT([$PYGTK_DEFSDIR])
+--- rhythmbox-0.13.0/configure.ac~	2010-07-02 07:02:58.000000000 +0300
++++ rhythmbox-0.13.0/configure.ac	2010-07-11 14:57:35.868907719 +0300
+@@ -708,11 +708,11 @@
+ 	AC_MSG_RESULT([$GST_PYTHON_DEFSDIR])
  
- 	AC_MSG_CHECKING([for pygtk codegen])
--	PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.py"
-+	PYGTK_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/codegen.pyc"
- 	AC_MSG_RESULT([$PYGTK_CODEGEN])
+ 	AC_MSG_CHECKING([for pygobject codegen])
+-	PYGOBJECT_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygobject-2.0`/codegen.py"
++	PYGOBJECT_CODEGEN="$PYTHON `$PKG_CONFIG --variable=codegendir pygobject-2.0`/codegen.pyc"
+ 	AC_MSG_RESULT([$PYGOBJECT_CODEGEN])
  
- 	AC_MSG_CHECKING([for pygtk h2def])
--	PYGTK_H2DEF="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/h2def.py"
-+	PYGTK_H2DEF="$PYTHON `$PKG_CONFIG --variable=codegendir pygtk-2.0`/h2def.pyc"
- 	AC_MSG_RESULT([$PYGTK_H2DEF])
+ 	AC_MSG_CHECKING([for pygobject h2def])
+-	PYGOBJECT_H2DEF="$PYTHON `$PKG_CONFIG --variable=codegendir pygobject-2.0`/h2def.py"
++	PYGOBJECT_H2DEF="$PYTHON `$PKG_CONFIG --variable=codegendir pygobject-2.0`/h2def.pyc"
+ 	AC_MSG_RESULT([$PYGOBJECT_H2DEF])
  
  	AC_SUBST([PYGTK_DEFSDIR])

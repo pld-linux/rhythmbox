@@ -1,18 +1,19 @@
 #
 # Conditional build:
 %bcond_without	ipod	# build without iPod support
-%bcond_without	mtp	# build without MTP support
-#
+%bcond_without	mtp		# build without MTP support
+%bcond_without	daap	# build without DAAP support
+
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.12.8
-Release:	3
+Version:	0.13.0
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.12/%{name}-%{version}.tar.bz2
-# Source0-md5:	3e24108119264a0cbd8b4ccbd7732173
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.13/%{name}-%{version}.tar.bz2
+# Source0-md5:	39be31456ac8b9ba9288f0f4f9498638
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
@@ -36,9 +37,10 @@ BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.10.10
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
+%{?with_daap:BuildRequires:	libdmapsharing-devel >= 1.9.0.21}
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
-%{?with_ipod:BuildRequires:	libgpod-devel >= 0.5.2}
+%{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
 BuildRequires:	libmusicbrainz-devel
 BuildRequires:	libmusicbrainz3-devel
@@ -113,7 +115,7 @@ Requires:	browser-plugins >= 2.0
 Requires:	browser-plugins(%{_target_base_arch})
 
 %description -n browser-plugin-%{name}
-Rhythmbox's plugin for browsers.
+iTunes detection browser plugin (for podcasts).
 
 %description -n browser-plugin-%{name} -l hu.UTF-8
 Rhythmbox böngésző plugin.
@@ -146,7 +148,9 @@ gnome-doc-prepare --copy --force
 %{__autoheader}
 %{__automake}
 %{__autoconf}
+MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 %configure \
+	--disable-static \
 	--disable-schemas-install \
 	--disable-scrollkeeper \
 	--disable-silent-rules \
@@ -156,6 +160,7 @@ gnome-doc-prepare --copy --force
 	--enable-python \
 	--enable-vala \
 	%{!?with_ipod:--without-ipod} \
+	--%{?with_daap:en}%{!?with_daap:--dis}able-daap \
 	--with-gnome-keyring \
 	--with-gudev \
 	--with-libbrasero-media \
@@ -168,29 +173,29 @@ gnome-doc-prepare --copy --force
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-install -d $RPM_BUILD_ROOT%{_browserpluginsdir}
-
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-mv $RPM_BUILD_ROOT%{_libdir}/mozilla/plugins/* $RPM_BUILD_ROOT%{_browserpluginsdir}
-
-# there is no -devel subpackage, so we don't need APIdocs
+# there is no -devel subpackage
 rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
+rm -rf $RPM_BUILD_ROOT%{_includedir}/rhythmbox
+rm -f $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/daap/rb-daap-glue.h
+
+rm -rf $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.so
+rm -rf $RPM_BUILD_ROOT%{_pkgconfigdir}/rhythmbox.pc
 
 %find_lang %{name} --with-gnome --with-omf
 
-rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.{la,a}
-rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.{la,a}
-rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.{a,la}
+rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
+rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-itms-detection-plugin.la
+rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.la
+rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
+rm -f  $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
 rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
 rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
 
-find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.py" -exec rm -f {} \;
-find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.a" -exec rm -f {} \;
-find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.la" -exec rm -f {} \;
+find $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins -name "*.py" | xargs rm
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -247,11 +252,13 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
 %{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
+%if %{with daap}
 %dir %{_libdir}/rhythmbox/plugins/daap
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
 %{_libdir}/rhythmbox/plugins/daap/*-plugin
 %{_libdir}/rhythmbox/plugins/daap/*.ui
 %{_libdir}/rhythmbox/plugins/daap/*.xml
+%endif
 %dir %{_libdir}/rhythmbox/plugins/fmradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/fmradio/*.so
 %{_libdir}/rhythmbox/plugins/fmradio/*-plugin
@@ -261,11 +268,13 @@ fi
 %{_libdir}/rhythmbox/plugins/generic-player/*-plugin
 %{_libdir}/rhythmbox/plugins/generic-player/*.ui
 %{_libdir}/rhythmbox/plugins/generic-player/generic-player-ui.xml
-%{?with_ipod:%dir %{_libdir}/rhythmbox/plugins/ipod}
-%{?with_ipod:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so}
-%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*-plugin}
-%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/ipod-ui.xml}
-%{?with_ipod:%{_libdir}/rhythmbox/plugins/ipod/*.ui}
+%if %{with ipod}
+%dir %{_libdir}/rhythmbox/plugins/ipod
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/ipod/*.so
+%{_libdir}/rhythmbox/plugins/ipod/*-plugin
+%{_libdir}/rhythmbox/plugins/ipod/ipod-ui.xml
+%{_libdir}/rhythmbox/plugins/ipod/*.ui
+%endif
 %dir %{_libdir}/rhythmbox/plugins/iradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/iradio/*.so
 %{_libdir}/rhythmbox/plugins/iradio/*-plugin
@@ -289,11 +298,13 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/mmkeys/libmmkeys.so
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.rb-plugin
-%{?with_mtp:%dir %{_libdir}/rhythmbox/plugins/mtpdevice}
-%{?with_mtp:%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mtpdevice/libmtpdevice.so}
-%{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/mtpdevice.rb-plugin}
-%{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/*.ui}
-%{?with_mtp:%{_libdir}/rhythmbox/plugins/mtpdevice/mtp-ui.xml}
+%if %{with mtp}
+%dir %{_libdir}/rhythmbox/plugins/mtpdevice
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mtpdevice/libmtpdevice.so
+%{_libdir}/rhythmbox/plugins/mtpdevice/mtpdevice.rb-plugin
+%{_libdir}/rhythmbox/plugins/mtpdevice/*.ui
+%{_libdir}/rhythmbox/plugins/mtpdevice/mtp-ui.xml
+%endif
 %dir %{_libdir}/rhythmbox/plugins/power-manager
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/power-manager/*.so
 %{_libdir}/rhythmbox/plugins/power-manager/*-plugin
@@ -348,13 +359,11 @@ fi
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
-%{_iconsdir}/hicolor/*/*/rhythmbox.svg
 %{_iconsdir}/hicolor/*/*/music-library.png
+%{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
 %{_sysconfdir}/gconf/schemas/rhythmbox.schemas
 %{_mandir}/man1/rhythmbox.1*
 %{_mandir}/man1/rhythmbox-client.1*
-
-
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
