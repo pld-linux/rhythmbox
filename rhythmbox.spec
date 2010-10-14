@@ -136,6 +136,8 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %{__sed} -i -e 's#ps##' po/LINGUAS
 rm -rf po/ps
 
+%{__sed} -i -e 's|vala-1.0|vala-0.10|g' configure.ac
+
 %build
 # for snapshots
 gnome-doc-prepare --copy --force
@@ -230,7 +232,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.0
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.1
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
 %dir %{_libdir}/rhythmbox/plugins/artdisplay
@@ -259,6 +261,9 @@ fi
 %{_libdir}/rhythmbox/plugins/daap/*.ui
 %{_libdir}/rhythmbox/plugins/daap/*.xml
 %endif
+%dir %{_libdir}/rhythmbox/plugins/dbus-media-server
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/dbus-media-server/libdbus-media-server.so
+%{_libdir}/rhythmbox/plugins/dbus-media-server/dbus-media-server.rb-plugin
 %dir %{_libdir}/rhythmbox/plugins/fmradio
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/fmradio/*.so
 %{_libdir}/rhythmbox/plugins/fmradio/*-plugin
@@ -298,6 +303,9 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/mmkeys/libmmkeys.so
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.rb-plugin
+%dir %{_libdir}/rhythmbox/plugins/mpris
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mpris/libmpris.so
+%{_libdir}/rhythmbox/plugins/mpris/mpris.rb-plugin
 %if %{with mtp}
 %dir %{_libdir}/rhythmbox/plugins/mtpdevice
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/mtpdevice/libmtpdevice.so
