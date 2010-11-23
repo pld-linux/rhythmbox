@@ -1,0 +1,11 @@
+--- rhythmbox-0.13.1/configure.ac~	2010-11-24 00:45:22.206982997 +0100
++++ rhythmbox-0.13.1/configure.ac	2010-11-24 00:47:32.807982996 +0100
+@@ -793,7 +793,7 @@
+                              [Disable DAAP support]),,
+               enable_daap=auto)
+ if test "x$enable_daap" != "xno"; then
+-	PKG_CHECK_MODULES(DMAPSHARING, libdmapsharing-2.0,
++	PKG_CHECK_MODULES(DMAPSHARING, libdmapsharing-2.2,
+ 			  have_libdmapsharing=yes,
+ 			  have_libdmapsharing=no)
+ 	if test "x$have_libdmapsharing" = "xno"; then

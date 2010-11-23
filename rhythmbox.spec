@@ -17,6 +17,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.13/%{name}-%{version
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
+Patch3:		%{name}-libdmapsharing-2.2.patch
 URL:		http://www.rhythmbox.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -128,9 +129,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-# %patch3 -p1
-#%patch4 -p1
-#%patch5 -p1
+%patch3 -p1
 
 # Pashto not yet supported by (our?) libc
 %{__sed} -i -e 's#ps##' po/LINGUAS
