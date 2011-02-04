@@ -9,7 +9,7 @@ Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.13.1
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.13/%{name}-%{version}.tar.bz2
@@ -67,6 +67,7 @@ BuildRequires:	xulrunner-devel
 BuildRequires:	zlib-devel
 %pyrequires_eq	python-modules
 Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
 Requires(post,preun):	GConf2
