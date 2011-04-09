@@ -8,12 +8,12 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	0.13.1
-Release:	6
+Version:	0.13.3
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.13/%{name}-%{version}.tar.bz2
-# Source0-md5:	274e1105e1c26e553731886dec5d05bd
+# Source0-md5:	02dbe28c47c7dd6446aa7e87b90cbcca
 Patch0:		%{name}-desktop.patch
 Patch1:		%{name}-gtk2.8-crash.patch
 Patch2:		%{name}-pyc.patch
@@ -130,7 +130,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#%%patch3 -p1
 
 # Pashto not yet supported by (our?) libc
 %{__sed} -i -e 's#ps##' po/LINGUAS
@@ -232,7 +232,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.1
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.3
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
 %dir %{_libdir}/rhythmbox/plugins/artdisplay
@@ -249,8 +249,8 @@ fi
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*-plugin
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.xml
-%{_libdir}/rhythmbox/plugins/audioscrobbler/as-icon.png
-%{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-prefs.ui
+%{_libdir}/rhythmbox/plugins/audioscrobbler/*.png
+%{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-*.ui
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
 %{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
@@ -258,6 +258,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/daap
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
 %{_libdir}/rhythmbox/plugins/daap/*-plugin
+%{_libdir}/rhythmbox/plugins/daap/*.png
 %{_libdir}/rhythmbox/plugins/daap/*.ui
 %{_libdir}/rhythmbox/plugins/daap/*.xml
 %endif
@@ -284,7 +285,7 @@ fi
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/iradio/*.so
 %{_libdir}/rhythmbox/plugins/iradio/*-plugin
 %{_libdir}/rhythmbox/plugins/iradio/*.xml
-%{_libdir}/rhythmbox/plugins/iradio/iradio-initial.pls
+%{_libdir}/rhythmbox/plugins/iradio/iradio-initial.xspf
 %{_libdir}/rhythmbox/plugins/iradio/station-properties.ui
 %dir %{_libdir}/rhythmbox/plugins/jamendo
 %{_libdir}/rhythmbox/plugins/jamendo/*.py[co]
