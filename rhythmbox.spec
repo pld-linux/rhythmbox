@@ -1,9 +1,11 @@
 #
+# TODO: restore cd-recorder plugin
+#
 # Conditional build:
 %bcond_without	ipod	# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap	# build without DAAP support
-
+#
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
@@ -249,9 +251,9 @@ fi
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.xml
 %{_libdir}/rhythmbox/plugins/audioscrobbler/*.png
 %{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler-*.ui
-%dir %{_libdir}/rhythmbox/plugins/cd-recorder
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
-%{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
+#%%dir %{_libdir}/rhythmbox/plugins/cd-recorder
+#%%attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
+#%%{_libdir}/rhythmbox/plugins/cd-recorder/*-plugin
 %if %{with daap}
 %dir %{_libdir}/rhythmbox/plugins/daap
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
