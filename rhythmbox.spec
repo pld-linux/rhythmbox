@@ -1,5 +1,6 @@
-#
-# TODO: restore cd-recorder plugin
+# TODO:
+# - Restore cd-recorder plugin
+# - Add rbzeitgeist plugin
 #
 # Conditional build:
 %bcond_without	ipod	# build without iPod support
@@ -11,7 +12,7 @@ Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	0.13.3
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/0.13/%{name}-%{version}.tar.bz2
