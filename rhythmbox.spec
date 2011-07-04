@@ -40,7 +40,7 @@ BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+2-devel >= 2:2.10.10
 BuildRequires:	gtk-doc
 BuildRequires:	intltool
-%{?with_daap:BuildRequires:	libdmapsharing-devel >= 1.9.0.21}
+%{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.1.6}
 BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
