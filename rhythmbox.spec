@@ -16,6 +16,7 @@ Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/%{version}/%{name}-%{v
 # Source0-md5:	fe7fb78496951efc40d82222e8a63d85
 Patch0:		%{name}-desktop.patch
 URL:		http://projects.gnome.org/rhythmbox/
+BuildRequires:	GConf2-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.14
@@ -23,7 +24,6 @@ BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	docbook-dtd412-xml
-BuildRequires:	gcr-devel >= 0.8
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
 BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.28.0
@@ -40,6 +40,7 @@ BuildRequires:	gtk-webkit3-devel >= 1.3.9
 BuildRequires:	intltool
 %{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.11}
 BuildRequires:	libglade2-devel >= 1:2.6.0
+BuildRequires:	libgnome-keyring-devel >= 0.8
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
 BuildRequires:	libmusicbrainz3-devel > 3.0.2
@@ -64,6 +65,7 @@ BuildRequires:	tdb-devel >= 2:1.2.6
 BuildRequires:	totem-pl-parser-devel >= 2.32.1
 BuildRequires:	udev-glib-devel >= 143
 BuildRequires:	vala >= 0.9.4
+BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xulrunner-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
