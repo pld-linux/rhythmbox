@@ -12,14 +12,14 @@ Version:	2.96
 Release:	0.3
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/2.96/%{name}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	fe7fb78496951efc40d82222e8a63d85
 Patch0:		%{name}-desktop.patch
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.14
-BuildRequires:	brasero-devel >= 2.26.0
+BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	docbook-dtd412-xml
@@ -29,22 +29,23 @@ BuildRequires:	gettext-devel
 BuildRequires:	glib2-devel >= 1:2.28.0
 BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
-BuildRequires:	gnome-vfs2-devel >= 2.18.0.1
 BuildRequires:	gobject-introspection-devel >= 0.10.0
+BuildRequires:	grilo-devel >= 0.1.17
 BuildRequires:	gstreamer-GConf >= 0.10.4
-BuildRequires:	gstreamer-devel >= 0.10.10
+BuildRequires:	gstreamer-devel >= 0.10.32
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+3-devel >= 3.2.0
 BuildRequires:	gtk-doc
+BuildRequires:	gtk-webkit3-devel >= 1.3.9
 BuildRequires:	intltool
 %{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.11}
 BuildRequires:	libglade2-devel >= 1:2.6.0
-BuildRequires:	libgnomeui-devel >= 2.18.1
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
-BuildRequires:	libmusicbrainz-devel
-BuildRequires:	libmusicbrainz3-devel
-BuildRequires:	libnotify-devel >= 0.4.2
+BuildRequires:	libmusicbrainz3-devel > 3.0.2
+BuildRequires:	libnotify-devel >= 0.7.0
+BuildRequires:	libpeas-devel >= 0.7.3
+BuildRequires:	libpeas-gtk-devel >= 0.7.3
 BuildRequires:	libsexy-devel >= 0.1.10
 BuildRequires:	libsoup-devel >= 2.26.0
 BuildRequires:	libsoup-gnome-devel >= 2.26.0
@@ -52,7 +53,7 @@ BuildRequires:	libtool
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python-gstreamer-devel >= 0.10.1
-BuildRequires:	python-pygobject3-common-devel
+BuildRequires:	python-pygobject3-common-devel >= 2.90.2
 BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
@@ -60,9 +61,9 @@ BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
 BuildRequires:	tdb-devel >= 2:1.2.6
-BuildRequires:	totem-pl-parser-devel >= 2.22.0
-BuildRequires:	udev-glib-devel >= 0.5.7
-BuildRequires:	vala
+BuildRequires:	totem-pl-parser-devel >= 2.32.1
+BuildRequires:	udev-glib-devel >= 143
+BuildRequires:	vala >= 0.9.4
 BuildRequires:	xulrunner-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
@@ -73,15 +74,12 @@ Requires(post,postun):	hicolor-icon-theme
 Requires(post,postun):	scrollkeeper
 Requires(post,preun):	GConf2
 Requires:	dbus >= 0.93
-Requires:	glib2 >= 1:2.26.0
+Requires:	glib2 >= 1:2.28.0
 Requires:	gstreamer-audio-effects-base >= 0.10.10
 Requires:	gstreamer-audio-formats >= 0.10.4
 Requires:	gstreamer-audiosink
-Requires:	gstreamer-gnomevfs >= 0.10.10
 Requires:	gstreamer-plugins-good >= 0.10.4
-Requires:	gtk+2 >= 2:2.10.10
-Requires:	libgnomeui >= 2.18.1
-Suggests:	gnome-vfs2
+Requires:	gtk+3 >= 3.2.0
 Suggests:	gstreamer-flac
 Suggests:	gstreamer-mad
 Suggests:	gstreamer-neon
@@ -89,7 +87,6 @@ Suggests:	gstreamer-vorbis
 Suggests:	python-Louie
 Suggests:	python-coherence
 Suggests:	python-gnome
-Suggests:	python-gnome-vfs
 Suggests:	python-gstreamer
 Obsoletes:	net-rhythmbox
 # sr@Latn vs. sr@latin
@@ -131,12 +128,6 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %setup -q
 %patch0 -p1
 
-# Pashto not yet supported by (our?) libc
-%{__sed} -i -e 's#ps##' po/LINGUAS
-rm -rf po/ps
-
-%{__sed} -i -e 's|vala-1.0|vala-0.10|g' configure.ac
-
 %build
 # for snapshots
 gnome-doc-prepare --copy --force
@@ -167,6 +158,7 @@ MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	--with-libbrasero-media \
 	--with-mdns=avahi \
 	--with-mtp \
+	--with-webkit \
 	--with-x \
 	--without-hal \
 	--without-libnautilus-burn
@@ -178,27 +170,22 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT \
 	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
 
-# there is no -devel subpackage
-rm -rf $RPM_BUILD_ROOT%{_datadir}/gtk-doc
-rm -rf $RPM_BUILD_ROOT%{_includedir}/rhythmbox
-rm -f $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/daap/rb-daap-glue.h
-
-rm -rf $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.so
-rm -rf $RPM_BUILD_ROOT%{_pkgconfigdir}/rhythmbox.pc
-
 %find_lang %{name} --with-gnome --with-omf
 
-rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
-rm -f  $RPM_BUILD_ROOT%{_libdir}/librhythmbox-itms-detection-plugin.la
-rm -f  $RPM_BUILD_ROOT%{_libdir}/bonobo/lib*.la
-rm -f  $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
-rm -f  $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
-rm -rf $RPM_BUILD_ROOT%{_datadir}/application-registry
-rm -rf $RPM_BUILD_ROOT%{_datadir}/mime-info
+%py_postclean %{_libdir}/rhythmbox/plugins
+
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
+
+# there is no -devel subpackage
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gtk-doc
+%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/rhythmbox
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gir-1.0
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.so
+%{__rm} $RPM_BUILD_ROOT%{_pkgconfigdir}/rhythmbox.pc
 
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/sample-vala
-
-%py_postclean %{_libdir}/rhythmbox/plugins
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -251,7 +238,7 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/artdisplay
 %{_libdir}/rhythmbox/plugins/artdisplay/artdisplay.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
+%{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/artsearch
 %{_libdir}/rhythmbox/plugins/artsearch/artsearch.plugin
@@ -273,6 +260,12 @@ fi
 %{_libdir}/rhythmbox/plugins/context/context.plugin
 %{_libdir}/rhythmbox/plugins/context/*.py[co]
 
+%if %{with daap}
+%dir %{_libdir}/rhythmbox/plugins/daap
+%{_libdir}/rhythmbox/plugins/daap/daap.plugin
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
+%endif
+
 %dir %{_libdir}/rhythmbox/plugins/dbus-media-server
 %{_libdir}/rhythmbox/plugins/dbus-media-server/dbus-media-server.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/dbus-media-server/libdbus-media-server.so
@@ -293,12 +286,6 @@ fi
 %{_libdir}/rhythmbox/plugins/im-status/im-status.plugin
 %{_libdir}/rhythmbox/plugins/im-status/*.py[co]
 
-#%dir %{_libdir}/rhythmbox/plugins/status-icon
-#%{_libdir}/rhythmbox/plugins/status-icon/libstatus-icon.so
-#%{_libdir}/rhythmbox/plugins/status-icon/*.ui
-#%{_libdir}/rhythmbox/plugins/status-icon/*.xml
-#%{_libdir}/rhythmbox/plugins/status-icon/*.rb-plugin
-
 %if %{with ipod}
 %dir %{_libdir}/rhythmbox/plugins/ipod
 %{_libdir}/rhythmbox/plugins/ipod/ipod.plugin
@@ -311,11 +298,11 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %{_libdir}/rhythmbox/plugins/lyrics/lyrics.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
+%{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/magnatune
 %{_libdir}/rhythmbox/plugins/magnatune/magnatune.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/magnatune/*.py[co]
+%{_libdir}/rhythmbox/plugins/magnatune/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.plugin
@@ -341,11 +328,11 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/python-console
 %{_libdir}/rhythmbox/plugins/python-console/pythonconsole.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/python-console/*.py[co]
+%{_libdir}/rhythmbox/plugins/python-console/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/rb
 %{_libdir}/rhythmbox/plugins/rb/rb.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/rb/*.py[co]
+%{_libdir}/rhythmbox/plugins/rb/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/rblirc
 %{_libdir}/rhythmbox/plugins/rblirc/rblirc.plugin
@@ -366,32 +353,6 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/visualizer
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
-
-%if 0
-%if %{with daap}
-%dir %{_libdir}/rhythmbox/plugins/daap
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/daap/*.so
-%{_libdir}/rhythmbox/plugins/daap/*-plugin
-%{_libdir}/rhythmbox/plugins/daap/*.png
-%{_libdir}/rhythmbox/plugins/daap/*.ui
-%{_libdir}/rhythmbox/plugins/daap/*.xml
-%endif
-%dir %{_libdir}/rhythmbox/plugins/jamendo
-%{_libdir}/rhythmbox/plugins/jamendo/*.py[co]
-%{_libdir}/rhythmbox/plugins/jamendo/*.ui
-%{_libdir}/rhythmbox/plugins/jamendo/jamendo.rb-plugin
-%{_libdir}/rhythmbox/plugins/jamendo/*.png
-%dir %{_libdir}/rhythmbox/plugins/upnp_coherence
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/upnp_coherence/*.py[co]
-%{_libdir}/rhythmbox/plugins/upnp_coherence/coherence.rb-plugin
-#%dir %{_libdir}/rhythmbox/plugins/dontreallyclose
-#%attr(755,root,root) %{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.py[co]
-#%{_libdir}/rhythmbox/plugins/dontreallyclose/dontreallyclose.rb-plugin
-%endif
-
-#%files devel
-#%{_datadir}/gir-1.0/MPID-3.0.gir
-#%{_datadir}/gir-1.0/RB-3.0.gir
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
