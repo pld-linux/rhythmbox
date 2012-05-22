@@ -3,13 +3,14 @@
 %bcond_without	ipod	# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap	# build without DAAP support
+%bcond_without	vis		# build without Visualization support
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	2.96
-Release:	0.4
+Release:	0.5
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/%{version}/%{name}-%{version}.tar.xz
@@ -69,6 +70,12 @@ BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xulrunner-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
+%if %{with vis}
+BuildRequires:	clutter-devel >= 1.2
+BuildRequires:	clutter-gst-devel >= 1.0
+BuildRequires:	clutter-gtk-devel >= 1.0
+BuildRequires:	mx-devel
+%endif
 %pyrequires_eq	python-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
@@ -225,7 +232,6 @@ fi
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_iconsdir}/hicolor/*/*/music-library.png
 %{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
-#%{_sysconfdir}/gconf/schemas/rhythmbox.schemas
 %{_mandir}/man1/rhythmbox.1*
 %{_mandir}/man1/rhythmbox-client.1*
 
@@ -350,9 +356,11 @@ fi
 %{_libdir}/rhythmbox/plugins/sendto/sendto.plugin
 %{_libdir}/rhythmbox/plugins/sendto/*.py[co]
 
+%if %{with vis}
 %dir %{_libdir}/rhythmbox/plugins/visualizer
 %{_libdir}/rhythmbox/plugins/visualizer/visualizer.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
+%endif
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
