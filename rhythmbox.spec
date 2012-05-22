@@ -9,7 +9,7 @@ Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	2.96
-Release:	0.3
+Release:	0.4
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/%{version}/%{name}-%{version}.tar.xz
@@ -155,13 +155,11 @@ MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	%{?with_daap:--enable-daap} \
 	--with-gnome-keyring \
 	--with-gudev \
-	--with-libbrasero-media \
 	--with-mdns=avahi \
 	--with-mtp \
 	--with-webkit \
 	--with-x \
-	--without-hal \
-	--without-libnautilus-burn
+	--without-hal
 %{__make}
 
 %install
