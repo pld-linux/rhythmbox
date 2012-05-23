@@ -22,7 +22,6 @@ BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.14
 BuildRequires:	brasero-devel >= 2.31.5
-BuildRequires:	check >= 0.9.4
 BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
@@ -32,7 +31,6 @@ BuildRequires:	gnome-common
 BuildRequires:	gnome-doc-utils
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	grilo-devel >= 0.1.17
-BuildRequires:	gstreamer-GConf >= 0.10.4
 BuildRequires:	gstreamer-devel >= 0.10.32
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+3-devel >= 3.2.0
@@ -40,7 +38,6 @@ BuildRequires:	gtk-doc
 BuildRequires:	gtk-webkit3-devel >= 1.3.9
 BuildRequires:	intltool
 %{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.11}
-BuildRequires:	libglade2-devel >= 1:2.6.0
 BuildRequires:	libgnome-keyring-devel >= 0.8
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
@@ -48,26 +45,21 @@ BuildRequires:	libmusicbrainz3-devel > 3.0.2
 BuildRequires:	libnotify-devel >= 0.7.0
 BuildRequires:	libpeas-devel >= 0.7.3
 BuildRequires:	libpeas-gtk-devel >= 0.7.3
-BuildRequires:	libsexy-devel >= 0.1.10
 BuildRequires:	libsoup-devel >= 2.26.0
 BuildRequires:	libsoup-gnome-devel >= 2.26.0
 BuildRequires:	libtool
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-gstreamer-devel >= 0.10.1
 BuildRequires:	python-pygobject3-common-devel >= 2.90.2
-BuildRequires:	python-pygtk-devel >= 2:2.10.4
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
-BuildRequires:	scrollkeeper
 BuildRequires:	sed >= 4.0
 BuildRequires:	tdb-devel >= 2:1.2.6
 BuildRequires:	totem-pl-parser-devel >= 2.32.1
 BuildRequires:	udev-glib-devel >= 143
 BuildRequires:	vala >= 0.9.4
 BuildRequires:	xorg-lib-libSM-devel
-BuildRequires:	xulrunner-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 %if %{with vis}
