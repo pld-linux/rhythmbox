@@ -149,7 +149,6 @@ MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	--disable-scrollkeeper \
 	--disable-silent-rules \
 	--enable-browser-plugin \
-	--enable-gtk-doc \
 	--enable-lirc \
 	--enable-python \
 	--enable-vala \
