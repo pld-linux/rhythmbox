@@ -1,9 +1,10 @@
 #
 # Conditional build:
-%bcond_without	ipod	# build without iPod support
+%bcond_without	ipod		# build without iPod support
 %bcond_without	mtp		# build without MTP support
-%bcond_without	daap	# build without DAAP support
+%bcond_without	daap		# build without DAAP support
 %bcond_without	vis		# build without Visualization support
+%bcond_with	webkit		# build with gtk-webkit support
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
@@ -35,7 +36,7 @@ BuildRequires:	gstreamer-devel >= 0.10.32
 BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
 BuildRequires:	gtk+3-devel >= 3.2.0
 BuildRequires:	gtk-doc
-BuildRequires:	gtk-webkit3-devel >= 1.3.9
+%{?with_webkit:BuildRequires:	gtk-webkit3-devel >= 1.3.9}
 BuildRequires:	intltool
 %{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.11}
 BuildRequires:	libgnome-keyring-devel >= 0.8
@@ -158,9 +159,10 @@ MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	--with-gudev \
 	--with-mdns=avahi \
 	--with-mtp \
-	--with-webkit \
+	--with%{!?with_webkit:out}-webkit \
 	--with-x \
 	--without-hal
+
 %{__make}
 
 %install
