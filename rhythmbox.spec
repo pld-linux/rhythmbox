@@ -3,7 +3,7 @@
 %bcond_without	ipod		# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap		# build without DAAP support
-%bcond_without	vis		# build without Visualization support
+%bcond_with	vis		# build with Visualization support
 %bcond_with	webkit		# build with gtk-webkit support
 
 Summary:	Music Management Application
@@ -145,7 +145,6 @@ gnome-doc-prepare --copy --force
 MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 %configure \
 	--disable-static \
-	--disable-schemas-install \
 	--disable-scrollkeeper \
 	--disable-silent-rules \
 	--enable-browser-plugin \
@@ -216,7 +215,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.5
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.6
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
@@ -232,10 +231,6 @@ fi
 
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
-
-%dir %{_libdir}/rhythmbox/plugins/artdisplay
-%{_libdir}/rhythmbox/plugins/artdisplay/artdisplay.plugin
-%{_libdir}/rhythmbox/plugins/artdisplay/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/artsearch
 %{_libdir}/rhythmbox/plugins/artsearch/artsearch.plugin
