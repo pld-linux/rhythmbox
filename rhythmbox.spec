@@ -9,12 +9,12 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	2.96
+Version:	2.98
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	fe7fb78496951efc40d82222e8a63d85
+# Source0-md5:	1567bd790e9dd23fd63401c1c09e6249
 Patch0:		%{name}-desktop.patch
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	GConf2-devel
