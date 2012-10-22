@@ -185,8 +185,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.so
 %{__rm} $RPM_BUILD_ROOT%{_pkgconfigdir}/rhythmbox.pc
 
-%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/sample-vala
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
