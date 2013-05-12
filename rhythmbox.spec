@@ -10,15 +10,14 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	2.98
+Version:	2.99.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	1567bd790e9dd23fd63401c1c09e6249
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/2.99/%{name}-%{version}.tar.xz
+# Source0-md5:	88dbd8ee65639f020c390648b3060be2
 Patch0:		%{name}-desktop.patch
 URL:		http://projects.gnome.org/rhythmbox/
-BuildRequires:	GConf2-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	avahi-glib-devel >= 0.6.14
@@ -173,14 +172,15 @@ rm -rf $RPM_BUILD_ROOT
 
 %py_postclean %{_libdir}/rhythmbox/plugins
 
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
 
 # there is no -devel subpackage
+%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gir-1.0
 %{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gtk-doc
 %{__rm} -r $RPM_BUILD_ROOT%{_includedir}/rhythmbox
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gir-1.0
+%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/rhythmbox/sample-plugins
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.so
 %{__rm} $RPM_BUILD_ROOT%{_pkgconfigdir}/rhythmbox.pc
 
@@ -215,12 +215,13 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.6
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.7
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
 %{_iconsdir}/hicolor/*/*/music-library.png
+%{_iconsdir}/hicolor/*/*/rhythmbox-missing-artwork.png
 %{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
 %{_mandir}/man1/rhythmbox.1*
 %{_mandir}/man1/rhythmbox-client.1*
@@ -247,10 +248,6 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %{_libdir}/rhythmbox/plugins/cd-recorder/cd-recorder.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
-
-%dir %{_libdir}/rhythmbox/plugins/context
-%{_libdir}/rhythmbox/plugins/context/context.plugin
-%{_libdir}/rhythmbox/plugins/context/*.py[co]
 
 %if %{with daap}
 %dir %{_libdir}/rhythmbox/plugins/daap
