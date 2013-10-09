@@ -331,7 +331,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/rbzeitgeist
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/rbzeitgeist.plugin
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/*.py
-%{_libdir}/rhythmbox/plugins/rbzeitgeist/__pycache__
+#%{_libdir}/rhythmbox/plugins/rbzeitgeist/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/replaygain
 %{_libdir}/rhythmbox/plugins/replaygain/replaygain.plugin
