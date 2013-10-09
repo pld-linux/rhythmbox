@@ -49,7 +49,7 @@ BuildRequires:	libsoup-gnome-devel >= 2.26.0
 BuildRequires:	libtool
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python-pygobject3-common-devel >= 2.90.2
+BuildRequires:	python3-pygobject3-devel
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
@@ -67,7 +67,7 @@ BuildRequires:	clutter-gst-devel >= 1.0
 BuildRequires:	clutter-gtk-devel >= 1.0
 BuildRequires:	mx-devel
 %endif
-%pyrequires_eq	python-modules
+%pyrequires_eq	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
@@ -84,10 +84,10 @@ Suggests:	gstreamer-flac
 Suggests:	gstreamer-mad
 Suggests:	gstreamer-neon
 Suggests:	gstreamer-vorbis
-Suggests:	python-Louie
-Suggests:	python-coherence
-Suggests:	python-gnome
-Suggests:	python-gstreamer
+Suggests:	python3-Louie
+Suggests:	python3-coherence
+Suggests:	python3-gnome
+Suggests:	python3-gstreamer
 Obsoletes:	net-rhythmbox
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -168,8 +168,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %find_lang %{name} --with-gnome --with-omf
 
-%py_postclean %{_libdir}/rhythmbox/plugins
-
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
@@ -232,6 +230,8 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/artsearch
 %{_libdir}/rhythmbox/plugins/artsearch/artsearch.plugin
+%{_libdir}/rhythmbox/plugins/artsearch/*.py
+%{_libdir}/rhythmbox/plugins/artsearch/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/audiocd
 %{_libdir}/rhythmbox/plugins/audiocd/audiocd.plugin
@@ -269,6 +269,8 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/im-status
 %{_libdir}/rhythmbox/plugins/im-status/im-status.plugin
+%{_libdir}/rhythmbox/plugins/im-status/*.py
+%{_libdir}/rhythmbox/plugins/im-status/__pycache__
 
 %if %{with ipod}
 %dir %{_libdir}/rhythmbox/plugins/ipod
@@ -282,9 +284,13 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %{_libdir}/rhythmbox/plugins/lyrics/lyrics.plugin
+%{_libdir}/rhythmbox/plugins/lyrics/*.py
+%{_libdir}/rhythmbox/plugins/lyrics/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/magnatune
 %{_libdir}/rhythmbox/plugins/magnatune/magnatune.plugin
+%{_libdir}/rhythmbox/plugins/magnatune/*.py
+%{_libdir}/rhythmbox/plugins/magnatune/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.plugin
@@ -310,9 +316,13 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/python-console
 %{_libdir}/rhythmbox/plugins/python-console/pythonconsole.plugin
+%{_libdir}/rhythmbox/plugins/python-console/*.py
+%{_libdir}/rhythmbox/plugins/python-console/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/rb
 %{_libdir}/rhythmbox/plugins/rb/rb.plugin
+%{_libdir}/rhythmbox/plugins/rb/*.py
+%{_libdir}/rhythmbox/plugins/rb/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/rblirc
 %{_libdir}/rhythmbox/plugins/rblirc/rblirc.plugin
@@ -320,12 +330,18 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/rbzeitgeist
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/rbzeitgeist.plugin
+%{_libdir}/rhythmbox/plugins/rbzeitgeist/*.py
+%{_libdir}/rhythmbox/plugins/rbzeitgeist/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/replaygain
 %{_libdir}/rhythmbox/plugins/replaygain/replaygain.plugin
+%{_libdir}/rhythmbox/plugins/replaygain/*.py
+%{_libdir}/rhythmbox/plugins/replaygain/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/sendto
 %{_libdir}/rhythmbox/plugins/sendto/sendto.plugin
+%{_libdir}/rhythmbox/plugins/sendto/*.py
+%{_libdir}/rhythmbox/plugins/sendto/__pycache__
 
 %if %{with vis}
 %dir %{_libdir}/rhythmbox/plugins/visualizer
