@@ -213,12 +213,11 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.7
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.8
 %{_datadir}/%{name}
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
-%{_iconsdir}/hicolor/*/*/music-library.png
 %{_iconsdir}/hicolor/*/*/rhythmbox-missing-artwork.png
 %{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
 %{_mandir}/man1/rhythmbox.1*
@@ -233,7 +232,6 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/artsearch
 %{_libdir}/rhythmbox/plugins/artsearch/artsearch.plugin
-%{_libdir}/rhythmbox/plugins/artsearch/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/audiocd
 %{_libdir}/rhythmbox/plugins/audiocd/audiocd.plugin
@@ -271,7 +269,6 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/im-status
 %{_libdir}/rhythmbox/plugins/im-status/im-status.plugin
-%{_libdir}/rhythmbox/plugins/im-status/*.py[co]
 
 %if %{with ipod}
 %dir %{_libdir}/rhythmbox/plugins/ipod
@@ -285,11 +282,9 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %{_libdir}/rhythmbox/plugins/lyrics/lyrics.plugin
-%{_libdir}/rhythmbox/plugins/lyrics/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/magnatune
 %{_libdir}/rhythmbox/plugins/magnatune/magnatune.plugin
-%{_libdir}/rhythmbox/plugins/magnatune/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.plugin
@@ -315,11 +310,9 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/python-console
 %{_libdir}/rhythmbox/plugins/python-console/pythonconsole.plugin
-%{_libdir}/rhythmbox/plugins/python-console/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/rb
 %{_libdir}/rhythmbox/plugins/rb/rb.plugin
-%{_libdir}/rhythmbox/plugins/rb/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/rblirc
 %{_libdir}/rhythmbox/plugins/rblirc/rblirc.plugin
@@ -327,15 +320,12 @@ fi
 
 %dir %{_libdir}/rhythmbox/plugins/rbzeitgeist
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/rbzeitgeist.plugin
-%{_libdir}/rhythmbox/plugins/rbzeitgeist/rbzeitgeist.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/replaygain
 %{_libdir}/rhythmbox/plugins/replaygain/replaygain.plugin
-%{_libdir}/rhythmbox/plugins/replaygain/*.py[co]
 
 %dir %{_libdir}/rhythmbox/plugins/sendto
 %{_libdir}/rhythmbox/plugins/sendto/sendto.plugin
-%{_libdir}/rhythmbox/plugins/sendto/*.py[co]
 
 %if %{with vis}
 %dir %{_libdir}/rhythmbox/plugins/visualizer
