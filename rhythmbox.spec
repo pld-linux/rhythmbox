@@ -3,19 +3,19 @@
 %bcond_without	ipod		# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap		# build without DAAP support
-%bcond_with	vis		# build with Visualization support
+%bcond_without	vis		# build with Visualization support
 %bcond_with	webkit		# build with gtk-webkit support
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.0
+Version:	3.0.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	9d2a65a8d5b0c9b86f4ae3e688c7a5d4
+# Source0-md5:	a938b8e47751af3a990b562d4bf212a0
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -331,7 +331,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/rbzeitgeist
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/rbzeitgeist.plugin
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/*.py
-#%{_libdir}/rhythmbox/plugins/rbzeitgeist/__pycache__
+%{_libdir}/rhythmbox/plugins/rbzeitgeist/__pycache__
 
 %dir %{_libdir}/rhythmbox/plugins/replaygain
 %{_libdir}/rhythmbox/plugins/replaygain/replaygain.plugin
