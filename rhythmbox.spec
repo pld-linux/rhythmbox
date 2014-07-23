@@ -10,12 +10,12 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.0.2
+Version:	3.0.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.0/%{name}-%{version}.tar.xz
-# Source0-md5:	20ca20e6562ad001b7bb78050b02de45
+# Source0-md5:	039902979c45f182e5a74547e2198187
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
