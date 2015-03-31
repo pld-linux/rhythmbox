@@ -10,12 +10,12 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.1
+Version:	3.2
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.1/%{name}-%{version}.tar.xz
-# Source0-md5:	851200afde83ca5ba6aa58ceb23e582c
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.2/%{name}-%{version}.tar.xz
+# Source0-md5:	83ad39ebe115d7a4e6b1be9bce69dca4
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -63,11 +63,11 @@ BuildRequires:	xz
 BuildRequires:	zlib-devel
 %if %{with vis}
 BuildRequires:	clutter-devel >= 1.2
-BuildRequires:	clutter-gst-devel >= 1.0
+BuildRequires:	clutter-gst2-devel >= 1.0
 BuildRequires:	clutter-gtk-devel >= 1.0
 BuildRequires:	mx-devel
 %endif
-%pyrequires_eq	python3-modules
+Requires:	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
@@ -211,7 +211,7 @@ fi
 %attr(755,root,root) %{_bindir}/*
 %attr(755,root,root) %{_libdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.8
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.9
 %{_datadir}/%{name}
 %{_datadir}/appdata/rhythmbox.appdata.xml
 %{_datadir}/dbus-1/services/*.service
@@ -343,6 +343,11 @@ fi
 %{_libdir}/rhythmbox/plugins/sendto/sendto.plugin
 %{_libdir}/rhythmbox/plugins/sendto/*.py
 %{_libdir}/rhythmbox/plugins/sendto/__pycache__
+
+%dir %{_libdir}/rhythmbox/plugins/soundcloud
+%{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.plugin
+%{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.py
+%{_libdir}/rhythmbox/plugins/soundcloud/__pycache__
 
 %if %{with vis}
 %dir %{_libdir}/rhythmbox/plugins/visualizer
