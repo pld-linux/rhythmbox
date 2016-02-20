@@ -10,43 +10,41 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.2
+Version:	3.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.2/%{name}-%{version}.tar.xz
-# Source0-md5:	83ad39ebe115d7a4e6b1be9bce69dca4
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.3/%{name}-%{version}.tar.xz
+# Source0-md5:	afffb1566172e0449095f2aaad26b693
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
-BuildRequires:	avahi-glib-devel >= 0.6.14
 BuildRequires:	brasero-devel >= 2.31.5
-BuildRequires:	dbus-glib-devel >= 0.71
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
 BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.28.0
+BuildRequires:	glib2-devel >= 1:2.34.0
 BuildRequires:	gnome-common
-BuildRequires:	gnome-doc-utils
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	grilo-devel >= 0.1.17
-BuildRequires:	gstreamer-devel >= 0.10.32
-BuildRequires:	gstreamer-plugins-base-devel >= 0.10.10
-BuildRequires:	gtk+3-devel >= 3.2.0
+BuildRequires:	gstreamer-devel >= 1.0.0
+BuildRequires:	gstreamer-plugins-base-devel >= 1.0.0
+BuildRequires:	gtk+3-devel >= 3.12.0
 BuildRequires:	gtk-doc
 %{?with_webkit:BuildRequires:	gtk-webkit3-devel >= 1.3.9}
-BuildRequires:	intltool
-%{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.11}
-BuildRequires:	libgnome-keyring-devel >= 0.8
+BuildRequires:	intltool >= 0.35.0
+BuildRequires:	json-glib-devel
+%{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.19}
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
-BuildRequires:	libmusicbrainz3-devel > 3.0.2
 BuildRequires:	libnotify-devel >= 0.7.0
 BuildRequires:	libpeas-devel >= 0.7.3
 BuildRequires:	libpeas-gtk-devel >= 0.7.3
-BuildRequires:	libsoup-devel >= 2.26.0
-BuildRequires:	libsoup-gnome-devel >= 2.26.0
+BuildRequires:	libsecret-devel >= 0.18
+BuildRequires:	libsoup-devel >= 2.34.0
+BuildRequires:	libsoup-gnome-devel >= 2.34.0
 BuildRequires:	libtool
+BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3-pygobject3-devel
@@ -55,39 +53,39 @@ BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	sed >= 4.0
 BuildRequires:	tdb-devel >= 2:1.2.6
-BuildRequires:	totem-pl-parser-devel >= 2.32.1
+BuildRequires:	totem-pl-parser-devel >= 3.2.0
 BuildRequires:	udev-glib-devel >= 143
 BuildRequires:	vala >= 0.9.4
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
 %if %{with vis}
-BuildRequires:	clutter-devel >= 1.2
+BuildRequires:	clutter-devel >= 1.8
 BuildRequires:	clutter-gst2-devel >= 1.0
 BuildRequires:	clutter-gtk-devel >= 1.0
-BuildRequires:	mx-devel
+BuildRequires:	mx-devel >= 1.0.1
 %endif
 Requires:	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,postun):	scrollkeeper
-Requires(post,preun):	GConf2
+Requires(post,postun):	glib2 >= 1:2.34.0
 Requires:	dbus >= 0.93
-Requires:	glib2 >= 1:2.28.0
-Requires:	gstreamer-audio-effects-base >= 0.10.10
-Requires:	gstreamer-audio-formats >= 0.10.4
+Requires:	glib2 >= 1:2.34.0
+Requires:	gstreamer-audio-effects-base >= 1.0.0
+Requires:	gstreamer-audio-formats >= 1.0.0
 Requires:	gstreamer-audiosink
-Requires:	gstreamer-plugins-good >= 0.10.4
-Requires:	gtk+3 >= 3.2.0
+Requires:	gstreamer-plugins-good >= 1.0.0
+Requires:	gtk+3 >= 3.12.0
 Suggests:	gstreamer-flac
 Suggests:	gstreamer-mad
 Suggests:	gstreamer-neon
 Suggests:	gstreamer-vorbis
-Suggests:	python3-Louie
-Suggests:	python3-coherence
-Suggests:	python3-gnome
-Suggests:	python3-gstreamer
+Suggests:	gtk-webkit3
+Suggests:	libpeas-gtk >= 0.7.3
+Suggests:	libpeas-loader-python3
+Suggests:	python3-Mako
+Suggests:	python3-zeitgeist
 Obsoletes:	net-rhythmbox
 # sr@Latn vs. sr@latin
 Conflicts:	glibc-misc < 6:2.7
@@ -128,10 +126,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 %setup -q
 
 %build
-# for snapshots
-gnome-doc-prepare --copy --force
 %{__gtkdocize}
-%{__gnome_doc_common}
 %{__glib_gettextize}
 %{__intltoolize}
 %{__libtoolize}
@@ -142,7 +137,6 @@ gnome-doc-prepare --copy --force
 MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 %configure \
 	--disable-static \
-	--disable-scrollkeeper \
 	--disable-silent-rules \
 	--enable-browser-plugin \
 	--enable-lirc \
@@ -150,9 +144,7 @@ MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	--enable-vala \
 	%{!?with_ipod:--without-ipod} \
 	%{?with_daap:--enable-daap} \
-	--with-gnome-keyring \
 	--with-gudev \
-	--with-mdns=avahi \
 	--with-mtp \
 	--with%{!?with_webkit:out}-webkit \
 	--with-x \
@@ -163,10 +155,9 @@ MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 %install
 rm -rf $RPM_BUILD_ROOT
 %{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT \
-	GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
+	DESTDIR=$RPM_BUILD_ROOT
 
-%find_lang %{name} --with-gnome --with-omf
+%find_lang %{name} --with-gnome
 
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
@@ -186,14 +177,12 @@ rm -rf $RPM_BUILD_ROOT
 %post
 /sbin/ldconfig
 %glib_compile_schemas
-%scrollkeeper_update_post
 %update_desktop_database_post
 %update_icon_cache hicolor
 
 %postun
 /sbin/ldconfig
 %glib_compile_schemas
-%scrollkeeper_update_postun
 %update_desktop_database_postun
 %update_icon_cache hicolor
 
@@ -233,6 +222,10 @@ fi
 %{_libdir}/rhythmbox/plugins/artsearch/artsearch.plugin
 %{_libdir}/rhythmbox/plugins/artsearch/*.py
 %{_libdir}/rhythmbox/plugins/artsearch/__pycache__
+
+%dir %{_libdir}/rhythmbox/plugins/android
+%{_libdir}/rhythmbox/plugins/android/android.plugin
+%attr(755,root,root) %{_libdir}/rhythmbox/plugins/android/libandroid.so
 
 %dir %{_libdir}/rhythmbox/plugins/audiocd
 %{_libdir}/rhythmbox/plugins/audiocd/audiocd.plugin
