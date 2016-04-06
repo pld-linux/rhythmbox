@@ -10,12 +10,13 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.3
+Version:	3.3.1
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.3/%{name}-%{version}.tar.xz
-# Source0-md5:	afffb1566172e0449095f2aaad26b693
+# Source0-md5:	59d15290c3565a84ec60ad1a24d9e24f
+Patch0:		%{name}-grilo-0.3.0.patch
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -124,6 +125,7 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__gtkdocize}
@@ -238,6 +240,10 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %{_libdir}/rhythmbox/plugins/cd-recorder/cd-recorder.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
+
+%dir %{_libdir}/rhythmbox/plugins/context
+%{_libdir}/rhythmbox/plugins/context/*.py
+%{_libdir}/rhythmbox/plugins/context/__pycache__
 
 %if %{with daap}
 %dir %{_libdir}/rhythmbox/plugins/daap
