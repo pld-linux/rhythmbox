@@ -3,20 +3,18 @@
 %bcond_without	ipod		# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap		# build without DAAP support
-%bcond_without	vis		# build with Visualization support
 %bcond_with	webkit		# build with gtk-webkit support
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.3.1
+Version:	3.4.3
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.3/%{name}-%{version}.tar.xz
-# Source0-md5:	59d15290c3565a84ec60ad1a24d9e24f
-Patch0:		%{name}-grilo-0.3.0.patch
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
+# Source0-md5:	79a775cffcf320fcdefa74bf6b2d1d32
 URL:		http://projects.gnome.org/rhythmbox/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -60,12 +58,6 @@ BuildRequires:	vala >= 0.9.4
 BuildRequires:	xorg-lib-libSM-devel
 BuildRequires:	xz
 BuildRequires:	zlib-devel
-%if %{with vis}
-BuildRequires:	clutter-devel >= 1.8
-BuildRequires:	clutter-gst2-devel >= 1.0
-BuildRequires:	clutter-gtk-devel >= 1.0
-BuildRequires:	mx-devel >= 1.0.1
-%endif
 Requires:	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
@@ -125,7 +117,6 @@ Wtyczka Rhythmboksa do przeglądarek WWW.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__gtkdocize}
@@ -200,15 +191,14 @@ fi
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
 %attr(755,root,root) %{_bindir}/*
-%attr(755,root,root) %{_libdir}/rhythmbox-metadata
+%attr(755,root,root) %{_libexecdir}/rhythmbox-metadata
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.9
+%attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.10
 %{_datadir}/%{name}
-%{_datadir}/appdata/rhythmbox.appdata.xml
+%{_datadir}/metainfo/rhythmbox.appdata.xml
 %{_datadir}/dbus-1/services/*.service
 %{_desktopdir}/*.desktop
 %{_iconsdir}/hicolor/*/*/rhythmbox.png
-%{_iconsdir}/hicolor/*/*/rhythmbox-missing-artwork.png
 %{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
 %{_mandir}/man1/rhythmbox.1*
 %{_mandir}/man1/rhythmbox-client.1*
@@ -348,11 +338,10 @@ fi
 %{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.py
 %{_libdir}/rhythmbox/plugins/soundcloud/__pycache__
 
-%if %{with vis}
-%dir %{_libdir}/rhythmbox/plugins/visualizer
-%{_libdir}/rhythmbox/plugins/visualizer/visualizer.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/visualizer/libvisualizer.so
-%endif
+%dir %{_libdir}/rhythmbox/plugins/webremote
+%{_libdir}/rhythmbox/plugins/webremote/webremote.plugin
+%{_libdir}/rhythmbox/plugins/webremote/*.py
+%{_libdir}/rhythmbox/plugins/webremote/__pycache__
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
