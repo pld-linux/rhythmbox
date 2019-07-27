@@ -233,25 +233,29 @@ fi
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog README NEWS
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/rhythmbox
+%attr(755,root,root) %{_bindir}/rhythmbox-client
 %attr(755,root,root) %{_libexecdir}/rhythmbox-metadata
+
 %attr(755,root,root) %{_libdir}/librhythmbox-core.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/librhythmbox-core.so.10
-%{_datadir}/%{name}
-%{_datadir}/metainfo/rhythmbox.appdata.xml
-%{_datadir}/dbus-1/services/*.service
-%{_desktopdir}/*.desktop
-%{_iconsdir}/hicolor/*/*/rhythmbox.png
-%{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
-%{_mandir}/man1/rhythmbox.1*
-%{_mandir}/man1/rhythmbox-client.1*
-
 %{_libdir}/girepository-1.0/MPID-3.0.typelib
 %{_libdir}/girepository-1.0/RB-3.0.typelib
-%{_datadir}/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
 
 %dir %{_libdir}/rhythmbox
 %dir %{_libdir}/rhythmbox/plugins
+%dir %{_datadir}/rhythmbox
+%{_datadir}/rhythmbox/rhythmbox.gep
+%dir %{_datadir}/rhythmbox/plugins
+%{_datadir}/dbus-1/services/org.gnome.Rhythmbox3.service
+%{_datadir}/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
+%{_datadir}/metainfo/rhythmbox.appdata.xml
+%{_desktopdir}/rhythmbox.desktop
+%{_desktopdir}/rhythmbox-device.desktop
+%{_iconsdir}/hicolor/*x*/apps/rhythmbox.png
+%{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
+%{_mandir}/man1/rhythmbox.1*
+%{_mandir}/man1/rhythmbox-client.1*
 
 %dir %{_libdir}/rhythmbox/plugins/artsearch
 %{_libdir}/rhythmbox/plugins/artsearch/artsearch.plugin
@@ -269,6 +273,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/audioscrobbler
 %{_libdir}/rhythmbox/plugins/audioscrobbler/audioscrobbler.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/audioscrobbler/*.so
+%{_datadir}/rhythmbox/plugins/audioscrobbler
 
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %{_libdir}/rhythmbox/plugins/cd-recorder/cd-recorder.plugin
@@ -277,6 +282,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/context
 %{_libdir}/rhythmbox/plugins/context/*.py
 %{_libdir}/rhythmbox/plugins/context/__pycache__
+%{_datadir}/rhythmbox/plugins/context
 
 %if %{with daap}
 %dir %{_libdir}/rhythmbox/plugins/daap
@@ -319,11 +325,13 @@ fi
 %{_libdir}/rhythmbox/plugins/lyrics/lyrics.plugin
 %{_libdir}/rhythmbox/plugins/lyrics/*.py
 %{_libdir}/rhythmbox/plugins/lyrics/__pycache__
+%{_datadir}/rhythmbox/plugins/lyrics
 
 %dir %{_libdir}/rhythmbox/plugins/magnatune
 %{_libdir}/rhythmbox/plugins/magnatune/magnatune.plugin
 %{_libdir}/rhythmbox/plugins/magnatune/*.py
 %{_libdir}/rhythmbox/plugins/magnatune/__pycache__
+%{_datadir}/rhythmbox/plugins/magnatune
 
 %dir %{_libdir}/rhythmbox/plugins/mmkeys
 %{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.plugin
@@ -360,6 +368,7 @@ fi
 %dir %{_libdir}/rhythmbox/plugins/rblirc
 %{_libdir}/rhythmbox/plugins/rblirc/rblirc.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/rblirc/*.so
+%{_datadir}/rhythmbox/plugins/rblirc
 
 %dir %{_libdir}/rhythmbox/plugins/rbzeitgeist
 %{_libdir}/rhythmbox/plugins/rbzeitgeist/rbzeitgeist.plugin
@@ -370,6 +379,7 @@ fi
 %{_libdir}/rhythmbox/plugins/replaygain/replaygain.plugin
 %{_libdir}/rhythmbox/plugins/replaygain/*.py
 %{_libdir}/rhythmbox/plugins/replaygain/__pycache__
+%{_datadir}/rhythmbox/plugins/replaygain
 
 %dir %{_libdir}/rhythmbox/plugins/sendto
 %{_libdir}/rhythmbox/plugins/sendto/sendto.plugin
@@ -380,11 +390,13 @@ fi
 %{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.plugin
 %{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.py
 %{_libdir}/rhythmbox/plugins/soundcloud/__pycache__
+%{_datadir}/rhythmbox/plugins/soundcloud
 
 %dir %{_libdir}/rhythmbox/plugins/webremote
 %{_libdir}/rhythmbox/plugins/webremote/webremote.plugin
 %{_libdir}/rhythmbox/plugins/webremote/*.py
 %{_libdir}/rhythmbox/plugins/webremote/__pycache__
+%{_datadir}/rhythmbox/plugins/webremote
 
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
