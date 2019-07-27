@@ -3,7 +3,7 @@
 %bcond_without	ipod		# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap		# build without DAAP support
-%bcond_with	webkit		# build with gtk-webkit support
+%bcond_with	libdmapsharing4	# libdmapsharing4 instead of libdmapsharing3
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
@@ -15,73 +15,92 @@ License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
 # Source0-md5:	79a775cffcf320fcdefa74bf6b2d1d32
+# https://gitlab.gnome.org/GNOME/rhythmbox/merge_requests/12.patch
+Patch0:		%{name}-libdmapsharing4.patch
 URL:		http://projects.gnome.org/rhythmbox/
-BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	autoconf >= 2.63.2
+BuildRequires:	automake >= 1:1.11
 BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
-BuildRequires:	gettext-tools
-BuildRequires:	glib2-devel >= 1:2.34.0
-BuildRequires:	gnome-common
+BuildRequires:	gettext-tools >= 0.18
+BuildRequires:	glib2-devel >= 1:2.38.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	grilo-devel >= 0.1.17
-BuildRequires:	gstreamer-devel >= 1.0.0
-BuildRequires:	gstreamer-plugins-base-devel >= 1.0.0
-BuildRequires:	gtk+3-devel >= 3.12.0
-BuildRequires:	gtk-doc
-%{?with_webkit:BuildRequires:	gtk-webkit3-devel >= 1.3.9}
+BuildRequires:	grilo-devel >= 0.3.0
+BuildRequires:	gstreamer-devel >= 1.4.0
+BuildRequires:	gstreamer-plugins-base-devel >= 1.4.0
+BuildRequires:	gtk+3-devel >= 3.20.0
+BuildRequires:	gtk-doc >= 1.4
 BuildRequires:	intltool >= 0.35.0
 BuildRequires:	json-glib-devel
-%{?with_daap:BuildRequires:	libdmapsharing-devel >= 2.9.19}
-%{?with_ipod:BuildRequires:	libgpod-devel >= 0.6}
+%if %{with daap}
+%if %{with libdmapsharing4}
+BuildRequires:	libdmapsharing-devel >= 3.9
+BuildRequires:	libdmapsharing-devel < 4.9
+%else
+BuildRequires:	libdmapsharing-devel >= 2.9.19
+BuildRequires:	libdmapsharing-devel < 3.9
+%endif
+%endif
+%{?with_ipod:BuildRequires:	libgpod-devel >= 0.8}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
 BuildRequires:	libnotify-devel >= 0.7.0
 BuildRequires:	libpeas-devel >= 0.7.3
 BuildRequires:	libpeas-gtk-devel >= 0.7.3
 BuildRequires:	libsecret-devel >= 0.18
-BuildRequires:	libsoup-devel >= 2.34.0
-BuildRequires:	libsoup-gnome-devel >= 2.34.0
-BuildRequires:	libtool
+BuildRequires:	libsoup-devel >= 2.42.0
+BuildRequires:	libtool >= 2:2
 BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
-BuildRequires:	python3-pygobject3-devel
+BuildRequires:	python3-pygobject3-devel >= 3.0
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
 BuildRequires:	rpmbuild(macros) >= 1.311
 BuildRequires:	sed >= 4.0
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	tdb-devel >= 2:1.2.6
 BuildRequires:	totem-pl-parser-devel >= 3.2.0
 BuildRequires:	udev-glib-devel >= 143
 BuildRequires:	vala >= 0.9.4
-BuildRequires:	xorg-lib-libSM-devel
+BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xz
+BuildRequires:	yelp-tools
 BuildRequires:	zlib-devel
 Requires:	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,postun):	glib2 >= 1:2.34.0
+Requires(post,postun):	glib2 >= 1:2.38.0
+Requires:	brasero >= 2.31.5
 Requires:	dbus >= 0.93
-Requires:	glib2 >= 1:2.34.0
-Requires:	gstreamer-audio-effects-base >= 1.0.0
-Requires:	gstreamer-audio-formats >= 1.0.0
+Requires:	glib2 >= 1:2.38.0
+Requires:	gstreamer-audio-effects-base >= 1.4.0
+Requires:	gstreamer-audio-formats >= 1.4.0
 Requires:	gstreamer-audiosink
-Requires:	gstreamer-plugins-good >= 1.0.0
-Requires:	gtk+3 >= 3.12.0
-Suggests:	gstreamer-flac
-Suggests:	gstreamer-mad
-Suggests:	gstreamer-neon
-Suggests:	gstreamer-vorbis
-Suggests:	gtk-webkit3
+Requires:	gstreamer-plugins-good >= 1.4.0
+Requires:	gtk+3 >= 3.20.0
+%{?with_daap:Requires:	libdmapsharing >= 2.9.19}
+%{?with_ipod:Requires:	libgpod >= 0.8}
+%{?with_mtp:Requires:	libmtp >= 0.3.0}
+Requires:	libnotify >= 0.7.0
+Requires:	libpeas >= 0.7.3
+Requires:	libpeas-gtk >= 0.7.3
+Requires:	libsecret >= 0.18
+Requires:	libsoup >= 2.42.0
+Requires:	libxml2 >= 1:2.7.8
+Requires:	tdb >= 2:1.2.6
+Requires:	totem-pl-parser >= 3.2.0
+Requires:	udev-glib >= 143
+Suggests:	gstreamer-flac >= 1.4.0
+Suggests:	gstreamer-mad >= 1.4.0
+Suggests:	gstreamer-neon >= 1.4.0
+Suggests:	gstreamer-vorbis >= 1.4.0
 Suggests:	libpeas-gtk >= 0.7.3
 Suggests:	libpeas-loader-python3
 Suggests:	python3-Mako
 Suggests:	python3-zeitgeist
 Obsoletes:	net-rhythmbox
-# sr@Latn vs. sr@latin
-Conflicts:	glibc-misc < 6:2.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -115,33 +134,63 @@ Rhythmbox böngésző plugin.
 %description -n browser-plugin-%{name} -l pl.UTF-8
 Wtyczka Rhythmboksa do przeglądarek WWW.
 
+%package devel
+Summary:	Header files for developing Rhythmbox plugins
+Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia wtyczek Rhythmboksa
+Group:		Development/Libraries
+Requires:	%{name} = %{version}-%{release}
+Requires:	glib2-devel >= 1:2.38.0
+Requires:	gstreamer-devel >= 1.4.0
+Requires:	gtk+3-devel >= 3.20.0
+Requires:	libsoup-devel >= 2.42.0
+Requires:	libxml2-devel >= 1:2.7.8
+Requires:	totem-pl-parser-devel >= 3.2.0
+
+%description devel
+Header files for developing Rhythmbox plugins.
+
+%description devel -l pl.UTF-8
+Pliki nagłówkowe do tworzenia wtyczek Rhythmboksa.
+
+%package apidocs
+Summary:	Documentation for Rhythmbox plugin API
+Summary(pl.UTF-8):	Dokumentacja API wtyczek Rhythmboksa
+Group:		Documentation
+
+%description apidocs
+Documentation for Rhythmbox plugin API.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API wtyczek Rhythmboksa.
+
 %prep
 %setup -q
+%if %{with libdmapsharing4}
+%patch0 -p1
+%endif
 
 %build
 %{__gtkdocize}
-%{__glib_gettextize}
 %{__intltoolize}
 %{__libtoolize}
 %{__aclocal} -I macros
 %{__autoheader}
 %{__automake}
 %{__autoconf}
-MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 %configure \
+	MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	--disable-static \
 	--disable-silent-rules \
 	--enable-browser-plugin \
+	%{?with_daap:--enable-daap} \
 	--enable-lirc \
 	--enable-python \
 	--enable-vala \
-	%{!?with_ipod:--without-ipod} \
-	%{?with_daap:--enable-daap} \
 	--with-gudev \
+	--with-html-dir=%{_gtkdocdir} \
+	%{!?with_ipod:--without-ipod} \
 	--with-mtp \
-	--with%{!?with_webkit:out}-webkit \
-	--with-x \
-	--without-hal
+	--with-x
 
 %{__make}
 
@@ -156,13 +205,7 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
 
-# there is no -devel subpackage
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gir-1.0
-%{__rm} -r $RPM_BUILD_ROOT%{_datadir}/gtk-doc
-%{__rm} -r $RPM_BUILD_ROOT%{_includedir}/rhythmbox
 %{__rm} -r $RPM_BUILD_ROOT%{_libdir}/rhythmbox/sample-plugins
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.so
-%{__rm} $RPM_BUILD_ROOT%{_pkgconfigdir}/rhythmbox.pc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -346,3 +389,15 @@ fi
 %files -n browser-plugin-%{name}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_browserpluginsdir}/librhythmbox-itms-detection-plugin.so
+
+%files devel
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/librhythmbox-core.so
+%{_datadir}/gir-1.0/MPID-3.0.gir
+%{_datadir}/gir-1.0/RB-3.0.gir
+%{_includedir}/rhythmbox
+%{_pkgconfigdir}/rhythmbox.pc
+
+%files apidocs
+%defattr(644,root,root,755)
+%{_gtkdocdir}/rhythmbox
