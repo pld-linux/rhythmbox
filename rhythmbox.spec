@@ -3,14 +3,14 @@
 %bcond_without	ipod		# build without iPod support
 %bcond_without	mtp		# build without MTP support
 %bcond_without	daap		# build without DAAP support
-%bcond_with	libdmapsharing4	# libdmapsharing4 instead of libdmapsharing3
+%bcond_without	libdmapsharing4	# libdmapsharing4 instead of libdmapsharing3
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	3.4.3
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
