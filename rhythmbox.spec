@@ -9,12 +9,12 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.4.3
-Release:	2
+Version:	3.4.4
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	79a775cffcf320fcdefa74bf6b2d1d32
+# Source0-md5:	5ebb20d4559300e7df91c5a476050b13
 # https://gitlab.gnome.org/GNOME/rhythmbox/merge_requests/12.patch
 Patch0:		%{name}-libdmapsharing4.patch
 URL:		http://projects.gnome.org/rhythmbox/
@@ -53,6 +53,7 @@ BuildRequires:	libtool >= 2:2
 BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
 BuildRequires:	pkgconfig
+BuildRequires:	python3-devel >= 1:3.2.3
 BuildRequires:	python3-pygobject3-devel >= 3.0
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
@@ -100,6 +101,7 @@ Suggests:	libpeas-gtk >= 0.7.3
 Suggests:	libpeas-loader-python3
 Suggests:	python3-Mako
 Suggests:	python3-zeitgeist
+Obsoletes:	browser-plugin-rhythmbox < 3.4.4
 Obsoletes:	net-rhythmbox
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -115,24 +117,6 @@ sok mindent.
 %description -l pl.UTF-8
 Rhythmbox to kompletna aplikacja multimedialna, obsługująca bibliotekę
 muzyczną, wiele "grup muzyki", radio internetowe itp.
-
-%package -n browser-plugin-%{name}
-Summary:	Rhythmbox's browser plugin
-Summary(hu.UTF-8):	Rhythmbox böngésző plugin
-Summary(pl.UTF-8):	Wtyczka Rhythmboksa do przeglądarek WWW
-Group:		X11/Libraries
-Requires:	%{name} = %{version}-%{release}
-Requires:	browser-plugins >= 2.0
-Requires:	browser-plugins(%{_target_base_arch})
-
-%description -n browser-plugin-%{name}
-iTunes detection browser plugin (for podcasts).
-
-%description -n browser-plugin-%{name} -l hu.UTF-8
-Rhythmbox böngésző plugin.
-
-%description -n browser-plugin-%{name} -l pl.UTF-8
-Wtyczka Rhythmboksa do przeglądarek WWW.
 
 %package devel
 Summary:	Header files for developing Rhythmbox plugins
@@ -178,10 +162,8 @@ Dokumentacja API wtyczek Rhythmboksa.
 %{__automake}
 %{__autoconf}
 %configure \
-	MOZILLA_PLUGINDIR=%{_browserpluginsdir} \
 	--disable-static \
 	--disable-silent-rules \
-	--enable-browser-plugin \
 	%{?with_daap:--enable-daap} \
 	--enable-lirc \
 	--enable-python \
@@ -196,12 +178,12 @@ Dokumentacja API wtyczek Rhythmboksa.
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %find_lang %{name} --with-gnome
 
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/browser-plugins/*.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
 
@@ -221,14 +203,6 @@ rm -rf $RPM_BUILD_ROOT
 %glib_compile_schemas
 %update_desktop_database_postun
 %update_icon_cache hicolor
-
-%post -n browser-plugin-%{name}
-%update_browser_plugins
-
-%postun -n browser-plugin-%{name}
-if [ "$1" = 0 ]; then
-	%update_browser_plugins
-fi
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
@@ -252,8 +226,8 @@ fi
 %{_datadir}/metainfo/rhythmbox.appdata.xml
 %{_desktopdir}/rhythmbox.desktop
 %{_desktopdir}/rhythmbox-device.desktop
-%{_iconsdir}/hicolor/*x*/apps/rhythmbox.png
-%{_iconsdir}/hicolor/scalable/apps/rhythmbox-symbolic.svg
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Rhythmbox.svg
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Rhythmbox-symbolic.svg
 %{_mandir}/man1/rhythmbox.1*
 %{_mandir}/man1/rhythmbox-client.1*
 
@@ -321,6 +295,12 @@ fi
 %{_libdir}/rhythmbox/plugins/iradio/iradio.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/iradio/*.so
 
+%dir %{_libdir}/rhythmbox/plugins/listenbrainz
+%{_libdir}/rhythmbox/plugins/listenbrainz/listenbrainz.plugin
+%{_libdir}/rhythmbox/plugins/listenbrainz/*.py
+%{_libdir}/rhythmbox/plugins/listenbrainz/__pycache__
+%{_datadir}/rhythmbox/plugins/listenbrainz
+
 %dir %{_libdir}/rhythmbox/plugins/lyrics
 %{_libdir}/rhythmbox/plugins/lyrics/lyrics.plugin
 %{_libdir}/rhythmbox/plugins/lyrics/*.py
@@ -381,11 +361,6 @@ fi
 %{_libdir}/rhythmbox/plugins/replaygain/__pycache__
 %{_datadir}/rhythmbox/plugins/replaygain
 
-%dir %{_libdir}/rhythmbox/plugins/sendto
-%{_libdir}/rhythmbox/plugins/sendto/sendto.plugin
-%{_libdir}/rhythmbox/plugins/sendto/*.py
-%{_libdir}/rhythmbox/plugins/sendto/__pycache__
-
 %dir %{_libdir}/rhythmbox/plugins/soundcloud
 %{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.plugin
 %{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.py
@@ -397,10 +372,6 @@ fi
 %{_libdir}/rhythmbox/plugins/webremote/*.py
 %{_libdir}/rhythmbox/plugins/webremote/__pycache__
 %{_datadir}/rhythmbox/plugins/webremote
-
-%files -n browser-plugin-%{name}
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_browserpluginsdir}/librhythmbox-itms-detection-plugin.so
 
 %files devel
 %defattr(644,root,root,755)
