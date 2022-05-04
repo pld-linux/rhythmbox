@@ -1,41 +1,36 @@
 #
 # Conditional build:
-%bcond_without	ipod		# build without iPod support
-%bcond_without	mtp		# build without MTP support
-%bcond_without	daap		# build without DAAP support
+%bcond_without	ipod		# iPod support
+%bcond_without	mtp		# MTP support
+%bcond_without	daap		# DAAP support
 %bcond_without	libdmapsharing4	# libdmapsharing4 instead of libdmapsharing3
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.4.4
+Version:	3.4.5
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	5ebb20d4559300e7df91c5a476050b13
-# https://gitlab.gnome.org/GNOME/rhythmbox/merge_requests/12.patch
-Patch0:		%{name}-libdmapsharing4.patch
-URL:		http://projects.gnome.org/rhythmbox/
-BuildRequires:	autoconf >= 2.63.2
-BuildRequires:	automake >= 1:1.11
+Source0:	https://download.gnome.org/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
+# Source0-md5:	418cb58cb590e295f1151c6175c13232
+URL:		https://wiki.gnome.org/Apps/Rhythmbox
 BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
 BuildRequires:	gettext-tools >= 0.18
-BuildRequires:	glib2-devel >= 1:2.38.0
+BuildRequires:	glib2-devel >= 1:2.56.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	grilo-devel >= 0.3.0
+BuildRequires:	grilo-devel >= 0.3.1
 BuildRequires:	gstreamer-devel >= 1.4.0
 BuildRequires:	gstreamer-plugins-base-devel >= 1.4.0
 BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	gtk-doc >= 1.4
-BuildRequires:	intltool >= 0.35.0
 BuildRequires:	json-glib-devel
 %if %{with daap}
 %if %{with libdmapsharing4}
-BuildRequires:	libdmapsharing-devel >= 3.9
+BuildRequires:	libdmapsharing-devel >= 3.9.4
 BuildRequires:	libdmapsharing-devel < 4.9
 %else
 BuildRequires:	libdmapsharing-devel >= 2.9.19
@@ -49,15 +44,20 @@ BuildRequires:	libpeas-devel >= 0.7.3
 BuildRequires:	libpeas-gtk-devel >= 0.7.3
 BuildRequires:	libsecret-devel >= 0.18
 BuildRequires:	libsoup-devel >= 2.42.0
-BuildRequires:	libtool >= 2:2
 BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
+BuildRequires:	meson >= 0.59.0
+# see top of meson.build
+BuildRequires:	meson < 0.62.1
+BuildRequires:	ninja >= 1.5
+BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
 BuildRequires:	python3-devel >= 1:3.2.3
 BuildRequires:	python3-pygobject3-devel >= 3.0
+BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpm-pythonprov
 BuildRequires:	rpmbuild(find_lang) >= 1.23
-BuildRequires:	rpmbuild(macros) >= 1.311
+BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	tdb-devel >= 2:1.2.6
@@ -72,10 +72,11 @@ Requires:	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,postun):	glib2 >= 1:2.38.0
+Requires(post,postun):	glib2 >= 1:2.56.0
 Requires:	brasero >= 2.31.5
 Requires:	dbus >= 0.93
-Requires:	glib2 >= 1:2.38.0
+Requires:	glib2 >= 1:2.56.0
+Requires:	grilo >= 0.3.1
 Requires:	gstreamer-audio-effects-base >= 1.4.0
 Requires:	gstreamer-audio-formats >= 1.4.0
 Requires:	gstreamer-audiosink
@@ -102,7 +103,7 @@ Suggests:	libpeas-loader-python3
 Suggests:	python3-Mako
 Suggests:	python3-zeitgeist
 Obsoletes:	browser-plugin-rhythmbox < 3.4.4
-Obsoletes:	net-rhythmbox
+Obsoletes:	net-rhythmbox < 0.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -123,7 +124,7 @@ Summary:	Header files for developing Rhythmbox plugins
 Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia wtyczek Rhythmboksa
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.38.0
+Requires:	glib2-devel >= 1:2.56.0
 Requires:	gstreamer-devel >= 1.4.0
 Requires:	gtk+3-devel >= 3.20.0
 Requires:	libsoup-devel >= 2.42.0
@@ -136,10 +137,23 @@ Header files for developing Rhythmbox plugins.
 %description devel -l pl.UTF-8
 Pliki nagłówkowe do tworzenia wtyczek Rhythmboksa.
 
+%package -n vala-rhythmbox
+Summary:	Vala API for Rhythmbox
+Summary(pl.UTF-8):	API języka Vala dla Rhythmboksa
+Group:		Development/Libraries
+Requires:	%{name}-devel = %{version}-%{release}
+
+%description -n vala-rhythmbox
+Vala API for Rhythmbox.
+
+%description -n vala-rhythmbox -l pl.UTF-8
+API języka Vala dla Rhythmboksa.
+
 %package apidocs
 Summary:	Documentation for Rhythmbox plugin API
 Summary(pl.UTF-8):	Dokumentacja API wtyczek Rhythmboksa
 Group:		Documentation
+BuildArch:	noarch
 
 %description apidocs
 Documentation for Rhythmbox plugin API.
@@ -149,45 +163,24 @@ Dokumentacja API wtyczek Rhythmboksa.
 
 %prep
 %setup -q
-%if %{with libdmapsharing4}
-%patch0 -p1
-%endif
 
 %build
-%{__gtkdocize}
-%{__intltoolize}
-%{__libtoolize}
-%{__aclocal} -I macros
-%{__autoheader}
-%{__automake}
-%{__autoconf}
-%configure \
-	--disable-static \
-	--disable-silent-rules \
-	%{?with_daap:--enable-daap} \
-	--enable-lirc \
-	--enable-python \
-	--enable-vala \
-	--with-gudev \
-	--with-html-dir=%{_gtkdocdir} \
-	%{!?with_ipod:--without-ipod} \
-	--with-mtp \
-	--with-x
+%meson build \
+	%{!?with_daap:-Ddaap=disabled} \
+	-Dgtk_doc=true \
+	%{!?with_ipod:-Dipod=disabled}
 
-%{__make}
+%ninja_build -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	DESTDIR=$RPM_BUILD_ROOT
+%ninja_install -C build
+
+%py3_comp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
+%py3_ocomp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
 
 %find_lang %{name} --with-gnome
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/librhythmbox-core.la
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins/*/*.la
-
-%{__rm} -r $RPM_BUILD_ROOT%{_libdir}/rhythmbox/sample-plugins
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -223,11 +216,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_datadir}/rhythmbox/plugins
 %{_datadir}/dbus-1/services/org.gnome.Rhythmbox3.service
 %{_datadir}/glib-2.0/schemas/org.gnome.rhythmbox.gschema.xml
-%{_datadir}/metainfo/rhythmbox.appdata.xml
-%{_desktopdir}/rhythmbox.desktop
-%{_desktopdir}/rhythmbox-device.desktop
-%{_iconsdir}/hicolor/scalable/apps/org.gnome.Rhythmbox.svg
-%{_iconsdir}/hicolor/scalable/apps/org.gnome.Rhythmbox-symbolic.svg
+%{_datadir}/metainfo/org.gnome.Rhythmbox3.appdata.xml
+%{_desktopdir}/org.gnome.Rhythmbox3.desktop
+%{_desktopdir}/org.gnome.Rhythmbox3.device.desktop
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Rhythmbox3.svg
+%{_iconsdir}/hicolor/scalable/apps/org.gnome.Rhythmbox3-symbolic.svg
 %{_mandir}/man1/rhythmbox.1*
 %{_mandir}/man1/rhythmbox-client.1*
 
@@ -252,11 +245,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/rhythmbox/plugins/cd-recorder
 %{_libdir}/rhythmbox/plugins/cd-recorder/cd-recorder.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/cd-recorder/*.so
-
-%dir %{_libdir}/rhythmbox/plugins/context
-%{_libdir}/rhythmbox/plugins/context/*.py
-%{_libdir}/rhythmbox/plugins/context/__pycache__
-%{_datadir}/rhythmbox/plugins/context
 
 %if %{with daap}
 %dir %{_libdir}/rhythmbox/plugins/daap
@@ -313,10 +301,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/rhythmbox/plugins/magnatune/__pycache__
 %{_datadir}/rhythmbox/plugins/magnatune
 
-%dir %{_libdir}/rhythmbox/plugins/mmkeys
-%{_libdir}/rhythmbox/plugins/mmkeys/mmkeys.plugin
-%attr(755,root,root) %{_libdir}/rhythmbox/plugins/mmkeys/libmmkeys.so
-
 %dir %{_libdir}/rhythmbox/plugins/mpris
 %{_libdir}/rhythmbox/plugins/mpris/mpris.plugin
 %attr(755,root,root) %{_libdir}/rhythmbox/plugins/mpris/libmpris.so
@@ -361,12 +345,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/rhythmbox/plugins/replaygain/__pycache__
 %{_datadir}/rhythmbox/plugins/replaygain
 
-%dir %{_libdir}/rhythmbox/plugins/soundcloud
-%{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.plugin
-%{_libdir}/rhythmbox/plugins/soundcloud/soundcloud.py
-%{_libdir}/rhythmbox/plugins/soundcloud/__pycache__
-%{_datadir}/rhythmbox/plugins/soundcloud
-
 %dir %{_libdir}/rhythmbox/plugins/webremote
 %{_libdir}/rhythmbox/plugins/webremote/webremote.plugin
 %{_libdir}/rhythmbox/plugins/webremote/*.py
@@ -380,6 +358,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/gir-1.0/RB-3.0.gir
 %{_includedir}/rhythmbox
 %{_pkgconfigdir}/rhythmbox.pc
+
+%files -n vala-rhythmbox
+%defattr(644,root,root,755)
+%{_datadir}/vala/vapi/rb.vapi
+%{_datadir}/vala/vapi/rhythmdb.vapi
 
 %files apidocs
 %defattr(644,root,root,755)
