@@ -9,12 +9,12 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.4.5
+Version:	3.4.6
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	418cb58cb590e295f1151c6175c13232
+# Source0-md5:	17151dc48bd64c216f3b99ff01db2dc7
 URL:		https://wiki.gnome.org/Apps/Rhythmbox
 BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	docbook-dtd412-xml
@@ -47,8 +47,6 @@ BuildRequires:	libsoup-devel >= 2.42.0
 BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
 BuildRequires:	meson >= 0.59.0
-# see top of meson.build
-BuildRequires:	meson < 0.62.1
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
