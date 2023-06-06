@@ -3,39 +3,33 @@
 %bcond_without	ipod		# iPod support
 %bcond_without	mtp		# MTP support
 %bcond_without	daap		# DAAP support
-%bcond_without	libdmapsharing4	# libdmapsharing4 instead of libdmapsharing3
 
 Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.4.6
+Version:	3.4.7
 Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	17151dc48bd64c216f3b99ff01db2dc7
+# Source0-md5:	14f60f29c3a353264b554e71d2d9759e
 URL:		https://wiki.gnome.org/Apps/Rhythmbox
 BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
 BuildRequires:	gettext-tools >= 0.18
-BuildRequires:	glib2-devel >= 1:2.56.0
+BuildRequires:	glib2-devel >= 1:2.66.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
-BuildRequires:	grilo-devel >= 0.3.1
+BuildRequires:	grilo-devel >= 0.3.16-2
 BuildRequires:	gstreamer-devel >= 1.4.0
 BuildRequires:	gstreamer-plugins-base-devel >= 1.4.0
 BuildRequires:	gtk+3-devel >= 3.20.0
 BuildRequires:	gtk-doc >= 1.4
 BuildRequires:	json-glib-devel
 %if %{with daap}
-%if %{with libdmapsharing4}
-BuildRequires:	libdmapsharing-devel >= 3.9.4
+BuildRequires:	libdmapsharing-devel >= 3.9.11
 BuildRequires:	libdmapsharing-devel < 4.9
-%else
-BuildRequires:	libdmapsharing-devel >= 2.9.19
-BuildRequires:	libdmapsharing-devel < 3.9
-%endif
 %endif
 %{?with_ipod:BuildRequires:	libgpod-devel >= 0.8}
 %{?with_mtp:BuildRequires:	libmtp-devel >= 0.3.0}
@@ -43,7 +37,7 @@ BuildRequires:	libnotify-devel >= 0.7.0
 BuildRequires:	libpeas-devel >= 0.7.3
 BuildRequires:	libpeas-gtk-devel >= 0.7.3
 BuildRequires:	libsecret-devel >= 0.18
-BuildRequires:	libsoup-devel >= 2.42.0
+BuildRequires:	libsoup3-devel >= 3.0.7
 BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
 BuildRequires:	meson >= 0.59.0
@@ -60,7 +54,7 @@ BuildRequires:	sed >= 4.0
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	tdb-devel >= 2:1.2.6
 BuildRequires:	totem-pl-parser-devel >= 3.2.0
-BuildRequires:	udev-glib-devel >= 143
+BuildRequires:	udev-glib-devel >= 1:143
 BuildRequires:	vala >= 0.9.4
 BuildRequires:	xorg-lib-libX11-devel
 BuildRequires:	xz
@@ -70,28 +64,28 @@ Requires:	python3-modules
 Requires(post,postun):	desktop-file-utils
 Requires(post,postun):	gtk-update-icon-cache
 Requires(post,postun):	hicolor-icon-theme
-Requires(post,postun):	glib2 >= 1:2.56.0
+Requires(post,postun):	glib2 >= 1:2.66.0
 Requires:	brasero >= 2.31.5
 Requires:	dbus >= 0.93
-Requires:	glib2 >= 1:2.56.0
-Requires:	grilo >= 0.3.1
+Requires:	glib2 >= 1:2.66.0
+Requires:	grilo >= 0.3.16-2
 Requires:	gstreamer-audio-effects-base >= 1.4.0
 Requires:	gstreamer-audio-formats >= 1.4.0
 Requires:	gstreamer-audiosink
 Requires:	gstreamer-plugins-good >= 1.4.0
 Requires:	gtk+3 >= 3.20.0
-%{?with_daap:Requires:	libdmapsharing >= 2.9.19}
+%{?with_daap:Requires:	libdmapsharing >= 3.9.11}
 %{?with_ipod:Requires:	libgpod >= 0.8}
 %{?with_mtp:Requires:	libmtp >= 0.3.0}
 Requires:	libnotify >= 0.7.0
 Requires:	libpeas >= 0.7.3
 Requires:	libpeas-gtk >= 0.7.3
 Requires:	libsecret >= 0.18
-Requires:	libsoup >= 2.42.0
+Requires:	libsoup3 >= 3.0.7
 Requires:	libxml2 >= 1:2.7.8
 Requires:	tdb >= 2:1.2.6
 Requires:	totem-pl-parser >= 3.2.0
-Requires:	udev-glib >= 143
+Requires:	udev-glib >= 1:143
 Suggests:	gstreamer-flac >= 1.4.0
 Suggests:	gstreamer-mad >= 1.4.0
 Suggests:	gstreamer-neon >= 1.4.0
@@ -122,10 +116,10 @@ Summary:	Header files for developing Rhythmbox plugins
 Summary(pl.UTF-8):	Pliki nagłówkowe do tworzenia wtyczek Rhythmboksa
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
-Requires:	glib2-devel >= 1:2.56.0
+Requires:	glib2-devel >= 1:2.66.0
 Requires:	gstreamer-devel >= 1.4.0
 Requires:	gtk+3-devel >= 3.20.0
-Requires:	libsoup-devel >= 2.42.0
+Requires:	libsoup3-devel >= 3.0.7
 Requires:	libxml2-devel >= 1:2.7.8
 Requires:	totem-pl-parser-devel >= 3.2.0
 
@@ -164,7 +158,7 @@ Dokumentacja API wtyczek Rhythmboksa.
 
 %build
 %meson build \
-	%{!?with_daap:-Ddaap=disabled} \
+	%{?with_daap:-Ddaap=enabled} \
 	-Dgtk_doc=true \
 	%{!?with_ipod:-Dipod=disabled}
 
