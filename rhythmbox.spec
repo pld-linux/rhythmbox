@@ -9,7 +9,7 @@ Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
 Version:	3.4.7
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
@@ -171,6 +171,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %py3_comp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
 %py3_ocomp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
+
+# not supported by glibc (as of 2.37)
+%{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ie
 
 %find_lang %{name} --with-gnome
 
