@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	apidocs		# gi-doc based API documentation
 %bcond_without	ipod		# iPod support
 %bcond_without	mtp		# MTP support
 %bcond_without	daap		# DAAP support
@@ -8,24 +9,24 @@ Summary:	Music Management Application
 Summary(hu.UTF-8):	Zenelejátszó alkalmazás
 Summary(pl.UTF-8):	Aplikacja do zarządzania muzyką
 Name:		rhythmbox
-Version:	3.4.7
-Release:	2
+Version:	3.4.8
+Release:	1
 License:	GPL v2+
 Group:		X11/Applications
 Source0:	https://download.gnome.org/sources/rhythmbox/3.4/%{name}-%{version}.tar.xz
-# Source0-md5:	14f60f29c3a353264b554e71d2d9759e
+# Source0-md5:	6a272ee2da9b5fd57bb12d9559bb2ee9
 URL:		https://wiki.gnome.org/Apps/Rhythmbox
 BuildRequires:	brasero-devel >= 2.31.5
 BuildRequires:	docbook-dtd412-xml
 BuildRequires:	gdk-pixbuf2-devel >= 2.18.0
 BuildRequires:	gettext-tools >= 0.18
+%{?with_apidocs:BuildRequires:	gi-docgen}
 BuildRequires:	glib2-devel >= 1:2.66.0
 BuildRequires:	gobject-introspection-devel >= 0.10.0
 BuildRequires:	grilo-devel >= 0.3.16-2
 BuildRequires:	gstreamer-devel >= 1.4.0
 BuildRequires:	gstreamer-plugins-base-devel >= 1.4.0
 BuildRequires:	gtk+3-devel >= 3.20.0
-BuildRequires:	gtk-doc >= 1.4
 BuildRequires:	json-glib-devel
 %if %{with daap}
 BuildRequires:	libdmapsharing-devel >= 3.9.11
@@ -40,7 +41,7 @@ BuildRequires:	libsecret-devel >= 0.18
 BuildRequires:	libsoup3-devel >= 3.0.7
 BuildRequires:	libxml2-devel >= 1:2.7.8
 BuildRequires:	lirc-devel
-BuildRequires:	meson >= 0.59.0
+BuildRequires:	meson >= 0.64.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pango-devel
 BuildRequires:	pkgconfig
@@ -159,7 +160,7 @@ Dokumentacja API wtyczek Rhythmboksa.
 %build
 %meson build \
 	%{?with_daap:-Ddaap=enabled} \
-	-Dgtk_doc=true \
+	%{?with_apidocs:-Dapidoc=true} \
 	%{!?with_ipod:-Dipod=disabled}
 
 %ninja_build -C build
@@ -171,6 +172,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %py3_comp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
 %py3_ocomp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
+
+%if %{with apidocs}
+# not installed by ninja install
+install -d $RPM_BUILD_ROOT%{_gidocdir}
+cp -pr build/doc/apidoc $RPM_BUILD_ROOT%{_gidocdir}/rhythmbox
+%endif
 
 # not supported by glibc (as of 2.37)
 %{__rm} -r $RPM_BUILD_ROOT%{_localedir}/ie
@@ -194,7 +201,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f rhythmbox.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog README NEWS
+%doc AUTHORS ChangeLog README.md NEWS
 %attr(755,root,root) %{_bindir}/rhythmbox
 %attr(755,root,root) %{_bindir}/rhythmbox-client
 %attr(755,root,root) %{_libexecdir}/rhythmbox-metadata
@@ -361,4 +368,4 @@ rm -rf $RPM_BUILD_ROOT
 
 %files apidocs
 %defattr(644,root,root,755)
-%{_gtkdocdir}/rhythmbox
+%{_gidocdir}/rhythmbox
