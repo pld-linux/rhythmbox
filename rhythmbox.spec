@@ -158,17 +158,17 @@ Dokumentacja API wtyczek Rhythmboksa.
 %setup -q
 
 %build
-%meson build \
+%meson \
 	%{?with_daap:-Ddaap=enabled} \
 	%{?with_apidocs:-Dapidoc=true} \
 	%{!?with_ipod:-Dipod=disabled}
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%ninja_install -C build
+%meson_install
 
 %py3_comp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
 %py3_ocomp $RPM_BUILD_ROOT%{_libdir}/rhythmbox/plugins
